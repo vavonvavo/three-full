@@ -6,12 +6,22 @@
  */
 
 const fs      = require( 'fs' )
+const path    = require( 'path' )
 const gulp    = require( 'gulp' )
 const util    = require( 'gulp-util' )
 const eslint  = require( 'gulp-eslint' )
 const replace = require( 'gulp-batch-replace' )
 const del     = require( 'del' )
 const rollup  = require( 'rollup' )
+
+const log     = util.log
+const colors  = util.colors
+const red     = colors.red
+const green   = colors.green
+const blue    = colors.blue
+const cyan    = colors.cyan
+const yellow  = colors.yellow
+const magenta = colors.magenta
 
 gulp.task( 'help', ( done ) => {
 
@@ -723,32 +733,31 @@ gulp.task( 'lint', () => {
 /////////////////////
 
 gulp.task( 'convert-three', ( done ) => {
-
-    //	const acorn = require( 'acorn' )
-    //
-    //	const file = fs.readFileSync( './node_modules/three/examples/js/animation/CCDIKSolver.js', 'utf8' )
-    //
-    //	const result = acorn.parse( file, { sourceType: 'module' } )
-    //
-    //	console.log( result )
-
-    const es6    = require( './es6-convertor' )
+    
     const config = require( './configs/es6.conf' )
+    const JsToEs = require( 'js-to-es' ).JsToEs
 
-    es6.setInputs( config.inputs )
-       .setExcludes( config.excludes )
-       .setOutput( config.output )
-       .setEdgeCases( config.edgeCases )
-       .setBanner( config.banner )
-       .convert( () => {
+    const converter = new JsToEs()
+    converter.setInputs( config.inputs )
+             .setExcludes( config.excludes )
+             .setOutput( config.output )
+             .setEdgeCases( config.edgeCases )
+             .setBanner( config.banner )
+             .setNamespace( 'THREE' )
+             .convert()
+             .then( () => {
 
-           copyPolyfills()
-           copyShaderChunk()
-           updateThreeExports()
+                 //Todo: Allow js file to be copied without any processing
+                 copyPolyfills()
+                 createMainExporterFile()
 
-           done()
+                 done()
 
-       } )
+             } )
+             .catch( error => {
+                 console.log( error )
+                 done()
+             } )
 
     function copyPolyfills () {
 
@@ -756,19 +765,21 @@ gulp.task( 'convert-three', ( done ) => {
 
     }
 
-    function copyShaderChunk () {
-
-        fs.writeFileSync( './sources/renderers/shaders/ShaderChunk.js', fs.readFileSync( './node_modules/three/src/renderers/shaders/ShaderChunk.js', 'utf8' ) )
-
-    }
-
-    function updateThreeExports () {
+    function createMainExporterFile () {
 
         const mainExporterFilePath = './sources/Three.js'
 
-        const imports = 'import \'./polyfills.js\';\n\n'
-        const exports = es6.getAllExports( mainExporterFilePath )
-        const data    = imports + exports
+        let data = "import './polyfills.js';\n\n"
+
+        const exportMap = converter.exportMap
+        for ( let exportedElement in exportMap ) {
+
+            const exportPath = exportMap[ exportedElement ].split( path.sep )
+                                                           .slice( 6 )
+                                                           .join( '/' )
+
+            data += `export { ${exportedElement} } from './${exportPath}';\n`
+        }
 
         fs.writeFileSync( mainExporterFilePath, data )
 
