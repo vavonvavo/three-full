@@ -673,8 +673,6 @@ var Three = (function (exports) {
   		var v1 = new Vector3();
 
   		return function applyToBufferAttribute( attribute ) {
-  			var this$1 = this;
-
 
   			for ( var i = 0, l = attribute.count; i < l; i ++ ) {
 
@@ -682,7 +680,7 @@ var Three = (function (exports) {
   				v1.y = attribute.getY( i );
   				v1.z = attribute.getZ( i );
 
-  				v1.applyMatrix4( this$1 );
+  				v1.applyMatrix4( this );
 
   				attribute.setXYZ( i, v1.x, v1.y, v1.z );
 
@@ -1130,14 +1128,12 @@ var Three = (function (exports) {
   	},
 
   	fromArray: function ( array, offset ) {
-  		var this$1 = this;
-
 
   		if ( offset === undefined ) { offset = 0; }
 
   		for ( var i = 0; i < 16; i ++ ) {
 
-  			this$1.elements[ i ] = array[ i + offset ];
+  			this.elements[ i ] = array[ i + offset ];
 
   		}
 
@@ -2583,8 +2579,6 @@ var Three = (function (exports) {
   	},
 
   	dispatchEvent: function ( event ) {
-  		var this$1 = this;
-
 
   		if ( this._listeners === undefined ) { return; }
 
@@ -2599,7 +2593,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, l = array.length; i < l; i ++ ) {
 
-  				array[ i ].call( this$1, event );
+  				array[ i ].call( this, event );
 
   			}
 
@@ -3081,8 +3075,6 @@ var Three = (function (exports) {
   		var v1 = new Vector3();
 
   		return function applyToBufferAttribute( attribute ) {
-  			var this$1 = this;
-
 
   			for ( var i = 0, l = attribute.count; i < l; i ++ ) {
 
@@ -3090,7 +3082,7 @@ var Three = (function (exports) {
   				v1.y = attribute.getY( i );
   				v1.z = attribute.getZ( i );
 
-  				v1.applyMatrix3( this$1 );
+  				v1.applyMatrix3( this );
 
   				attribute.setXYZ( i, v1.x, v1.y, v1.z );
 
@@ -3334,14 +3326,12 @@ var Three = (function (exports) {
   	},
 
   	fromArray: function ( array, offset ) {
-  		var this$1 = this;
-
 
   		if ( offset === undefined ) { offset = 0; }
 
   		for ( var i = 0; i < 9; i ++ ) {
 
-  			this$1.elements[ i ] = array[ i + offset ];
+  			this.elements[ i ] = array[ i + offset ];
 
   		}
 
@@ -3866,14 +3856,13 @@ var Three = (function (exports) {
 
   	add: function ( object ) {
   		var arguments$1 = arguments;
-  		var this$1 = this;
 
 
   		if ( arguments.length > 1 ) {
 
   			for ( var i = 0; i < arguments.length; i ++ ) {
 
-  				this$1.add( arguments$1[ i ] );
+  				this.add( arguments$1[ i ] );
 
   			}
 
@@ -3913,14 +3902,13 @@ var Three = (function (exports) {
 
   	remove: function ( object ) {
   		var arguments$1 = arguments;
-  		var this$1 = this;
 
 
   		if ( arguments.length > 1 ) {
 
   			for ( var i = 0; i < arguments.length; i ++ ) {
 
-  				this$1.remove( arguments$1[ i ] );
+  				this.remove( arguments$1[ i ] );
 
   			}
 
@@ -3957,14 +3945,12 @@ var Three = (function (exports) {
   	},
 
   	getObjectByProperty: function ( name, value ) {
-  		var this$1 = this;
-
 
   		if ( this[ name ] === value ) { return this; }
 
   		for ( var i = 0, l = this.children.length; i < l; i ++ ) {
 
-  			var child = this$1.children[ i ];
+  			var child = this.children[ i ];
   			var object = child.getObjectByProperty( name, value );
 
   			if ( object !== undefined ) {
@@ -4186,8 +4172,6 @@ var Three = (function (exports) {
   	},
 
   	toJSON: function ( meta ) {
-  		var this$1 = this;
-
 
   		// meta is a string when called from JSON.stringify
   		var isRootObject = ( meta === undefined || typeof meta === 'string' );
@@ -4292,7 +4276,7 @@ var Three = (function (exports) {
 
   				for ( var i = 0, l = this.material.length; i < l; i ++ ) {
 
-  					uuids.push( serialize( meta.materials, this$1.material[ i ] ) );
+  					uuids.push( serialize( meta.materials, this.material[ i ] ) );
 
   				}
 
@@ -4314,7 +4298,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < this.children.length; i ++ ) {
 
-  				object.children.push( this$1.children[ i ].toJSON( meta ).object );
+  				object.children.push( this.children[ i ].toJSON( meta ).object );
 
   			}
 
@@ -4366,8 +4350,6 @@ var Three = (function (exports) {
   	},
 
   	copy: function ( source, recursive ) {
-  		var this$1 = this;
-
 
   		if ( recursive === undefined ) { recursive = true; }
 
@@ -4401,7 +4383,7 @@ var Three = (function (exports) {
   			for ( var i = 0; i < source.children.length; i ++ ) {
 
   				var child = source.children[ i ];
-  				this$1.add( child.clone() );
+  				this.add( child.clone() );
 
   			}
 
@@ -5036,8 +5018,6 @@ var Three = (function (exports) {
   	},
 
   	copy: function ( source ) {
-  		var this$1 = this;
-
 
   		this.a = source.a;
   		this.b = source.b;
@@ -5050,13 +5030,13 @@ var Three = (function (exports) {
 
   		for ( var i = 0, il = source.vertexNormals.length; i < il; i ++ ) {
 
-  			this$1.vertexNormals[ i ] = source.vertexNormals[ i ].clone();
+  			this.vertexNormals[ i ] = source.vertexNormals[ i ].clone();
 
   		}
 
   		for ( var i = 0, il = source.vertexColors.length; i < il; i ++ ) {
 
-  			this$1.vertexColors[ i ] = source.vertexColors[ i ].clone();
+  			this.vertexColors[ i ] = source.vertexColors[ i ].clone();
 
   		}
 
@@ -5154,14 +5134,12 @@ var Three = (function (exports) {
   	},
 
   	setFromPoints: function ( points ) {
-  		var this$1 = this;
-
 
   		this.makeEmpty();
 
   		for ( var i = 0, il = points.length; i < il; i ++ ) {
 
-  			this$1.expandByPoint( points[ i ] );
+  			this.expandByPoint( points[ i ] );
 
   		}
 
@@ -6386,21 +6364,19 @@ var Three = (function (exports) {
   	isGeometry: true,
 
   	applyMatrix: function ( matrix ) {
-  		var this$1 = this;
-
 
   		var normalMatrix = new Matrix3().getNormalMatrix( matrix );
 
   		for ( var i = 0, il = this.vertices.length; i < il; i ++ ) {
 
-  			var vertex = this$1.vertices[ i ];
+  			var vertex = this.vertices[ i ];
   			vertex.applyMatrix4( matrix );
 
   		}
 
   		for ( var i = 0, il = this.faces.length; i < il; i ++ ) {
 
-  			var face = this$1.faces[ i ];
+  			var face = this.faces[ i ];
   			face.normal.applyMatrix3( normalMatrix ).normalize();
 
   			for ( var j = 0, jl = face.vertexNormals.length; j < jl; j ++ ) {
@@ -6711,18 +6687,16 @@ var Three = (function (exports) {
   	},
 
   	computeFaceNormals: function () {
-  		var this$1 = this;
-
 
   		var cb = new Vector3(), ab = new Vector3();
 
   		for ( var f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  			var face = this$1.faces[ f ];
+  			var face = this.faces[ f ];
 
-  			var vA = this$1.vertices[ face.a ];
-  			var vB = this$1.vertices[ face.b ];
-  			var vC = this$1.vertices[ face.c ];
+  			var vA = this.vertices[ face.a ];
+  			var vB = this.vertices[ face.b ];
+  			var vC = this.vertices[ face.c ];
 
   			cb.subVectors( vC, vB );
   			ab.subVectors( vA, vB );
@@ -6737,8 +6711,6 @@ var Three = (function (exports) {
   	},
 
   	computeVertexNormals: function ( areaWeighted ) {
-  		var this$1 = this;
-
 
   		if ( areaWeighted === undefined ) { areaWeighted = true; }
 
@@ -6762,11 +6734,11 @@ var Three = (function (exports) {
 
   			for ( f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  				face = this$1.faces[ f ];
+  				face = this.faces[ f ];
 
-  				vA = this$1.vertices[ face.a ];
-  				vB = this$1.vertices[ face.b ];
-  				vC = this$1.vertices[ face.c ];
+  				vA = this.vertices[ face.a ];
+  				vB = this.vertices[ face.b ];
+  				vC = this.vertices[ face.c ];
 
   				cb.subVectors( vC, vB );
   				ab.subVectors( vA, vB );
@@ -6784,7 +6756,7 @@ var Three = (function (exports) {
 
   			for ( f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  				face = this$1.faces[ f ];
+  				face = this.faces[ f ];
 
   				vertices[ face.a ].add( face.normal );
   				vertices[ face.b ].add( face.normal );
@@ -6802,7 +6774,7 @@ var Three = (function (exports) {
 
   		for ( f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  			face = this$1.faces[ f ];
+  			face = this.faces[ f ];
 
   			var vertexNormals = face.vertexNormals;
 
@@ -6831,8 +6803,6 @@ var Three = (function (exports) {
   	},
 
   	computeFlatVertexNormals: function () {
-  		var this$1 = this;
-
 
   		var f, fl, face;
 
@@ -6840,7 +6810,7 @@ var Three = (function (exports) {
 
   		for ( f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  			face = this$1.faces[ f ];
+  			face = this.faces[ f ];
 
   			var vertexNormals = face.vertexNormals;
 
@@ -6869,8 +6839,6 @@ var Three = (function (exports) {
   	},
 
   	computeMorphNormals: function () {
-  		var this$1 = this;
-
 
   		var i, il, f, fl, face;
 
@@ -6880,7 +6848,7 @@ var Three = (function (exports) {
 
   		for ( f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  			face = this$1.faces[ f ];
+  			face = this.faces[ f ];
 
   			if ( ! face.__originalFaceNormal ) {
 
@@ -6919,14 +6887,14 @@ var Three = (function (exports) {
 
   			// create on first access
 
-  			if ( ! this$1.morphNormals[ i ] ) {
+  			if ( ! this.morphNormals[ i ] ) {
 
-  				this$1.morphNormals[ i ] = {};
-  				this$1.morphNormals[ i ].faceNormals = [];
-  				this$1.morphNormals[ i ].vertexNormals = [];
+  				this.morphNormals[ i ] = {};
+  				this.morphNormals[ i ].faceNormals = [];
+  				this.morphNormals[ i ].vertexNormals = [];
 
-  				var dstNormalsFace = this$1.morphNormals[ i ].faceNormals;
-  				var dstNormalsVertex = this$1.morphNormals[ i ].vertexNormals;
+  				var dstNormalsFace = this.morphNormals[ i ].faceNormals;
+  				var dstNormalsVertex = this.morphNormals[ i ].vertexNormals;
 
   				var faceNormal, vertexNormals;
 
@@ -6942,11 +6910,11 @@ var Three = (function (exports) {
 
   			}
 
-  			var morphNormals = this$1.morphNormals[ i ];
+  			var morphNormals = this.morphNormals[ i ];
 
   			// set vertices to morph target
 
-  			tmpGeo.vertices = this$1.morphTargets[ i ].vertices;
+  			tmpGeo.vertices = this.morphTargets[ i ].vertices;
 
   			// compute morph normals
 
@@ -6959,7 +6927,7 @@ var Three = (function (exports) {
 
   			for ( f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  				face = this$1.faces[ f ];
+  				face = this.faces[ f ];
 
   				faceNormal = morphNormals.faceNormals[ f ];
   				vertexNormals = morphNormals.vertexNormals[ f ];
@@ -6978,7 +6946,7 @@ var Three = (function (exports) {
 
   		for ( f = 0, fl = this.faces.length; f < fl; f ++ ) {
 
-  			face = this$1.faces[ f ];
+  			face = this.faces[ f ];
 
   			face.normal = face.__originalFaceNormal;
   			face.vertexNormals = face.__originalVertexNormals;
@@ -7146,8 +7114,6 @@ var Three = (function (exports) {
 
   	},
   	mergeVertices: function () {
-  		var this$1 = this;
-
 
   		var verticesMap = {}; // Hashmap for looking up vertices by position coordinates (and making sure they are unique)
   		var unique = [], changes = [];
@@ -7160,13 +7126,13 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = this.vertices.length; i < il; i ++ ) {
 
-  			v = this$1.vertices[ i ];
+  			v = this.vertices[ i ];
   			key = Math.round( v.x * precision ) + '_' + Math.round( v.y * precision ) + '_' + Math.round( v.z * precision );
 
   			if ( verticesMap[ key ] === undefined ) {
 
   				verticesMap[ key ] = i;
-  				unique.push( this$1.vertices[ i ] );
+  				unique.push( this.vertices[ i ] );
   				changes[ i ] = unique.length - 1;
 
   			} else {
@@ -7183,7 +7149,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = this.faces.length; i < il; i ++ ) {
 
-  			face = this$1.faces[ i ];
+  			face = this.faces[ i ];
 
   			face.a = changes[ face.a ];
   			face.b = changes[ face.b ];
@@ -7210,11 +7176,11 @@ var Three = (function (exports) {
 
   			var idx = faceIndicesToRemove[ i ];
 
-  			this$1.faces.splice( idx, 1 );
+  			this.faces.splice( idx, 1 );
 
   			for ( j = 0, jl = this.faceVertexUvs.length; j < jl; j ++ ) {
 
-  				this$1.faceVertexUvs[ j ].splice( idx, 1 );
+  				this.faceVertexUvs[ j ].splice( idx, 1 );
 
   			}
 
@@ -7229,15 +7195,13 @@ var Three = (function (exports) {
   	},
 
   	setFromPoints: function ( points ) {
-  		var this$1 = this;
-
 
   		this.vertices = [];
 
   		for ( var i = 0, l = points.length; i < l; i ++ ) {
 
   			var point = points[ i ];
-  			this$1.vertices.push( new Vector3( point.x, point.y, point.z || 0 ) );
+  			this.vertices.push( new Vector3( point.x, point.y, point.z || 0 ) );
 
   		}
 
@@ -7293,8 +7257,6 @@ var Three = (function (exports) {
   	},
 
   	toJSON: function () {
-  		var this$1 = this;
-
 
   		var data = {
   			metadata: {
@@ -7328,7 +7290,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.vertices.length; i ++ ) {
 
-  			var vertex = this$1.vertices[ i ];
+  			var vertex = this.vertices[ i ];
   			vertices.push( vertex.x, vertex.y, vertex.z );
 
   		}
@@ -7343,11 +7305,11 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.faces.length; i ++ ) {
 
-  			var face = this$1.faces[ i ];
+  			var face = this.faces[ i ];
 
   			var hasMaterial = true;
   			var hasFaceUv = false; // deprecated
-  			var hasFaceVertexUv = this$1.faceVertexUvs[ 0 ][ i ] !== undefined;
+  			var hasFaceVertexUv = this.faceVertexUvs[ 0 ][ i ] !== undefined;
   			var hasFaceNormal = face.normal.length() > 0;
   			var hasFaceVertexNormal = face.vertexNormals.length > 0;
   			var hasFaceColor = face.color.r !== 1 || face.color.g !== 1 || face.color.b !== 1;
@@ -7370,7 +7332,7 @@ var Three = (function (exports) {
 
   			if ( hasFaceVertexUv ) {
 
-  				var faceVertexUvs = this$1.faceVertexUvs[ 0 ][ i ];
+  				var faceVertexUvs = this.faceVertexUvs[ 0 ][ i ];
 
   				faces.push(
   					getUvIndex( faceVertexUvs[ 0 ] ),
@@ -7493,8 +7455,6 @@ var Three = (function (exports) {
   	},
 
   	copy: function ( source ) {
-  		var this$1 = this;
-
 
   		var i, il, j, jl, k, kl;
 
@@ -7522,7 +7482,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = vertices.length; i < il; i ++ ) {
 
-  			this$1.vertices.push( vertices[ i ].clone() );
+  			this.vertices.push( vertices[ i ].clone() );
 
   		}
 
@@ -7532,7 +7492,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = colors.length; i < il; i ++ ) {
 
-  			this$1.colors.push( colors[ i ].clone() );
+  			this.colors.push( colors[ i ].clone() );
 
   		}
 
@@ -7542,7 +7502,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = faces.length; i < il; i ++ ) {
 
-  			this$1.faces.push( faces[ i ].clone() );
+  			this.faces.push( faces[ i ].clone() );
 
   		}
 
@@ -7552,9 +7512,9 @@ var Three = (function (exports) {
 
   			var faceVertexUvs = source.faceVertexUvs[ i ];
 
-  			if ( this$1.faceVertexUvs[ i ] === undefined ) {
+  			if ( this.faceVertexUvs[ i ] === undefined ) {
 
-  				this$1.faceVertexUvs[ i ] = [];
+  				this.faceVertexUvs[ i ] = [];
 
   			}
 
@@ -7570,7 +7530,7 @@ var Three = (function (exports) {
 
   				}
 
-  				this$1.faceVertexUvs[ i ].push( uvsCopy );
+  				this.faceVertexUvs[ i ].push( uvsCopy );
 
   			}
 
@@ -7613,7 +7573,7 @@ var Three = (function (exports) {
 
   			}
 
-  			this$1.morphTargets.push( morphTarget );
+  			this.morphTargets.push( morphTarget );
 
   		}
 
@@ -7660,7 +7620,7 @@ var Three = (function (exports) {
 
   			}
 
-  			this$1.morphNormals.push( morphNormal );
+  			this.morphNormals.push( morphNormal );
 
   		}
 
@@ -7670,7 +7630,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = skinWeights.length; i < il; i ++ ) {
 
-  			this$1.skinWeights.push( skinWeights[ i ].clone() );
+  			this.skinWeights.push( skinWeights[ i ].clone() );
 
   		}
 
@@ -7680,7 +7640,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = skinIndices.length; i < il; i ++ ) {
 
-  			this$1.skinIndices.push( skinIndices[ i ].clone() );
+  			this.skinIndices.push( skinIndices[ i ].clone() );
 
   		}
 
@@ -7690,7 +7650,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = lineDistances.length; i < il; i ++ ) {
 
-  			this$1.lineDistances.push( lineDistances[ i ] );
+  			this.lineDistances.push( lineDistances[ i ] );
 
   		}
 
@@ -8435,15 +8395,13 @@ var Three = (function (exports) {
   	},
 
   	copyAt: function ( index1, attribute, index2 ) {
-  		var this$1 = this;
-
 
   		index1 *= this.itemSize;
   		index2 *= attribute.itemSize;
 
   		for ( var i = 0, l = this.itemSize; i < l; i ++ ) {
 
-  			this$1.array[ index1 + i ] = attribute.array[ index2 + i ];
+  			this.array[ index1 + i ] = attribute.array[ index2 + i ];
 
   		}
 
@@ -8831,8 +8789,6 @@ var Three = (function (exports) {
   	},
 
   	fromGeometry: function ( geometry ) {
-  		var this$1 = this;
-
 
   		var faces = geometry.faces;
   		var vertices = geometry.vertices;
@@ -8907,19 +8863,19 @@ var Three = (function (exports) {
 
   			var face = faces[ i ];
 
-  			this$1.vertices.push( vertices[ face.a ], vertices[ face.b ], vertices[ face.c ] );
+  			this.vertices.push( vertices[ face.a ], vertices[ face.b ], vertices[ face.c ] );
 
   			var vertexNormals = face.vertexNormals;
 
   			if ( vertexNormals.length === 3 ) {
 
-  				this$1.normals.push( vertexNormals[ 0 ], vertexNormals[ 1 ], vertexNormals[ 2 ] );
+  				this.normals.push( vertexNormals[ 0 ], vertexNormals[ 1 ], vertexNormals[ 2 ] );
 
   			} else {
 
   				var normal = face.normal;
 
-  				this$1.normals.push( normal, normal, normal );
+  				this.normals.push( normal, normal, normal );
 
   			}
 
@@ -8927,13 +8883,13 @@ var Three = (function (exports) {
 
   			if ( vertexColors.length === 3 ) {
 
-  				this$1.colors.push( vertexColors[ 0 ], vertexColors[ 1 ], vertexColors[ 2 ] );
+  				this.colors.push( vertexColors[ 0 ], vertexColors[ 1 ], vertexColors[ 2 ] );
 
   			} else {
 
   				var color = face.color;
 
-  				this$1.colors.push( color, color, color );
+  				this.colors.push( color, color, color );
 
   			}
 
@@ -8943,13 +8899,13 @@ var Three = (function (exports) {
 
   				if ( vertexUvs !== undefined ) {
 
-  					this$1.uvs.push( vertexUvs[ 0 ], vertexUvs[ 1 ], vertexUvs[ 2 ] );
+  					this.uvs.push( vertexUvs[ 0 ], vertexUvs[ 1 ], vertexUvs[ 2 ] );
 
   				} else {
 
   					console.warn( 'DirectGeometry.fromGeometry(): Undefined vertexUv ', i );
 
-  					this$1.uvs.push( new Vector2(), new Vector2(), new Vector2() );
+  					this.uvs.push( new Vector2(), new Vector2(), new Vector2() );
 
   				}
 
@@ -8961,13 +8917,13 @@ var Three = (function (exports) {
 
   				if ( vertexUvs !== undefined ) {
 
-  					this$1.uvs2.push( vertexUvs[ 0 ], vertexUvs[ 1 ], vertexUvs[ 2 ] );
+  					this.uvs2.push( vertexUvs[ 0 ], vertexUvs[ 1 ], vertexUvs[ 2 ] );
 
   				} else {
 
   					console.warn( 'DirectGeometry.fromGeometry(): Undefined vertexUv2 ', i );
 
-  					this$1.uvs2.push( new Vector2(), new Vector2(), new Vector2() );
+  					this.uvs2.push( new Vector2(), new Vector2(), new Vector2() );
 
   				}
 
@@ -8995,13 +8951,13 @@ var Three = (function (exports) {
 
   			if ( hasSkinIndices ) {
 
-  				this$1.skinIndices.push( skinIndices[ face.a ], skinIndices[ face.b ], skinIndices[ face.c ] );
+  				this.skinIndices.push( skinIndices[ face.a ], skinIndices[ face.b ], skinIndices[ face.c ] );
 
   			}
 
   			if ( hasSkinWeights ) {
 
-  				this$1.skinWeights.push( skinWeights[ face.a ], skinWeights[ face.b ], skinWeights[ face.c ] );
+  				this.skinWeights.push( skinWeights[ face.a ], skinWeights[ face.b ], skinWeights[ face.c ] );
 
   			}
 
@@ -9549,8 +9505,6 @@ var Three = (function (exports) {
   	},
 
   	fromDirectGeometry: function ( geometry ) {
-  		var this$1 = this;
-
 
   		var positions = new Float32Array( geometry.vertices.length * 3 );
   		this.addAttribute( 'position', new BufferAttribute( positions, 3 ).copyVector3sArray( geometry.vertices ) );
@@ -9605,7 +9559,7 @@ var Three = (function (exports) {
 
   			}
 
-  			this$1.morphAttributes[ name ] = array;
+  			this.morphAttributes[ name ] = array;
 
   		}
 
@@ -9994,8 +9948,6 @@ var Three = (function (exports) {
   	},
 
   	toJSON: function () {
-  		var this$1 = this;
-
 
   		var data = {
   			metadata: {
@@ -10061,9 +10013,9 @@ var Three = (function (exports) {
   		var morphAttributes = {};
   		var hasMorphAttributes = false;
 
-  		for ( var key in this$1.morphAttributes ) {
+  		for ( var key in this.morphAttributes ) {
 
-  			var attributeArray = this$1.morphAttributes[ key ];
+  			var attributeArray = this.morphAttributes[ key ];
 
   			var array = [];
 
@@ -10125,8 +10077,6 @@ var Three = (function (exports) {
   	},
 
   	copy: function ( source ) {
-  		var this$1 = this;
-
 
   		var name, i, l;
 
@@ -10160,7 +10110,7 @@ var Three = (function (exports) {
   		for ( name in attributes ) {
 
   			var attribute = attributes[ name ];
-  			this$1.addAttribute( name, attribute.clone() );
+  			this.addAttribute( name, attribute.clone() );
 
   		}
 
@@ -10179,7 +10129,7 @@ var Three = (function (exports) {
 
   			}
 
-  			this$1.morphAttributes[ name ] = array;
+  			this.morphAttributes[ name ] = array;
 
   		}
 
@@ -10190,7 +10140,7 @@ var Three = (function (exports) {
   		for ( i = 0, l = groups.length; i < l; i ++ ) {
 
   			var group = groups[ i ];
-  			this$1.addGroup( group.start, group.count, group.materialIndex );
+  			this.addGroup( group.start, group.count, group.materialIndex );
 
   		}
 
@@ -10446,8 +10396,6 @@ var Three = (function (exports) {
   	onBeforeCompile: function () {},
 
   	setValues: function ( values ) {
-  		var this$1 = this;
-
 
   		if ( values === undefined ) { return; }
 
@@ -10465,17 +10413,17 @@ var Three = (function (exports) {
   			// for backward compatability if shading is set in the constructor
   			if ( key === 'shading' ) {
 
-  				console.warn( '' + this$1.type + ': .shading has been removed. Use the boolean .flatShading instead.' );
-  				this$1.flatShading = ( newValue === FlatShading ) ? true : false;
+  				console.warn( '' + this.type + ': .shading has been removed. Use the boolean .flatShading instead.' );
+  				this.flatShading = ( newValue === FlatShading ) ? true : false;
   				continue;
 
   			}
 
-  			var currentValue = this$1[ key ];
+  			var currentValue = this[ key ];
 
   			if ( currentValue === undefined ) {
 
-  				console.warn( "" + this$1.type + ": '" + key + "' is not a property of this material." );
+  				console.warn( "" + this.type + ": '" + key + "' is not a property of this material." );
   				continue;
 
   			}
@@ -10490,7 +10438,7 @@ var Three = (function (exports) {
 
   			} else {
 
-  				this$1[ key ] = newValue;
+  				this[ key ] = newValue;
 
   			}
 
@@ -11798,8 +11746,6 @@ var Three = (function (exports) {
   	},
 
   	updateMorphTargets: function () {
-  		var this$1 = this;
-
 
   		var geometry = this.geometry;
   		var m, ml, name;
@@ -11822,8 +11768,8 @@ var Three = (function (exports) {
 
   						name = morphAttribute[ m ].name || String( m );
 
-  						this$1.morphTargetInfluences.push( 0 );
-  						this$1.morphTargetDictionary[ name ] = m;
+  						this.morphTargetInfluences.push( 0 );
+  						this.morphTargetDictionary[ name ] = m;
 
   					}
 
@@ -11929,8 +11875,6 @@ var Three = (function (exports) {
   		}
 
   		return function raycast( raycaster, intersects ) {
-  			var this$1 = this;
-
 
   			var geometry = this.geometry;
   			var material = this.material;
@@ -11994,7 +11938,7 @@ var Three = (function (exports) {
   								b = index.getX( j + 1 );
   								c = index.getX( j + 2 );
 
-  								intersection = checkBufferGeometryIntersection( this$1, groupMaterial, raycaster, ray, position, uv, a, b, c );
+  								intersection = checkBufferGeometryIntersection( this, groupMaterial, raycaster, ray, position, uv, a, b, c );
 
   								if ( intersection ) {
 
@@ -12019,7 +11963,7 @@ var Three = (function (exports) {
   							b = index.getX( i + 1 );
   							c = index.getX( i + 2 );
 
-  							intersection = checkBufferGeometryIntersection( this$1, material, raycaster, ray, position, uv, a, b, c );
+  							intersection = checkBufferGeometryIntersection( this, material, raycaster, ray, position, uv, a, b, c );
 
   							if ( intersection ) {
 
@@ -12052,7 +11996,7 @@ var Three = (function (exports) {
   								b = j + 1;
   								c = j + 2;
 
-  								intersection = checkBufferGeometryIntersection( this$1, groupMaterial, raycaster, ray, position, uv, a, b, c );
+  								intersection = checkBufferGeometryIntersection( this, groupMaterial, raycaster, ray, position, uv, a, b, c );
 
   								if ( intersection ) {
 
@@ -12077,7 +12021,7 @@ var Three = (function (exports) {
   							b = i + 1;
   							c = i + 2;
 
-  							intersection = checkBufferGeometryIntersection( this$1, material, raycaster, ray, position, uv, a, b, c );
+  							intersection = checkBufferGeometryIntersection( this, material, raycaster, ray, position, uv, a, b, c );
 
   							if ( intersection ) {
 
@@ -12118,7 +12062,7 @@ var Three = (function (exports) {
   					if ( faceMaterial.morphTargets === true ) {
 
   						var morphTargets = geometry.morphTargets;
-  						var morphInfluences = this$1.morphTargetInfluences;
+  						var morphInfluences = this.morphTargetInfluences;
 
   						vA.set( 0, 0, 0 );
   						vB.set( 0, 0, 0 );
@@ -12148,7 +12092,7 @@ var Three = (function (exports) {
 
   					}
 
-  					intersection = checkIntersection( this$1, faceMaterial, raycaster, ray, fvA, fvB, fvC, intersectionPoint );
+  					intersection = checkIntersection( this, faceMaterial, raycaster, ray, fvA, fvB, fvC, intersectionPoint );
 
   					if ( intersection ) {
 
@@ -12274,8 +12218,6 @@ var Three = (function (exports) {
   		var sphere = new Sphere();
 
   		return function raycast( raycaster, intersects ) {
-  			var this$1 = this;
-
 
   			var precision = raycaster.linePrecision;
 
@@ -12328,7 +12270,7 @@ var Three = (function (exports) {
 
   						if ( distSq > localPrecisionSq ) { continue; }
 
-  						interRay.applyMatrix4( this$1.matrixWorld ); //Move back to world space for distance calculation
+  						interRay.applyMatrix4( this.matrixWorld ); //Move back to world space for distance calculation
 
   						var distance = raycaster.ray.origin.distanceTo( interRay );
 
@@ -12339,11 +12281,11 @@ var Three = (function (exports) {
   							distance: distance,
   							// What do we want? intersection point on the ray or on the segment??
   							// point: raycaster.ray.at( distance ),
-  							point: interSegment.clone().applyMatrix4( this$1.matrixWorld ),
+  							point: interSegment.clone().applyMatrix4( this.matrixWorld ),
   							index: i,
   							face: null,
   							faceIndex: null,
-  							object: this$1
+  							object: this
 
   						} );
 
@@ -12360,7 +12302,7 @@ var Three = (function (exports) {
 
   						if ( distSq > localPrecisionSq ) { continue; }
 
-  						interRay.applyMatrix4( this$1.matrixWorld ); //Move back to world space for distance calculation
+  						interRay.applyMatrix4( this.matrixWorld ); //Move back to world space for distance calculation
 
   						var distance = raycaster.ray.origin.distanceTo( interRay );
 
@@ -12371,11 +12313,11 @@ var Three = (function (exports) {
   							distance: distance,
   							// What do we want? intersection point on the ray or on the segment??
   							// point: raycaster.ray.at( distance ),
-  							point: interSegment.clone().applyMatrix4( this$1.matrixWorld ),
+  							point: interSegment.clone().applyMatrix4( this.matrixWorld ),
   							index: i,
   							face: null,
   							faceIndex: null,
-  							object: this$1
+  							object: this
 
   						} );
 
@@ -12394,7 +12336,7 @@ var Three = (function (exports) {
 
   					if ( distSq > localPrecisionSq ) { continue; }
 
-  					interRay.applyMatrix4( this$1.matrixWorld ); //Move back to world space for distance calculation
+  					interRay.applyMatrix4( this.matrixWorld ); //Move back to world space for distance calculation
 
   					var distance = raycaster.ray.origin.distanceTo( interRay );
 
@@ -12405,11 +12347,11 @@ var Three = (function (exports) {
   						distance: distance,
   						// What do we want? intersection point on the ray or on the segment??
   						// point: raycaster.ray.at( distance ),
-  						point: interSegment.clone().applyMatrix4( this$1.matrixWorld ),
+  						point: interSegment.clone().applyMatrix4( this.matrixWorld ),
   						index: i,
   						face: null,
   						faceIndex: null,
-  						object: this$1
+  						object: this
 
   					} );
 
@@ -12717,8 +12659,6 @@ var Three = (function (exports) {
   			}
 
   			return function updateMatrixWorld( force ) {
-  				var this$1 = this;
-
 
   				var mesh = this.root;
 
@@ -12738,8 +12678,8 @@ var Three = (function (exports) {
   						var targetBone = bones[ ik.target ];
   						var effectorBone = bones[ ik.effector ];
 
-  						var targetMesh = this$1.children[ offset ++ ];
-  						var effectorMesh = this$1.children[ offset ++ ];
+  						var targetMesh = this.children[ offset ++ ];
+  						var effectorMesh = this.children[ offset ++ ];
 
   						targetMesh.position.copy( getPosition( targetBone, matrix ) );
   						effectorMesh.position.copy( getPosition( effectorBone, matrix ) );
@@ -12749,13 +12689,13 @@ var Three = (function (exports) {
   							var link = ik.links[ j ];
   							var linkBone = bones[ link.index ];
 
-  							var linkMesh = this$1.children[ offset ++ ];
+  							var linkMesh = this.children[ offset ++ ];
 
   							linkMesh.position.copy( getPosition( linkBone, matrix ) );
 
   						}
 
-  						var line = this$1.children[ offset ++ ];
+  						var line = this.children[ offset ++ ];
   						var array = line.geometry.attributes.position.array;
 
   						setPositionOfBoneToAttributeArray( array, 0, targetBone, matrix );
@@ -12786,8 +12726,6 @@ var Three = (function (exports) {
   		// private method
 
   		_init: function () {
-  			var this$1 = this;
-
 
   			var self = this;
   			var iks = this.iks;
@@ -12830,16 +12768,16 @@ var Three = (function (exports) {
 
   				var ik = iks[ i ];
 
-  				this$1.add( createTargetMesh() );
-  				this$1.add( createEffectorMesh() );
+  				this.add( createTargetMesh() );
+  				this.add( createEffectorMesh() );
 
   				for ( var j = 0, jl = ik.links.length; j < jl; j ++ ) {
 
-  					this$1.add( createLinkMesh() );
+  					this.add( createLinkMesh() );
 
   				}
 
-  				this$1.add( createLine( ik ) );
+  				this.add( createLine( ik ) );
 
   			}
 
@@ -13529,8 +13467,6 @@ var Three = (function (exports) {
   Object.assign( Interpolant.prototype, {
 
   	evaluate: function ( t ) {
-  		var this$1 = this;
-
 
   		var pp = this.parameterPositions,
   			i1 = this._cachedIndex,
@@ -13561,8 +13497,8 @@ var Three = (function (exports) {
   								// after end
 
   								i1 = pp.length;
-  								this$1._cachedIndex = i1;
-  								return this$1.afterEnd_( i1 - 1, t, t0 );
+  								this._cachedIndex = i1;
+  								return this.afterEnd_( i1 - 1, t, t0 );
 
   							}
 
@@ -13609,8 +13545,8 @@ var Three = (function (exports) {
 
   								// before start
 
-  								this$1._cachedIndex = 0;
-  								return this$1.beforeStart_( 0, t, t1 );
+  								this._cachedIndex = 0;
+  								return this.beforeStart_( 0, t, t1 );
 
   							}
 
@@ -15255,8 +15191,6 @@ var Three = (function (exports) {
 
   	// ensure we do not get a GarbageInGarbageOut situation, make sure tracks are at least minimally viable
   	validate: function () {
-  		var this$1 = this;
-
 
   		var valid = true;
 
@@ -15288,7 +15222,7 @@ var Three = (function (exports) {
 
   			if ( typeof currTime === 'number' && isNaN( currTime ) ) {
 
-  				console.error( 'KeyframeTrack: Time is not a valid number.', this$1, i, currTime );
+  				console.error( 'KeyframeTrack: Time is not a valid number.', this, i, currTime );
   				valid = false;
   				break;
 
@@ -15296,7 +15230,7 @@ var Three = (function (exports) {
 
   			if ( prevTime !== null && prevTime > currTime ) {
 
-  				console.error( 'KeyframeTrack: Out of order keys.', this$1, i, currTime, prevTime );
+  				console.error( 'KeyframeTrack: Out of order keys.', this, i, currTime, prevTime );
   				valid = false;
   				break;
 
@@ -15316,7 +15250,7 @@ var Three = (function (exports) {
 
   					if ( isNaN( value ) ) {
 
-  						console.error( 'KeyframeTrack: Value is not a valid number.', this$1, i, value );
+  						console.error( 'KeyframeTrack: Value is not a valid number.', this, i, value );
   						valid = false;
   						break;
 
@@ -15999,14 +15933,12 @@ var Three = (function (exports) {
   Object.assign( AnimationClip.prototype, {
 
   	resetDuration: function () {
-  		var this$1 = this;
-
 
   		var tracks = this.tracks, duration = 0;
 
   		for ( var i = 0, n = tracks.length; i !== n; ++ i ) {
 
-  			var track = this$1.tracks[ i ];
+  			var track = this.tracks[ i ];
 
   			duration = Math.max( duration, track.times[ track.times.length - 1 ] );
 
@@ -16019,12 +15951,10 @@ var Three = (function (exports) {
   	},
 
   	trim: function () {
-  		var this$1 = this;
-
 
   		for ( var i = 0; i < this.tracks.length; i ++ ) {
 
-  			this$1.tracks[ i ].trim( 0, this$1.duration );
+  			this.tracks[ i ].trim( 0, this.duration );
 
   		}
 
@@ -16033,14 +15963,12 @@ var Three = (function (exports) {
   	},
 
   	validate: function () {
-  		var this$1 = this;
-
 
   		var valid = true;
 
   		for ( var i = 0; i < this.tracks.length; i ++ ) {
 
-  			valid = valid && this$1.tracks[ i ].validate();
+  			valid = valid && this.tracks[ i ].validate();
 
   		}
 
@@ -16049,12 +15977,10 @@ var Three = (function (exports) {
   	},
 
   	optimize: function () {
-  		var this$1 = this;
-
 
   		for ( var i = 0; i < this.tracks.length; i ++ ) {
 
-  			this$1.tracks[ i ].optimize();
+  			this.tracks[ i ].optimize();
 
   		}
 
@@ -16062,14 +15988,12 @@ var Three = (function (exports) {
 
   	},
   	clone: function () {
-  		var this$1 = this;
-
 
   		var tracks = [];
 
   		for ( var i = 0; i < this.tracks.length; i ++ ) {
 
-  			tracks.push( this$1.tracks[ i ].clone() );
+  			tracks.push( this.tracks[ i ].clone() );
 
   		}
 
@@ -16097,8 +16021,6 @@ var Three = (function (exports) {
   	constructor: AnimationMixer,
 
   	_bindAction: function ( action, prototypeAction ) {
-  		var this$1 = this;
-
 
   		var root = action._localRoot || this._root,
   			tracks = action._clip.tracks,
@@ -16137,7 +16059,7 @@ var Three = (function (exports) {
   					if ( binding._cacheIndex === null ) {
 
   						++ binding.referenceCount;
-  						this$1._addInactiveBinding( binding, rootUuid, trackName );
+  						this._addInactiveBinding( binding, rootUuid, trackName );
 
   					}
 
@@ -16153,7 +16075,7 @@ var Three = (function (exports) {
   					track.ValueTypeName, track.getValueSize() );
 
   				++ binding.referenceCount;
-  				this$1._addInactiveBinding( binding, rootUuid, trackName );
+  				this._addInactiveBinding( binding, rootUuid, trackName );
 
   				bindings[ i ] = binding;
 
@@ -16166,8 +16088,6 @@ var Three = (function (exports) {
   	},
 
   	_activateAction: function ( action ) {
-  		var this$1 = this;
-
 
   		if ( ! this._isActiveAction( action ) ) {
 
@@ -16196,7 +16116,7 @@ var Three = (function (exports) {
 
   				if ( binding.useCount ++ === 0 ) {
 
-  					this$1._lendBinding( binding );
+  					this._lendBinding( binding );
   					binding.saveOriginalState();
 
   				}
@@ -16210,8 +16130,6 @@ var Three = (function (exports) {
   	},
 
   	_deactivateAction: function ( action ) {
-  		var this$1 = this;
-
 
   		if ( this._isActiveAction( action ) ) {
 
@@ -16225,7 +16143,7 @@ var Three = (function (exports) {
   				if ( -- binding.useCount === 0 ) {
 
   					binding.restoreOriginalState();
-  					this$1._takeBackBinding( binding );
+  					this._takeBackBinding( binding );
 
   				}
 
@@ -16388,8 +16306,6 @@ var Three = (function (exports) {
   	},
 
   	_removeInactiveBindingsForAction: function ( action ) {
-  		var this$1 = this;
-
 
   		var bindings = action._propertyBindings;
   		for ( var i = 0, n = bindings.length; i !== n; ++ i ) {
@@ -16398,7 +16314,7 @@ var Three = (function (exports) {
 
   			if ( -- binding.referenceCount === 0 ) {
 
-  				this$1._removeInactiveBinding( binding );
+  				this._removeInactiveBinding( binding );
 
   			}
 
@@ -16727,8 +16643,6 @@ var Three = (function (exports) {
 
   	// free all resources specific to a particular clip
   	uncacheClip: function ( clip ) {
-  		var this$1 = this;
-
 
   		var actions = this._actions,
   			clipUuid = clip.uuid,
@@ -16747,7 +16661,7 @@ var Three = (function (exports) {
 
   				var action = actionsToRemove[ i ];
 
-  				this$1._deactivateAction( action );
+  				this._deactivateAction( action );
 
   				var cacheIndex = action._cacheIndex,
   					lastInactiveAction = actions[ actions.length - 1 ];
@@ -16759,7 +16673,7 @@ var Three = (function (exports) {
   				actions[ cacheIndex ] = lastInactiveAction;
   				actions.pop();
 
-  				this$1._removeInactiveBindingsForAction( action );
+  				this._removeInactiveBindingsForAction( action );
 
   			}
 
@@ -16771,8 +16685,6 @@ var Three = (function (exports) {
 
   	// free all resources specific to a particular root target object
   	uncacheRoot: function ( root ) {
-  		var this$1 = this;
-
 
   		var rootUuid = root.uuid,
   			actionsByClip = this._actionsByClip;
@@ -16784,8 +16696,8 @@ var Three = (function (exports) {
 
   			if ( action !== undefined ) {
 
-  				this$1._deactivateAction( action );
-  				this$1._removeInactiveAction( action );
+  				this._deactivateAction( action );
+  				this._removeInactiveAction( action );
 
   			}
 
@@ -16800,7 +16712,7 @@ var Three = (function (exports) {
 
   				var binding = bindingByName[ trackName ];
   				binding.restoreOriginalState();
-  				this$1._removeInactiveBinding( binding );
+  				this._removeInactiveBinding( binding );
 
   			}
 
@@ -17433,12 +17345,10 @@ var Three = (function (exports) {
 
   		},
   		reset: function () {
-  			var this$1 = this;
-
 
   			for ( var i = 0, il = this.bodies.length; i < il; i++ ) {
 
-  				this$1.bodies[ i ].reset();
+  				this.bodies[ i ].reset();
 
   			}
 
@@ -17446,12 +17356,10 @@ var Three = (function (exports) {
 
   		},
   		warmup: function ( cycles ) {
-  			var this$1 = this;
-
 
   			for ( var i = 0; i < cycles; i++ ) {
 
-  				this$1.update( 1 / 60 );
+  				this.update( 1 / 60 );
 
   			}
 
@@ -17538,29 +17446,25 @@ var Three = (function (exports) {
   		},
 
   		_initRigidBodies: function ( rigidBodies ) {
-  			var this$1 = this;
-
 
   			for ( var i = 0, il = rigidBodies.length; i < il; i++ ) {
 
-  				this$1.bodies.push( new RigidBody(
-  					this$1.mesh, this$1.world, rigidBodies[ i ], this$1.manager ) );
+  				this.bodies.push( new RigidBody(
+  					this.mesh, this.world, rigidBodies[ i ], this.manager ) );
 
   			}
 
   		},
 
   		_initConstraints: function ( constraints ) {
-  			var this$1 = this;
-
 
   			for ( var i = 0, il = constraints.length; i < il; i++ ) {
 
   				var params = constraints[ i ];
-  				var bodyA = this$1.bodies[ params.rigidBodyIndex1 ];
-  				var bodyB = this$1.bodies[ params.rigidBodyIndex2 ];
-  				this$1.constraints.push( new Constraint(
-  					this$1.mesh, this$1.world, bodyA, bodyB, params, this$1.manager ) );
+  				var bodyA = this.bodies[ params.rigidBodyIndex1 ];
+  				var bodyB = this.bodies[ params.rigidBodyIndex2 ];
+  				this.constraints.push( new Constraint(
+  					this.mesh, this.world, bodyA, bodyB, params, this.manager ) );
 
   			}
   		},
@@ -17589,24 +17493,20 @@ var Three = (function (exports) {
   		},
 
   		_updateRigidBodies: function () {
-  			var this$1 = this;
-
 
   			for ( var i = 0, il = this.bodies.length; i < il; i++ ) {
 
-  				this$1.bodies[ i ].updateFromBone();
+  				this.bodies[ i ].updateFromBone();
 
   			}
 
   		},
 
   		_updateBones: function () {
-  			var this$1 = this;
-
 
   			for ( var i = 0, il = this.bodies.length; i < il; i++ ) {
 
-  				this$1.bodies[ i ].updateBone();
+  				this.bodies[ i ].updateBone();
 
   			}
 
@@ -18515,8 +18415,6 @@ var Three = (function (exports) {
   			var matrixWorldInv = new Matrix4();
 
   			return function updateMatrixWorld( force ) {
-  				var this$1 = this;
-
 
   				var mesh = this.root;
 
@@ -18533,7 +18431,7 @@ var Three = (function (exports) {
   					for ( var i = 0, il = bodies.length; i < il; i ++ ) {
 
   						var body = bodies[ i ].body;
-  						var child = this$1.children[ i ];
+  						var child = this.children[ i ];
 
   						var tr = body.getCenterOfMassTransform();
   						var origin = tr.getOrigin();
@@ -18568,8 +18466,6 @@ var Three = (function (exports) {
   		// private method
 
   		_init: function () {
-  			var this$1 = this;
-
 
   			var bodies = this.physics.bodies;
 
@@ -18616,7 +18512,7 @@ var Three = (function (exports) {
   			for ( var i = 0, il = bodies.length; i < il; i ++ ) {
 
   				var param = bodies[ i ].params;
-  				this$1.add( new Mesh( createGeometry( param ), this$1.materials[ param.type ] ) );
+  				this.add( new Mesh( createGeometry( param ), this.materials[ param.type ] ) );
 
   			}
 
@@ -18734,14 +18630,12 @@ var Three = (function (exports) {
 
   		},
   		update: function ( delta ) {
-  			var this$1 = this;
-
 
   			if ( this.audioManager !== null ) { this.audioManager.control( delta ); }
 
   			for ( var i = 0; i < this.meshes.length; i ++ ) {
 
-  				this$1._animateMesh( this$1.meshes[ i ], delta );
+  				this._animateMesh( this.meshes[ i ], delta );
 
   			}
 
@@ -18803,8 +18697,6 @@ var Three = (function (exports) {
 
   		},
   		enable: function ( key, enabled ) {
-  			var this$1 = this;
-
 
   			if ( this.enabled[ key ] === undefined ) {
 
@@ -18819,7 +18711,7 @@ var Three = (function (exports) {
 
   				for ( var i = 0, il = this.meshes.length; i < il; i ++ ) {
 
-  					this$1._optimizeIK( this$1.meshes[ i ], enabled );
+  					this._optimizeIK( this.meshes[ i ], enabled );
 
   				}
 
@@ -18910,24 +18802,22 @@ var Three = (function (exports) {
   		},
 
   		_removeMesh: function ( mesh ) {
-  			var this$1 = this;
-
 
   			var found = false;
   			var writeIndex = 0;
 
   			for ( var i = 0, il = this.meshes.length; i < il; i ++ ) {
 
-  				if ( this$1.meshes[ i ] === mesh ) {
+  				if ( this.meshes[ i ] === mesh ) {
 
-  					this$1.objects.delete( mesh );
+  					this.objects.delete( mesh );
   					found = true;
 
   					continue;
 
   				}
 
-  				this$1.meshes[ writeIndex ++ ] = this$1.meshes[ i ];
+  				this.meshes[ writeIndex ++ ] = this.meshes[ i ];
 
   			}
 
@@ -19196,8 +19086,6 @@ var Three = (function (exports) {
 
   		},
   		_syncDuration: function () {
-  			var this$1 = this;
-
 
   			var max = 0.0;
 
@@ -19210,7 +19098,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, il = meshes.length; i < il; i ++ ) {
 
-  				var mixer = this$1.objects.get( meshes[ i ] ).mixer;
+  				var mixer = this.objects.get( meshes[ i ] ).mixer;
 
   				if ( mixer === undefined ) { continue; }
 
@@ -19270,7 +19158,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, il = this.meshes.length; i < il; i ++ ) {
 
-  				var mixer = this$1.objects.get( this$1.meshes[ i ] ).mixer;
+  				var mixer = this.objects.get( this.meshes[ i ] ).mixer;
 
   				if ( mixer === undefined ) { continue; }
 
@@ -19375,19 +19263,17 @@ var Three = (function (exports) {
   		// experimental
 
   		_getMasterPhysics: function () {
-  			var this$1 = this;
-
 
   			if ( this.masterPhysics !== null ) { return this.masterPhysics; }
 
   			for ( var i = 0, il = this.meshes.length; i < il; i ++ ) {
 
-  				var physics = this$1.meshes[ i ].physics;
+  				var physics = this.meshes[ i ].physics;
 
   				if ( physics !== undefined && physics !== null ) {
 
-  					this$1.masterPhysics = physics;
-  					return this$1.masterPhysics;
+  					this.masterPhysics = physics;
+  					return this.masterPhysics;
 
   				}
 
@@ -19398,8 +19284,6 @@ var Three = (function (exports) {
   		},
 
   		_updateSharedPhysics: function ( delta ) {
-  			var this$1 = this;
-
 
   			if ( this.meshes.length === 0 || ! this.enabled.physics || ! this.sharedPhysics ) { return; }
 
@@ -19409,7 +19293,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, il = this.meshes.length; i < il; i ++ ) {
 
-  				var p = this$1.meshes[ i ].physics;
+  				var p = this.meshes[ i ].physics;
 
   				if ( p !== null && p !== undefined ) {
 
@@ -19423,7 +19307,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, il = this.meshes.length; i < il; i ++ ) {
 
-  				var p = this$1.meshes[ i ].physics;
+  				var p = this.meshes[ i ].physics;
 
   				if ( p !== null && p !== undefined ) {
 
@@ -19472,14 +19356,12 @@ var Three = (function (exports) {
   		// private methods
 
   		_shouldStartAudio: function () {
-  			var this$1 = this;
-
 
   			if ( this.audio.isPlaying ) { return false; }
 
   			while ( this.currentTime >= this.duration ) {
 
-  				this$1.currentTime -= this$1.duration;
+  				this.currentTime -= this.duration;
 
   			}
 
@@ -20081,16 +19963,14 @@ var Three = (function (exports) {
   };
 
   ShaderMaterial.prototype.toJSON = function ( meta ) {
-  	var this$1 = this;
-
 
   	var data = Material$1.prototype.toJSON.call( this, meta );
 
   	data.uniforms = {};
 
-  	for ( var name in this$1.uniforms ) {
+  	for ( var name in this.uniforms ) {
 
-  		var uniform = this$1.uniforms[ name ];
+  		var uniform = this.uniforms[ name ];
   		var value = uniform.value;
 
   		if ( value && value.isTexture ) {
@@ -20161,9 +20041,9 @@ var Three = (function (exports) {
 
   	var extensions = {};
 
-  	for ( var key in this$1.extensions ) {
+  	for ( var key in this.extensions ) {
 
-  		if ( this$1.extensions[ key ] === true ) { extensions[ key ] = true; }
+  		if ( this.extensions[ key ] === true ) { extensions[ key ] = true; }
 
   	}
 
@@ -22390,8 +22270,6 @@ var Three = (function (exports) {
   	},
 
   	intersectObjects: function ( objects, recursive, optionalTarget ) {
-  		var this$1 = this;
-
 
   		var intersects = optionalTarget || [];
 
@@ -22404,7 +22282,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0, l = objects.length; i < l; i ++ ) {
 
-  			intersectObject( objects[ i ], this$1, intersects, recursive );
+  			intersectObject( objects[ i ], this, intersects, recursive );
 
   		}
 
@@ -28730,8 +28608,6 @@ var Three = (function (exports) {
   	// updateMatrixWorld will update transformations and appearance of individual handles
 
   	this.updateMatrixWorld = function () {
-  		var this$1 = this;
-
 
   		var space = this.space;
 
@@ -28761,10 +28637,10 @@ var Three = (function (exports) {
 
   			handle.visible = true;
   			handle.rotation.set( 0, 0, 0 );
-  			handle.position.copy( this$1.worldPosition );
+  			handle.position.copy( this.worldPosition );
 
-  			var eyeDistance = this$1.worldPosition.distanceTo( this$1.cameraPosition);
-  			handle.scale.set( 1, 1, 1 ).multiplyScalar( eyeDistance * this$1.size / 7 );
+  			var eyeDistance = this.worldPosition.distanceTo( this.cameraPosition);
+  			handle.scale.set( 1, 1, 1 ).multiplyScalar( eyeDistance * this.size / 7 );
 
   			// TODO: simplify helpers and consider decoupling from gizmo
 
@@ -28774,93 +28650,93 @@ var Three = (function (exports) {
 
   				if ( handle.name === 'AXIS' ) {
 
-  					handle.position.copy( this$1.worldPositionStart );
-  					handle.visible = !!this$1.axis;
+  					handle.position.copy( this.worldPositionStart );
+  					handle.visible = !!this.axis;
 
-  					if ( this$1.axis === 'X' ) {
+  					if ( this.axis === 'X' ) {
 
   						tempQuaternion.setFromEuler( tempEuler.set( 0, 0, 0 ) );
   						handle.quaternion.copy( quaternion ).multiply( tempQuaternion );
 
-  						if ( Math.abs( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this$1.eye ) ) > 0.9 ) {
+  						if ( Math.abs( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this.eye ) ) > 0.9 ) {
   							handle.visible = false;
   						}
 
   					}
 
-  					if ( this$1.axis === 'Y' ) {
+  					if ( this.axis === 'Y' ) {
 
   						tempQuaternion.setFromEuler( tempEuler.set( 0, 0, Math.PI / 2 ) );
   						handle.quaternion.copy( quaternion ).multiply( tempQuaternion );
 
-  						if ( Math.abs( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this$1.eye ) ) > 0.9 ) {
+  						if ( Math.abs( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this.eye ) ) > 0.9 ) {
   							handle.visible = false;
   						}
 
   					}
 
-  					if ( this$1.axis === 'Z' ) {
+  					if ( this.axis === 'Z' ) {
 
   						tempQuaternion.setFromEuler( tempEuler.set( 0, Math.PI / 2, 0 ) );
   						handle.quaternion.copy( quaternion ).multiply( tempQuaternion );
 
-  						if ( Math.abs( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this$1.eye ) ) > 0.9 ) {
+  						if ( Math.abs( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this.eye ) ) > 0.9 ) {
   							handle.visible = false;
   						}
 
   					}
 
-  					if ( this$1.axis === 'XYZE' ) {
+  					if ( this.axis === 'XYZE' ) {
 
   						tempQuaternion.setFromEuler( tempEuler.set( 0, Math.PI / 2, 0 ) );
-  						alignVector.copy( this$1.rotationAxis );
+  						alignVector.copy( this.rotationAxis );
   						handle.quaternion.setFromRotationMatrix( lookAtMatrix.lookAt( zeroVector, alignVector, unitY ) );
   						handle.quaternion.multiply( tempQuaternion );
-  						handle.visible = this$1.dragging;
+  						handle.visible = this.dragging;
 
   					}
 
-  					if ( this$1.axis === 'E' ) {
+  					if ( this.axis === 'E' ) {
 
   						handle.visible = false;
 
   					}
   				} else if ( handle.name === 'START' ) {
 
-  					handle.position.copy( this$1.worldPositionStart );
-  					handle.visible = this$1.dragging;
+  					handle.position.copy( this.worldPositionStart );
+  					handle.visible = this.dragging;
 
   				} else if ( handle.name === 'END' ) {
 
-  					handle.position.copy( this$1.worldPosition );
-  					handle.visible = this$1.dragging;
+  					handle.position.copy( this.worldPosition );
+  					handle.visible = this.dragging;
 
   				} else if ( handle.name === 'DELTA' ) {
 
-  					handle.position.copy( this$1.worldPositionStart );
-  					handle.quaternion.copy( this$1.worldQuaternionStart );
-  					tempVector.set( 1e-10, 1e-10, 1e-10 ).add( this$1.worldPositionStart ).sub( this$1.worldPosition ).multiplyScalar( -1 );
-  					tempVector.applyQuaternion( this$1.worldQuaternionStart.clone().inverse() );
+  					handle.position.copy( this.worldPositionStart );
+  					handle.quaternion.copy( this.worldQuaternionStart );
+  					tempVector.set( 1e-10, 1e-10, 1e-10 ).add( this.worldPositionStart ).sub( this.worldPosition ).multiplyScalar( -1 );
+  					tempVector.applyQuaternion( this.worldQuaternionStart.clone().inverse() );
   					handle.scale.copy( tempVector );
-  					handle.visible = this$1.dragging;
+  					handle.visible = this.dragging;
 
   				} else {
 
   					handle.quaternion.copy( quaternion );
 
-  					if ( this$1.dragging ) {
+  					if ( this.dragging ) {
 
-  						handle.position.copy( this$1.worldPositionStart );
+  						handle.position.copy( this.worldPositionStart );
 
   					} else {
 
-  						handle.position.copy( this$1.worldPosition );
+  						handle.position.copy( this.worldPosition );
 
   					}
 
-  					if ( this$1.axis ) {
+  					if ( this.axis ) {
 
-  						handle.visible = this$1.axis.search( handle.name ) !== -1;
+  						handle.visible = this.axis.search( handle.name ) !== -1;
 
   					}
 
@@ -28875,7 +28751,7 @@ var Three = (function (exports) {
 
   			handle.quaternion.copy( quaternion );
 
-  			if ( this$1.mode === 'translate' || this$1.mode === 'scale' ) {
+  			if ( this.mode === 'translate' || this.mode === 'scale' ) {
 
   				// Hide translate and scale axis facing the camera
 
@@ -28883,37 +28759,37 @@ var Three = (function (exports) {
   				var PLANE_HIDE_TRESHOLD = 0.2;
   				var AXIS_FLIP_TRESHOLD = -0.4;
   				if ( handle.name === 'X' || handle.name === 'XYZX' ) {
-  					if ( Math.abs( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this$1.eye ) ) > AXIS_HIDE_TRESHOLD ) {
+  					if ( Math.abs( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this.eye ) ) > AXIS_HIDE_TRESHOLD ) {
   						handle.scale.set( 1e-10, 1e-10, 1e-10 );
   						handle.visible = false;
   					}
   				}
   				if ( handle.name === 'Y' || handle.name === 'XYZY' ) {
-  					if ( Math.abs( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this$1.eye ) ) > AXIS_HIDE_TRESHOLD ) {
+  					if ( Math.abs( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this.eye ) ) > AXIS_HIDE_TRESHOLD ) {
   						handle.scale.set( 1e-10, 1e-10, 1e-10 );
   						handle.visible = false;
   					}
   				}
   				if ( handle.name === 'Z' || handle.name === 'XYZZ' ) {
-  					if ( Math.abs( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this$1.eye ) ) > AXIS_HIDE_TRESHOLD ) {
+  					if ( Math.abs( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this.eye ) ) > AXIS_HIDE_TRESHOLD ) {
   						handle.scale.set( 1e-10, 1e-10, 1e-10 );
   						handle.visible = false;
   					}
   				}
   				if ( handle.name === 'XY' ) {
-  					if ( Math.abs( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this$1.eye ) ) < PLANE_HIDE_TRESHOLD ) {
+  					if ( Math.abs( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this.eye ) ) < PLANE_HIDE_TRESHOLD ) {
   						handle.scale.set( 1e-10, 1e-10, 1e-10 );
   						handle.visible = false;
   					}
   				}
   				if ( handle.name === 'YZ' ) {
-  					if ( Math.abs( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this$1.eye ) ) < PLANE_HIDE_TRESHOLD ) {
+  					if ( Math.abs( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this.eye ) ) < PLANE_HIDE_TRESHOLD ) {
   						handle.scale.set( 1e-10, 1e-10, 1e-10 );
   						handle.visible = false;
   					}
   				}
   				if ( handle.name === 'XZ' ) {
-  					if ( Math.abs( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this$1.eye ) ) < PLANE_HIDE_TRESHOLD ) {
+  					if ( Math.abs( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this.eye ) ) < PLANE_HIDE_TRESHOLD ) {
   						handle.scale.set( 1e-10, 1e-10, 1e-10 );
   						handle.visible = false;
   					}
@@ -28922,7 +28798,7 @@ var Three = (function (exports) {
   				// Flip translate and scale axis ocluded behind another axis
 
   				if ( handle.name.search( 'X' ) !== -1 ) {
-  					if ( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this$1.eye ) < AXIS_FLIP_TRESHOLD ) {
+  					if ( alignVector.copy( unitX ).applyQuaternion( quaternion ).dot( this.eye ) < AXIS_FLIP_TRESHOLD ) {
   						if ( handle.tag === 'fwd' ) {
   							handle.visible = false;
   						} else {
@@ -28934,7 +28810,7 @@ var Three = (function (exports) {
   				}
 
   				if ( handle.name.search( 'Y' ) !== -1 ) {
-  					if ( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this$1.eye ) < AXIS_FLIP_TRESHOLD ) {
+  					if ( alignVector.copy( unitY ).applyQuaternion( quaternion ).dot( this.eye ) < AXIS_FLIP_TRESHOLD ) {
   						if ( handle.tag === 'fwd' ) {
   							handle.visible = false;
   						} else {
@@ -28946,7 +28822,7 @@ var Three = (function (exports) {
   				}
 
   				if ( handle.name.search( 'Z' ) !== -1 ) {
-  					if ( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this$1.eye ) < AXIS_FLIP_TRESHOLD ) {
+  					if ( alignVector.copy( unitZ ).applyQuaternion( quaternion ).dot( this.eye ) < AXIS_FLIP_TRESHOLD ) {
   						if ( handle.tag === 'fwd' ) {
   							handle.visible = false;
   						} else {
@@ -28957,16 +28833,16 @@ var Three = (function (exports) {
   					}
   				}
 
-  			} else if ( this$1.mode === 'rotate' ) {
+  			} else if ( this.mode === 'rotate' ) {
 
   				// Align handles to current local or world rotation
 
   				tempQuaternion2.copy( quaternion );
-  				alignVector.copy( this$1.eye ).applyQuaternion( tempQuaternion.copy( quaternion ).inverse() );
+  				alignVector.copy( this.eye ).applyQuaternion( tempQuaternion.copy( quaternion ).inverse() );
 
   				if ( handle.name.search( "E" ) !== - 1 ) {
 
-  					handle.quaternion.setFromRotationMatrix( lookAtMatrix.lookAt( this$1.eye, zeroVector, unitY ) );
+  					handle.quaternion.setFromRotationMatrix( lookAtMatrix.lookAt( this.eye, zeroVector, unitY ) );
 
   				}
 
@@ -28997,10 +28873,10 @@ var Three = (function (exports) {
   			}
 
   			// Hide disabled axes
-  			handle.visible = handle.visible && ( handle.name.indexOf( "X" ) === -1 || this$1.showX );
-  			handle.visible = handle.visible && ( handle.name.indexOf( "Y" ) === -1 || this$1.showY );
-  			handle.visible = handle.visible && ( handle.name.indexOf( "Z" ) === -1 || this$1.showZ );
-  			handle.visible = handle.visible && ( handle.name.indexOf( "E" ) === -1 || ( this$1.showX && this$1.showY && this$1.showZ ) );
+  			handle.visible = handle.visible && ( handle.name.indexOf( "X" ) === -1 || this.showX );
+  			handle.visible = handle.visible && ( handle.name.indexOf( "Y" ) === -1 || this.showY );
+  			handle.visible = handle.visible && ( handle.name.indexOf( "Z" ) === -1 || this.showZ );
+  			handle.visible = handle.visible && ( handle.name.indexOf( "E" ) === -1 || ( this.showX && this.showY && this.showZ ) );
 
   			// highlight selected axis
 
@@ -29010,19 +28886,19 @@ var Three = (function (exports) {
   			handle.material.color.copy( handle.material._color );
   			handle.material.opacity = handle.material._opacity;
 
-  			if ( !this$1.enabled ) {
+  			if ( !this.enabled ) {
 
   				handle.material.opacity *= 0.5;
   				handle.material.color.lerp( new Color( 1, 1, 1 ), 0.5 );
 
-  			} else if ( this$1.axis ) {
+  			} else if ( this.axis ) {
 
-  				if ( handle.name === this$1.axis ) {
+  				if ( handle.name === this.axis ) {
 
   					handle.material.opacity = 1.0;
   					handle.material.color.lerp( new Color( 1, 1, 1 ), 0.5 );
 
-  				} else if ( this$1.axis.split('').some( function( a ) { return handle.name === a; } ) ) {
+  				} else if ( this.axis.split('').some( function( a ) { return handle.name === a; } ) ) {
 
   					handle.material.opacity = 1.0;
   					handle.material.color.lerp( new Color( 1, 1, 1 ), 0.5 );
@@ -29326,8 +29202,6 @@ var Three = (function (exports) {
   	Object.assign( QuickHull.prototype, {
 
   		setFromPoints: function ( points ) {
-  			var this$1 = this;
-
 
   			if ( Array.isArray( points ) !== true ) {
 
@@ -29345,7 +29219,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, l = points.length; i < l; i ++ ) {
 
-  				this$1.vertices.push( new VertexNode( points[ i ] ) );
+  				this.vertices.push( new VertexNode( points[ i ] ) );
 
   			}
 
@@ -29504,8 +29378,6 @@ var Three = (function (exports) {
   		// Removes all the visible vertices that 'face' is able to see
 
   		deleteFaceVertices: function ( face, absorbingFace ) {
-  			var this$1 = this;
-
 
   			var faceVertices = this.removeAllVerticesFromFace( face );
 
@@ -29533,13 +29405,13 @@ var Three = (function (exports) {
 
   						// check if 'vertex' is able to see 'absorbingFace'
 
-  						if ( distance > this$1.tolerance ) {
+  						if ( distance > this.tolerance ) {
 
-  							this$1.addVertexToFace( vertex, absorbingFace );
+  							this.addVertexToFace( vertex, absorbingFace );
 
   						} else {
 
-  							this$1.unassigned.append( vertex );
+  							this.unassigned.append( vertex );
 
   						}
 
@@ -29560,8 +29432,6 @@ var Three = (function (exports) {
   		// Reassigns as many vertices as possible from the unassigned list to the new faces
 
   		resolveUnassignedPoints: function ( newFaces ) {
-  			var this$1 = this;
-
 
   			if ( this.unassigned.isEmpty() === false ) {
 
@@ -29573,7 +29443,7 @@ var Three = (function (exports) {
 
   					var nextVertex = vertex.next;
 
-  					var maxDistance = this$1.tolerance;
+  					var maxDistance = this.tolerance;
 
   					var maxFace = null;
 
@@ -29592,7 +29462,7 @@ var Three = (function (exports) {
 
   							}
 
-  							if ( maxDistance > 1000 * this$1.tolerance ) { break; }
+  							if ( maxDistance > 1000 * this.tolerance ) { break; }
 
   						}
 
@@ -29602,7 +29472,7 @@ var Three = (function (exports) {
 
   					if ( maxFace !== null ) {
 
-  						this$1.addVertexToFace( vertex, maxFace );
+  						this.addVertexToFace( vertex, maxFace );
 
   					}
 
@@ -29619,8 +29489,6 @@ var Three = (function (exports) {
   		// Computes the extremes of a simplex which will be the initial hull
 
   		computeExtremes: function () {
-  			var this$1 = this;
-
 
   			var min = new Vector3();
   			var max = new Vector3();
@@ -29634,7 +29502,7 @@ var Three = (function (exports) {
 
   			for ( i = 0; i < 3; i ++ ) {
 
-  				minVertices[ i ] = maxVertices[ i ] = this$1.vertices[ 0 ];
+  				minVertices[ i ] = maxVertices[ i ] = this.vertices[ 0 ];
 
   			}
 
@@ -29645,7 +29513,7 @@ var Three = (function (exports) {
 
   			for ( i = 0, l = this.vertices.length; i < l; i ++ ) {
 
-  				var vertex = this$1.vertices[ i ];
+  				var vertex = this.vertices[ i ];
   				var point = vertex.point;
 
   				// update the min coordinates
@@ -29696,8 +29564,6 @@ var Three = (function (exports) {
   			var line3, plane, closestPoint;
 
   			return function computeInitialHull() {
-  				var this$1 = this;
-
 
   				if ( line3 === undefined ) {
 
@@ -29851,7 +29717,7 @@ var Three = (function (exports) {
 
   				for ( i = 0; i < 4; i ++ ) {
 
-  					this$1.faces.push( faces[ i ] );
+  					this.faces.push( faces[ i ] );
 
   				}
 
@@ -29863,17 +29729,17 @@ var Three = (function (exports) {
 
   					if ( vertex !== v0 && vertex !== v1 && vertex !== v2 && vertex !== v3 ) {
 
-  						maxDistance = this$1.tolerance;
+  						maxDistance = this.tolerance;
   						var maxFace = null;
 
   						for ( j = 0; j < 4; j ++ ) {
 
-  							distance = this$1.faces[ j ].distanceToPoint( vertex.point );
+  							distance = this.faces[ j ].distanceToPoint( vertex.point );
 
   							if ( distance > maxDistance ) {
 
   								maxDistance = distance;
-  								maxFace = this$1.faces[ j ];
+  								maxFace = this.faces[ j ];
 
   							}
 
@@ -29881,7 +29747,7 @@ var Three = (function (exports) {
 
   						if ( maxFace !== null ) {
 
-  							this$1.addVertexToFace( vertex, maxFace );
+  							this.addVertexToFace( vertex, maxFace );
 
   						}
 
@@ -29898,14 +29764,12 @@ var Three = (function (exports) {
   		// Removes inactive faces
 
   		reindexFaces: function () {
-  			var this$1 = this;
-
 
   			var activeFaces = [];
 
   			for ( var i = 0; i < this.faces.length; i ++ ) {
 
-  				var face = this$1.faces[ i ];
+  				var face = this.faces[ i ];
 
   				if ( face.mark === Visible ) {
 
@@ -29964,8 +29828,6 @@ var Three = (function (exports) {
   		// 'eyePoint' and a face that cannot see 'eyePoint'.
 
   		computeHorizon: function ( eyePoint, crossEdge, face, horizon ) {
-  			var this$1 = this;
-
 
   			// moves face's vertices to the 'unassigned' vertex list
 
@@ -29995,11 +29857,11 @@ var Three = (function (exports) {
 
   				if ( oppositeFace.mark === Visible ) {
 
-  					if ( oppositeFace.distanceToPoint( eyePoint ) > this$1.tolerance ) {
+  					if ( oppositeFace.distanceToPoint( eyePoint ) > this.tolerance ) {
 
   						// the opposite face can see the vertex, so proceed with next edge
 
-  						this$1.computeHorizon( eyePoint, twinEdge, oppositeFace, horizon );
+  						this.computeHorizon( eyePoint, twinEdge, oppositeFace, horizon );
 
   					} else {
 
@@ -30040,8 +29902,6 @@ var Three = (function (exports) {
   		//  horizon opposite face and the face on the left/right
 
   		addNewFaces: function ( eyeVertex, horizon ) {
-  			var this$1 = this;
-
 
   			this.newFaces = [];
 
@@ -30054,7 +29914,7 @@ var Three = (function (exports) {
 
   				// returns the right side edge
 
-  				var sideEdge = this$1.addAdjoiningFace( eyeVertex, horizonEdge );
+  				var sideEdge = this.addAdjoiningFace( eyeVertex, horizonEdge );
 
   				if ( firstSideEdge === null ) {
 
@@ -30068,7 +29928,7 @@ var Three = (function (exports) {
 
   				}
 
-  				this$1.newFaces.push( sideEdge.face );
+  				this.newFaces.push( sideEdge.face );
   				previousSideEdge = sideEdge;
 
   			}
@@ -30116,8 +29976,6 @@ var Three = (function (exports) {
   		},
 
   		compute: function () {
-  			var this$1 = this;
-
 
   			var vertex;
 
@@ -30127,7 +29985,7 @@ var Three = (function (exports) {
 
   			while ( ( vertex = this.nextVertexToAdd() ) !== undefined ) {
 
-  				this$1.addVertexToHull( vertex );
+  				this.addVertexToHull( vertex );
 
   			}
 
@@ -30584,8 +30442,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var ConvexObjectBreaker = function ( minSizeForBreak, smallDelta ) {
-  	var this$1 = this;
-
 
   	this.minSizeForBreak = minSizeForBreak || 1.4;
   	this.smallDelta = smallDelta || 0.0001;
@@ -30610,7 +30466,7 @@ var Three = (function (exports) {
 
   	this.segments = [];
   	var n = 30 * 30;
-  	for ( var i = 0; i < n; i ++ ) { this$1.segments[ i ] = false; }
+  	for ( var i = 0; i < n; i ++ ) { this.segments[ i ] = false; }
 
   };
 
@@ -30718,8 +30574,6 @@ var Three = (function (exports) {
   	},
 
   	cutByPlane: function ( object, plane, output ) {
-  		var this$1 = this;
-
 
   		// Returns breakable objects in output.object1 and output.object2 members, the resulting 2 pieces of the cut.
   		// object2 can be null if the plane doesn't cut the object.
@@ -30759,7 +30613,7 @@ var Three = (function (exports) {
 
   		// Reset segments mark
   		var numPointPairs = numPoints * numPoints;
-  		for ( var i = 0; i < numPointPairs; i ++ ) { this$1.segments[ i ] = false; }
+  		for ( var i = 0; i < numPointPairs; i ++ ) { this.segments[ i ] = false; }
 
   		var p0 = this.tempVector3_P0;
   		var p1 = this.tempVector3_P1;
@@ -30793,20 +30647,20 @@ var Three = (function (exports) {
 
   						if ( b1 === a2 || b1 === b2 || b1 === c2 ) {
 
-  							this$1.segments[ a1 * numPoints + b1 ] = true;
-  							this$1.segments[ b1 * numPoints + a1 ] = true;
+  							this.segments[ a1 * numPoints + b1 ] = true;
+  							this.segments[ b1 * numPoints + a1 ] = true;
 
   						}	else {
 
-  							this$1.segments[ c1 * numPoints + a1 ] = true;
-  							this$1.segments[ a1 * numPoints + c1 ] = true;
+  							this.segments[ c1 * numPoints + a1 ] = true;
+  							this.segments[ a1 * numPoints + c1 ] = true;
 
   						}
 
   					}	else if ( b1 === a2 || b1 === b2 || b1 === c2 ) {
 
-  						this$1.segments[ c1 * numPoints + b1 ] = true;
-  						this$1.segments[ b1 * numPoints + c1 ] = true;
+  						this.segments[ c1 * numPoints + b1 ] = true;
+  						this.segments[ b1 * numPoints + c1 ] = true;
 
   					}
 
@@ -30833,13 +30687,13 @@ var Three = (function (exports) {
   				var i0 = segment === 0 ? va : ( segment === 1 ? vb : vc );
   				var i1 = segment === 0 ? vb : ( segment === 1 ? vc : va );
 
-  				var segmentState = this$1.segments[ i0 * numPoints + i1 ];
+  				var segmentState = this.segments[ i0 * numPoints + i1 ];
 
   				if ( segmentState ) { continue; } // The segment already has been processed in another face
 
   				// Mark segment as processed (also inverted segment)
-  				this$1.segments[ i0 * numPoints + i1 ] = true;
-  				this$1.segments[ i1 * numPoints + i0 ] = true;
+  				this.segments[ i0 * numPoints + i1 ] = true;
+  				this.segments[ i1 * numPoints + i0 ] = true;
 
   				p0.set( coords[ 3 * i0 ], coords[ 3 * i0 + 1 ], coords[ 3 * i0 + 2 ] );
   				p1.set( coords[ 3 * i1 ], coords[ 3 * i1 + 1 ], coords[ 3 * i1 + 2 ] );
@@ -30894,11 +30748,11 @@ var Three = (function (exports) {
 
   					// Intersection of segment with the plane
 
-  					this$1.tempLine1.start.copy( p0 );
-  					this$1.tempLine1.end.copy( p1 );
+  					this.tempLine1.start.copy( p0 );
+  					this.tempLine1.end.copy( p1 );
 
   					var intersection = new Vector3();
-  					intersection = localPlane.intersectLine( this$1.tempLine1, intersection );
+  					intersection = localPlane.intersectLine( this.tempLine1, intersection );
 
   					if ( intersection === undefined ) {
 
@@ -30929,13 +30783,13 @@ var Three = (function (exports) {
 
   		if ( numPoints1 > 0 ) {
 
-  			for ( var i = 0; i < numPoints1; i ++ ) { this$1.tempCM1.add( points1[ i ] ); }
+  			for ( var i = 0; i < numPoints1; i ++ ) { this.tempCM1.add( points1[ i ] ); }
 
   			this.tempCM1.divideScalar( numPoints1 );
   			for ( var i = 0; i < numPoints1; i ++ ) {
 
   				var p = points1[ i ];
-  				p.sub( this$1.tempCM1 );
+  				p.sub( this.tempCM1 );
   				radius1 = Math.max( radius1, p.x, p.y, p.z );
 
   			}
@@ -30948,13 +30802,13 @@ var Three = (function (exports) {
   		var numPoints2 = points2.length;
   		if ( numPoints2 > 0 ) {
 
-  			for ( var i = 0; i < numPoints2; i ++ ) { this$1.tempCM2.add( points2[ i ] ); }
+  			for ( var i = 0; i < numPoints2; i ++ ) { this.tempCM2.add( points2[ i ] ); }
 
   			this.tempCM2.divideScalar( numPoints2 );
   			for ( var i = 0; i < numPoints2; i ++ ) {
 
   				var p = points2[ i ];
-  				p.sub( this$1.tempCM2 );
+  				p.sub( this.tempCM2 );
   				radius2 = Math.max( radius2, p.x, p.y, p.z );
 
   			}
@@ -31104,8 +30958,6 @@ var Three = (function (exports) {
   	// Get sequence of points using getPoint( t )
 
   	getPoints: function ( divisions ) {
-  		var this$1 = this;
-
 
   		if ( divisions === undefined ) { divisions = 5; }
 
@@ -31113,7 +30965,7 @@ var Three = (function (exports) {
 
   		for ( var d = 0; d <= divisions; d ++ ) {
 
-  			points.push( this$1.getPoint( d / divisions ) );
+  			points.push( this.getPoint( d / divisions ) );
 
   		}
 
@@ -31124,8 +30976,6 @@ var Three = (function (exports) {
   	// Get sequence of points using getPointAt( u )
 
   	getSpacedPoints: function ( divisions ) {
-  		var this$1 = this;
-
 
   		if ( divisions === undefined ) { divisions = 5; }
 
@@ -31133,7 +30983,7 @@ var Three = (function (exports) {
 
   		for ( var d = 0; d <= divisions; d ++ ) {
 
-  			points.push( this$1.getPointAt( d / divisions ) );
+  			points.push( this.getPointAt( d / divisions ) );
 
   		}
 
@@ -31153,8 +31003,6 @@ var Three = (function (exports) {
   	// Get list of cumulative segment lengths
 
   	getLengths: function ( divisions ) {
-  		var this$1 = this;
-
 
   		if ( divisions === undefined ) { divisions = this.arcLengthDivisions; }
 
@@ -31176,7 +31024,7 @@ var Three = (function (exports) {
 
   		for ( p = 1; p <= divisions; p ++ ) {
 
-  			current = this$1.getPoint( p / divisions );
+  			current = this.getPoint( p / divisions );
   			sum += current.distanceTo( last );
   			cache.push( sum );
   			last = current;
@@ -31304,8 +31152,6 @@ var Three = (function (exports) {
   	},
 
   	computeFrenetFrames: function ( segments, closed ) {
-  		var this$1 = this;
-
 
   		// see http://www.cs.indiana.edu/pub/techreports/TR425.pdf
 
@@ -31326,7 +31172,7 @@ var Three = (function (exports) {
 
   			u = i / segments;
 
-  			tangents[ i ] = this$1.getTangentAt( u );
+  			tangents[ i ] = this.getTangentAt( u );
   			tangents[ i ].normalize();
 
   		}
@@ -32135,8 +31981,6 @@ var Three = (function (exports) {
 
   	},
   	calcRationalCurveDerivatives: function ( Pders ) {
-  		var this$1 = this;
-
 
   		var nd = Pders.length;
   		var Aders = [];
@@ -32158,7 +32002,7 @@ var Three = (function (exports) {
 
   			for ( var i = 1; i <= k; ++ i ) {
 
-  				v.sub( CK[ k - i ].clone().multiplyScalar( this$1.calcKoverI( k, i ) * wders[ i ] ) );
+  				v.sub( CK[ k - i ].clone().multiplyScalar( this.calcKoverI( k, i ) * wders[ i ] ) );
 
   			}
 
@@ -32215,8 +32059,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var NURBSCurve = function ( degree, knots , controlPoints , startKnot , endKnot  ) {
-  	var this$1 = this;
-
 
   	Curve.call( this );
 
@@ -32230,7 +32072,7 @@ var Three = (function (exports) {
 
   		// ensure Vector4 for control points
   		var point = controlPoints[ i ];
-  		this$1.controlPoints[ i ] = new Vector4( point.x, point.y, point.z, point.w );
+  		this.controlPoints[ i ] = new Vector4( point.x, point.y, point.z, point.w );
 
   	}
 
@@ -32267,8 +32109,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var NURBSSurface = function ( degree1, degree2, knots1, knots2 , controlPoints  ) {
-  	var this$1 = this;
-
 
   	this.degree1 = degree1;
   	this.degree2 = degree2;
@@ -32282,11 +32122,11 @@ var Three = (function (exports) {
   	// ensure Vector4 for control points
   	for ( var i = 0; i < len1; ++ i ) {
 
-  		this$1.controlPoints[ i ] = [];
+  		this.controlPoints[ i ] = [];
   		for ( var j = 0; j < len2; ++ j ) {
 
   			var point = controlPoints[ i ][ j ];
-  			this$1.controlPoints[ i ][ j ] = new Vector4( point.x, point.y, point.z, point.w );
+  			this.controlPoints[ i ][ j ] = new Vector4( point.x, point.y, point.z, point.w );
 
   		}
 
@@ -37356,8 +37196,6 @@ var Three = (function (exports) {
   	},
 
   	mergeMorphTargetTracks: function ( clip, root ) {
-  		var this$1 = this;
-
 
   		var tracks = [];
   		var mergedTracks = {};
@@ -37446,7 +37284,7 @@ var Three = (function (exports) {
   			// be written again, but keyframes are de-duplicated.
   			for ( var j = 0; j < sourceTrack.times.length; j ++ ) {
 
-  				var keyframeIndex = this$1.insertKeyframe( mergedTrack, sourceTrack.times[ j ] );
+  				var keyframeIndex = this.insertKeyframe( mergedTrack, sourceTrack.times[ j ] );
   				mergedTrack.values[ keyframeIndex * targetCount + targetIndex ] = sourceTrack.values[ j ];
 
   			}
@@ -39148,8 +38986,6 @@ var Three = (function (exports) {
   // Added 4D noise
   // Joshua Koo zz85nus@gmail.com 
   var SimplexNoise = function(r) {
-  	var this$1 = this;
-
   	if (r == undefined) { r = Math; }
   	this.grad3 = [[ 1,1,0 ],[ -1,1,0 ],[ 1,-1,0 ],[ -1,-1,0 ], 
                                    [ 1,0,1 ],[ -1,0,1 ],[ 1,0,-1 ],[ -1,0,-1 ], 
@@ -39166,12 +39002,12 @@ var Three = (function (exports) {
 
   	this.p = [];
   	for (var i = 0; i < 256; i ++) {
-  		this$1.p[i] = Math.floor(r.random() * 256);
+  		this.p[i] = Math.floor(r.random() * 256);
   	}
     // To remove the need for index wrapping, double the permutation table length 
   	this.perm = []; 
   	for (var i = 0; i < 512; i ++) {
-  		this$1.perm[i] = this$1.p[i & 255];
+  		this.perm[i] = this.p[i & 255];
   	} 
 
     // A lookup table to traverse the simplex around a given point in 4D. 
@@ -39648,8 +39484,6 @@ var Three = (function (exports) {
   };
 
   LightningStrike.prototype.init = function ( rayParameters ) {
-  	var this$1 = this;
-
 
   	// Init all the state from the parameters
 
@@ -39721,7 +39555,7 @@ var Three = (function (exports) {
 
   	for ( var i = 0; i < this.maxSubrays; i++ ) {
 
-  		this$1.subrays.push( this$1.createSubray() );
+  		this.subrays.push( this.createSubray() );
 
   	}
 
@@ -39729,7 +39563,7 @@ var Three = (function (exports) {
 
   	for ( var i = 0; i < this.maxRaySegments; i++ ) {
 
-  		this$1.raySegments.push( this$1.createSegment() );
+  		this.raySegments.push( this.createSegment() );
 
   	}
 
@@ -39924,8 +39758,6 @@ var Three = (function (exports) {
   };
 
   LightningStrike.prototype.fractalRay = function ( time, segmentCallback ) {
-  	var this$1 = this;
-
 
   	this.time = time;
   	this.currentSegmentCallback = segmentCallback;
@@ -39937,24 +39769,24 @@ var Three = (function (exports) {
   	// Process all subrays that are being generated until consuming all of them
   	for ( var subrayIndex = 0; subrayIndex < this.numSubrays; subrayIndex++ ) {
 
-  		var subray = this$1.subrays[ subrayIndex ];
-  		this$1.currentSubray = subray;
+  		var subray = this.subrays[ subrayIndex ];
+  		this.currentSubray = subray;
 
-  		this$1.randomGenerator.setSeed( subray.seed );
+  		this.randomGenerator.setSeed( subray.seed );
 
   		subray.endPropagationTime = _Math.lerp( subray.birthTime, subray.deathTime, subray.propagationTimeFactor );
   		subray.beginVanishingTime = _Math.lerp( subray.deathTime, subray.birthTime, 1 - subray.vanishingTimeFactor );
 
-  		var random1 = this$1.randomGenerator.random;
+  		var random1 = this.randomGenerator.random;
   		subray.linPos0.set( random1(), random1(), random1() ).multiplyScalar( 1000 );
   		subray.linPos1.set( random1(), random1(), random1() ).multiplyScalar( 1000 );
 
-  		this$1.timeFraction = ( time - subray.birthTime ) / ( subray.deathTime - subray.birthTime );
+  		this.timeFraction = ( time - subray.birthTime ) / ( subray.deathTime - subray.birthTime );
 
-  		this$1.currentSegmentIndex  = 0;
-  		this$1.isInitialSegment = true;
+  		this.currentSegmentIndex  = 0;
+  		this.isInitialSegment = true;
 
-  		var segment = this$1.getNewSegment();
+  		var segment = this.getNewSegment();
   		segment.iteration = 0;
   		segment.pos0.copy( subray.pos0 );
   		segment.pos1.copy( subray.pos1 );
@@ -39968,9 +39800,9 @@ var Three = (function (exports) {
   		segment.fraction1 = 1;
   		segment.positionVariationFactor = 1 - subray.straightness;
 
-  		this$1.subrayProbability = this$1.ramification * Math.pow( this$1.recursionProbability, subray.recursion ) / ( 1 << subray.maxIterations );
+  		this.subrayProbability = this.ramification * Math.pow( this.recursionProbability, subray.recursion ) / ( 1 << subray.maxIterations );
 
-  		this$1.fractalRayRecursive( segment );
+  		this.fractalRayRecursive( segment );
 
   	}
 
@@ -41100,8 +40932,6 @@ var Three = (function (exports) {
   	};
 
   	this.init = function() {
-  		var this$1 = this;
-
 
   		if ( ! renderer.extensions.get( "OES_texture_float" ) ) {
 
@@ -41117,13 +40947,13 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.variables.length; i++ ) {
 
-  			var variable = this$1.variables[ i ];
+  			var variable = this.variables[ i ];
 
   			// Creates rendertargets and initialize them with input texture
-  			variable.renderTargets[ 0 ] = this$1.createRenderTarget( sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter );
-  			variable.renderTargets[ 1 ] = this$1.createRenderTarget( sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter );
-  			this$1.renderTexture( variable.initialValueTexture, variable.renderTargets[ 0 ] );
-  			this$1.renderTexture( variable.initialValueTexture, variable.renderTargets[ 1 ] );
+  			variable.renderTargets[ 0 ] = this.createRenderTarget( sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter );
+  			variable.renderTargets[ 1 ] = this.createRenderTarget( sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter );
+  			this.renderTexture( variable.initialValueTexture, variable.renderTargets[ 0 ] );
+  			this.renderTexture( variable.initialValueTexture, variable.renderTargets[ 1 ] );
 
   			// Adds dependencies uniforms to the ShaderMaterial
   			var material = variable.material;
@@ -41140,7 +40970,7 @@ var Three = (function (exports) {
   						var found = false;
   						for ( var j = 0; j < this.variables.length; j++ ) {
 
-  							if ( depVar.name === this$1.variables[ j ].name ) {
+  							if ( depVar.name === this.variables[ j ].name ) {
   								found = true;
   								break;
   							}
@@ -41167,15 +40997,13 @@ var Three = (function (exports) {
   	};
 
   	this.compute = function() {
-  		var this$1 = this;
-
 
   		var currentTextureIndex = this.currentTextureIndex;
   		var nextTextureIndex = this.currentTextureIndex === 0 ? 1 : 0;
 
   		for ( var i = 0, il = this.variables.length; i < il; i++ ) {
 
-  			var variable = this$1.variables[ i ];
+  			var variable = this.variables[ i ];
 
   			// Sets texture dependencies uniforms
   			if ( variable.dependencies !== null ) {
@@ -41192,7 +41020,7 @@ var Three = (function (exports) {
   			}
 
   			// Performs the computation for this variable
-  			this$1.doRenderTarget( variable.material, variable.renderTargets[ nextTextureIndex ] );
+  			this.doRenderTarget( variable.material, variable.renderTargets[ nextTextureIndex ] );
 
   		}
 
@@ -41803,8 +41631,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var GPUParticleSystem = function ( options ) {
-  	var this$1 = this;
-
 
   	Object3D.apply( this, arguments );
 
@@ -41949,7 +41775,7 @@ var Three = (function (exports) {
 
   	for ( i = 1e5; i > 0; i -- ) {
 
-  		this$1.rand.push( Math.random() - 0.5 );
+  		this.rand.push( Math.random() - 0.5 );
 
   	}
 
@@ -41995,14 +41821,12 @@ var Three = (function (exports) {
   	this.particleShaderMat.defaultAttributeValues.particleVelColSizeLife = [ 0, 0, 0, 0 ];
 
   	this.init = function () {
-  		var this$1 = this;
-
 
   		for ( var i = 0; i < this.PARTICLE_CONTAINERS; i ++ ) {
 
-  			var c = new GPUParticleContainer( this$1.PARTICLES_PER_CONTAINER, this$1 );
-  			this$1.particleContainers.push( c );
-  			this$1.add( c );
+  			var c = new GPUParticleContainer( this.PARTICLES_PER_CONTAINER, this );
+  			this.particleContainers.push( c );
+  			this.add( c );
 
   		}
 
@@ -42025,20 +41849,16 @@ var Three = (function (exports) {
   	};
 
   	this.update = function ( time ) {
-  		var this$1 = this;
-
 
   		for ( var i = 0; i < this.PARTICLE_CONTAINERS; i ++ ) {
 
-  			this$1.particleContainers[ i ].update( time );
+  			this.particleContainers[ i ].update( time );
 
   		}
 
   	};
 
   	this.dispose = function () {
-  		var this$1 = this;
-
 
   		this.particleShaderMat.dispose();
   		this.particleNoiseTex.dispose();
@@ -42046,7 +41866,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.PARTICLE_CONTAINERS; i ++ ) {
 
-  			this$1.particleContainers[ i ].dispose();
+  			this.particleContainers[ i ].dispose();
 
   		}
 
@@ -42314,8 +42134,6 @@ var Three = (function (exports) {
   	var scaleWorld = new Vector3();
 
   	return function updateMatrixWorld( force ) {
-  		var this$1 = this;
-
 
   		this.matrixAutoUpdate && this.updateMatrix();
 
@@ -42346,7 +42164,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0, l = this.children.length; i < l; i ++ ) {
 
-  			this$1.children[ i ].updateMatrixWorld( force );
+  			this.children[ i ].updateMatrixWorld( force );
 
   		}
 
@@ -42693,8 +42511,6 @@ var Three = (function (exports) {
   	};
 
   	SelectionBox.prototype.searchChildInFrustum = function ( frustum, object ) {
-  		var this$1 = this;
-
 
   		if ( object.isMesh ) {
 
@@ -42720,7 +42536,7 @@ var Three = (function (exports) {
 
   			for ( var x = 0; x < object.children.length; x ++ ) {
 
-  				this$1.searchChildInFrustum( frustum, object.children[ x ] );
+  				this.searchChildInFrustum( frustum, object.children[ x ] );
 
   			}
 
@@ -42916,15 +42732,13 @@ var Three = (function (exports) {
   	},
 
   	copyAt: function ( index1, attribute, index2 ) {
-  		var this$1 = this;
-
 
   		index1 *= this.stride;
   		index2 *= attribute.stride;
 
   		for ( var i = 0, l = this.stride; i < l; i ++ ) {
 
-  			this$1.array[ index1 + i ] = attribute.array[ index2 + i ];
+  			this.array[ index1 + i ] = attribute.array[ index2 + i ];
 
   		}
 
@@ -44012,8 +43826,6 @@ var Three = (function (exports) {
   Object.assign( FileLoader.prototype, {
 
   	load: function ( url, onLoad, onProgress, onError ) {
-  		var this$1 = this;
-
 
   		if ( url === undefined ) { url = ''; }
 
@@ -44260,9 +44072,9 @@ var Three = (function (exports) {
 
   			if ( request.overrideMimeType ) { request.overrideMimeType( this.mimeType !== undefined ? this.mimeType : 'text/plain' ); }
 
-  			for ( var header in this$1.requestHeader ) {
+  			for ( var header in this.requestHeader ) {
 
-  				request.setRequestHeader( header, this$1.requestHeader[ header ] );
+  				request.setRequestHeader( header, this.requestHeader[ header ] );
 
   			}
 
@@ -45627,14 +45439,12 @@ var Three = (function (exports) {
   	parse: function ( json, path ) {
 
   		function parseList( json, handler ) {
-  			var this$1 = this;
-
 
   			var meshes = new Array( json.length );
 
   			for ( var i = 0; i < json.length; ++ i ) {
 
-  				meshes[ i ] = handler.call( this$1, json[ i ] );
+  				meshes[ i ] = handler.call( this, json[ i ] );
 
   			}
 
@@ -45834,8 +45644,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   function Skeleton( bones, boneInverses ) {
-  	var this$1 = this;
-
 
   	// copy the bone array
 
@@ -45864,7 +45672,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, il = this.bones.length; i < il; i ++ ) {
 
-  				this$1.boneInverses.push( new Matrix4() );
+  				this.boneInverses.push( new Matrix4() );
 
   			}
 
@@ -45877,8 +45685,6 @@ var Three = (function (exports) {
   Object.assign( Skeleton.prototype, {
 
   	calculateInverses: function () {
-  		var this$1 = this;
-
 
   		this.boneInverses = [];
 
@@ -45886,21 +45692,19 @@ var Three = (function (exports) {
 
   			var inverse = new Matrix4();
 
-  			if ( this$1.bones[ i ] ) {
+  			if ( this.bones[ i ] ) {
 
-  				inverse.getInverse( this$1.bones[ i ].matrixWorld );
+  				inverse.getInverse( this.bones[ i ].matrixWorld );
 
   			}
 
-  			this$1.boneInverses.push( inverse );
+  			this.boneInverses.push( inverse );
 
   		}
 
   	},
 
   	pose: function () {
-  		var this$1 = this;
-
 
   		var bone, i, il;
 
@@ -45908,11 +45712,11 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = this.bones.length; i < il; i ++ ) {
 
-  			bone = this$1.bones[ i ];
+  			bone = this.bones[ i ];
 
   			if ( bone ) {
 
-  				bone.matrixWorld.getInverse( this$1.boneInverses[ i ] );
+  				bone.matrixWorld.getInverse( this.boneInverses[ i ] );
 
   			}
 
@@ -45922,7 +45726,7 @@ var Three = (function (exports) {
 
   		for ( i = 0, il = this.bones.length; i < il; i ++ ) {
 
-  			bone = this$1.bones[ i ];
+  			bone = this.bones[ i ];
 
   			if ( bone ) {
 
@@ -45987,12 +45791,10 @@ var Three = (function (exports) {
   	},
 
   	getBoneByName: function ( name ) {
-  		var this$1 = this;
-
 
   		for ( var i = 0, il = this.bones.length; i < il; i ++ ) {
 
-  			var bone = this$1.bones[ i ];
+  			var bone = this.bones[ i ];
 
   			if ( bone.name === name ) {
 
@@ -46234,8 +46036,6 @@ var Three = (function (exports) {
 
   			};
   			this.init = function () {
-  				var this$1 = this;
-
 
   				this.sortKeys();
 
@@ -46250,14 +46050,14 @@ var Three = (function (exports) {
 
   					for ( var i = 0; i < this.keys.length; i ++ ) {
 
-  						if ( this$1.keys[ i ].time == j ) {
+  						if ( this.keys[ i ].time == j ) {
 
-  							this$1._accelTable[ j ] = i;
+  							this._accelTable[ j ] = i;
   							break;
 
-  						} else if ( this$1.keys[ i ].time < j / this$1.fps && this$1.keys[ i + 1 ] && this$1.keys[ i + 1 ].time >= j / this$1.fps ) {
+  						} else if ( this.keys[ i ].time < j / this.fps && this.keys[ i + 1 ] && this.keys[ i + 1 ].time >= j / this.fps ) {
 
-  							this$1._accelTable[ j ] = i;
+  							this._accelTable[ j ] = i;
   							break;
 
   						}
@@ -46269,15 +46069,13 @@ var Three = (function (exports) {
   			};
 
   			this.parseFromThree = function ( data ) {
-  				var this$1 = this;
-
 
   				var fps = data.fps;
   				this.target = data.node;
   				var track = data.hierarchy[ 0 ].keys;
   				for ( var i = 0; i < track.length; i ++ ) {
 
-  					this$1.addKey( new Virtulous.KeyFrame( i / fps || track[ i ].time, track[ i ].targets[ 0 ].data ) );
+  					this.addKey( new Virtulous.KeyFrame( i / fps || track[ i ].time, track[ i ].targets[ 0 ].data ) );
 
   				}
   				this.init();
@@ -46285,15 +46083,13 @@ var Three = (function (exports) {
   			};
 
   			this.parseFromCollada = function ( data ) {
-  				var this$1 = this;
-
 
   				var track = data.keys;
   				var fps = this.fps;
 
   				for ( var i = 0; i < track.length; i ++ ) {
 
-  					this$1.addKey( new Virtulous.KeyFrame( i / fps || track[ i ].time, track[ i ].matrix ) );
+  					this.addKey( new Virtulous.KeyFrame( i / fps || track[ i ].time, track[ i ].matrix ) );
 
   				}
 
@@ -46314,8 +46110,6 @@ var Three = (function (exports) {
   			};
 
   			this.clone = function () {
-  				var this$1 = this;
-
 
   				var t = new Virtulous.KeyFrameTrack();
   				t.target = this.target;
@@ -46324,7 +46118,7 @@ var Three = (function (exports) {
 
   				for ( var i = 0; i < this.keys.length; i ++ ) {
 
-  					t.addKey( this$1.keys[ i ].clone() );
+  					t.addKey( this.keys[ i ].clone() );
 
   				}
 
@@ -46349,8 +46143,6 @@ var Three = (function (exports) {
   			};
 
   			this.setTime = function ( time ) {
-  				var this$1 = this;
-
 
   				time = Math.abs( time );
   				if ( this.length )
@@ -46360,23 +46152,23 @@ var Three = (function (exports) {
 
   				for ( var i = this.keySearchAccel( time ); i < this.keys.length; i ++ ) {
 
-  					if ( this$1.keys[ i ].time == time ) {
+  					if ( this.keys[ i ].time == time ) {
 
-  						key0 = this$1.keys[ i ];
-  						key1 = this$1.keys[ i ];
+  						key0 = this.keys[ i ];
+  						key1 = this.keys[ i ];
   						break;
 
-  					} else if ( this$1.keys[ i ].time < time && this$1.keys[ i + 1 ] && this$1.keys[ i + 1 ].time > time ) {
+  					} else if ( this.keys[ i ].time < time && this.keys[ i + 1 ] && this.keys[ i + 1 ].time > time ) {
 
-  						key0 = this$1.keys[ i ];
-  						key1 = this$1.keys[ i + 1 ];
+  						key0 = this.keys[ i ];
+  						key1 = this.keys[ i + 1 ];
   						break;
 
-  					} else if ( this$1.keys[ i ].time < time && i == this$1.keys.length - 1 ) {
+  					} else if ( this.keys[ i ].time < time && i == this.keys.length - 1 ) {
 
-  						key0 = this$1.keys[ i ];
-  						key1 = this$1.keys[ 0 ].clone();
-  						key1.time += this$1.length + .05;
+  						key0 = this.keys[ i ];
+  						key1 = this.keys[ 0 ].clone();
+  						key1.time += this.length + .05;
   						break;
 
   					}
@@ -46440,26 +46232,22 @@ var Three = (function (exports) {
   			};
 
   			this.setTime = function ( time ) {
-  				var this$1 = this;
-
 
   				this.time = time;
 
   				for ( var i = 0; i < this.tracks.length; i ++ )
-  					{ this$1.tracks[ i ].setTime( time ); }
+  					{ this.tracks[ i ].setTime( time ); }
 
   			};
 
   			this.clone = function ( target, compareitor ) {
-  				var this$1 = this;
-
 
   				if ( ! compareitor ) { compareitor = Virtulous.TrackTargetNodeNameCompare; }
   				var n = new Virtulous.Animation();
   				n.target = target;
   				for ( var i = 0; i < this.tracks.length; i ++ ) {
 
-  					var track = this$1.tracks[ i ].clone();
+  					var track = this.tracks[ i ].clone();
   					track.reTarget( target, compareitor );
   					n.addTrack( track );
 
@@ -46650,8 +46438,6 @@ var Three = (function (exports) {
   			this.mFaces = [];
   			this.mBones = [];
   			this.hookupSkeletons = function ( scene, threeScene ) {
-  				var this$1 = this;
-
 
   				if ( this.mBones.length == 0 ) { return; }
 
@@ -46671,28 +46457,28 @@ var Three = (function (exports) {
 
   				for ( var i = 0; i < this.mBones.length; i ++ ) {
 
-  					var bone = findMatchingBone( threeSkeletonRootBone, this$1.mBones[ i ].mName );
+  					var bone = findMatchingBone( threeSkeletonRootBone, this.mBones[ i ].mName );
 
   					if ( bone ) {
 
   						var tbone = bone;
   						allBones.push( tbone );
   						//tbone.matrixAutoUpdate = false;
-  						offsetMatrix.push( this$1.mBones[ i ].mOffsetMatrix.toTHREE() );
+  						offsetMatrix.push( this.mBones[ i ].mOffsetMatrix.toTHREE() );
 
   					} else {
 
-  						var skeletonRoot = scene.findNode( this$1.mBones[ i ].mName );
+  						var skeletonRoot = scene.findNode( this.mBones[ i ].mName );
   						if ( ! skeletonRoot ) { return; }
   						var threeSkeletonRoot = skeletonRoot.toTHREE( scene );
   						var threeSkeletonRootParent = threeSkeletonRoot.parent;
   						var threeSkeletonRootBone = cloneTreeToBones( threeSkeletonRoot, scene );
-  						this$1.threeNode.add( threeSkeletonRootBone );
-  						var bone = findMatchingBone( threeSkeletonRootBone, this$1.mBones[ i ].mName );
+  						this.threeNode.add( threeSkeletonRootBone );
+  						var bone = findMatchingBone( threeSkeletonRootBone, this.mBones[ i ].mName );
   						var tbone = bone;
   						allBones.push( tbone );
   						//tbone.matrixAutoUpdate = false;
-  						offsetMatrix.push( this$1.mBones[ i ].mOffsetMatrix.toTHREE() );
+  						offsetMatrix.push( this.mBones[ i ].mOffsetMatrix.toTHREE() );
 
   					}
 
@@ -46705,8 +46491,6 @@ var Three = (function (exports) {
   			};
 
   			this.toTHREE = function ( scene ) {
-  				var this$1 = this;
-
 
   				if ( this.threeNode ) { return this.threeNode; }
   				var geometry = new BufferGeometry();
@@ -46738,7 +46522,7 @@ var Three = (function (exports) {
 
   						for ( var j = 0; j < this.mBones[ i ].mWeights.length; j ++ ) {
 
-  							var weight = this$1.mBones[ i ].mWeights[ j ];
+  							var weight = this.mBones[ i ].mWeights[ j ];
   							if ( weight ) {
 
   								if ( ! weights[ weight.mVertexId ] ) { weights[ weight.mVertexId ] = []; }
@@ -46900,8 +46684,6 @@ var Three = (function (exports) {
   			this.mMeshes = [];
   			this.mChildren = [];
   			this.toTHREE = function ( scene ) {
-  				var this$1 = this;
-
 
   				if ( this.threeNode ) { return this.threeNode; }
   				var o = new Object3D();
@@ -46910,13 +46692,13 @@ var Three = (function (exports) {
 
   				for ( var i = 0; i < this.mChildren.length; i ++ ) {
 
-  					o.add( this$1.mChildren[ i ].toTHREE( scene ) );
+  					o.add( this.mChildren[ i ].toTHREE( scene ) );
 
   				}
 
   				for ( var i = 0; i < this.mMeshes.length; i ++ ) {
 
-  					o.add( scene.mMeshes[ this$1.mMeshes[ i ] ].toTHREE( scene ) );
+  					o.add( scene.mMeshes[ this.mMeshes[ i ] ].toTHREE( scene ) );
 
   				}
 
@@ -47045,33 +46827,31 @@ var Three = (function (exports) {
   			this.mNumProperties = 0;
   			this.mProperties = [];
   			this.toTHREE = function ( scene ) {
-  				var this$1 = this;
-
 
   				var name = this.mProperties[ 0 ].dataAsString();
   				var mat = new MeshPhongMaterial();
 
   				for ( var i = 0; i < this.mProperties.length; i ++ ) {
 
-  					if ( nameTypeMapping[ this$1.mProperties[ i ].mKey ] == 'float' )
-  						{ mat[ namePropMapping[ this$1.mProperties[ i ].mKey ] ] = this$1.mProperties[ i ].dataAsFloat(); }
-  					if ( nameTypeMapping[ this$1.mProperties[ i ].mKey ] == 'color' )
-  						{ mat[ namePropMapping[ this$1.mProperties[ i ].mKey ] ] = this$1.mProperties[ i ].dataAsColor(); }
-  					if ( nameTypeMapping[ this$1.mProperties[ i ].mKey ] == 'bool' )
-  						{ mat[ namePropMapping[ this$1.mProperties[ i ].mKey ] ] = this$1.mProperties[ i ].dataAsBool(); }
-  					if ( nameTypeMapping[ this$1.mProperties[ i ].mKey ] == 'string' )
-  						{ mat[ namePropMapping[ this$1.mProperties[ i ].mKey ] ] = this$1.mProperties[ i ].dataAsString(); }
-  					if ( nameTypeMapping[ this$1.mProperties[ i ].mKey ] == 'map' ) {
+  					if ( nameTypeMapping[ this.mProperties[ i ].mKey ] == 'float' )
+  						{ mat[ namePropMapping[ this.mProperties[ i ].mKey ] ] = this.mProperties[ i ].dataAsFloat(); }
+  					if ( nameTypeMapping[ this.mProperties[ i ].mKey ] == 'color' )
+  						{ mat[ namePropMapping[ this.mProperties[ i ].mKey ] ] = this.mProperties[ i ].dataAsColor(); }
+  					if ( nameTypeMapping[ this.mProperties[ i ].mKey ] == 'bool' )
+  						{ mat[ namePropMapping[ this.mProperties[ i ].mKey ] ] = this.mProperties[ i ].dataAsBool(); }
+  					if ( nameTypeMapping[ this.mProperties[ i ].mKey ] == 'string' )
+  						{ mat[ namePropMapping[ this.mProperties[ i ].mKey ] ] = this.mProperties[ i ].dataAsString(); }
+  					if ( nameTypeMapping[ this.mProperties[ i ].mKey ] == 'map' ) {
 
-  						var prop = this$1.mProperties[ i ];
+  						var prop = this.mProperties[ i ];
   						if ( prop.mSemantic == aiTextureType_DIFFUSE )
-  							{ mat.map = this$1.mProperties[ i ].dataAsMap(); }
+  							{ mat.map = this.mProperties[ i ].dataAsMap(); }
   						if ( prop.mSemantic == aiTextureType_NORMALS )
-  							{ mat.normalMap = this$1.mProperties[ i ].dataAsMap(); }
+  							{ mat.normalMap = this.mProperties[ i ].dataAsMap(); }
   						if ( prop.mSemantic == aiTextureType_LIGHTMAP )
-  							{ mat.lightMap = this$1.mProperties[ i ].dataAsMap(); }
+  							{ mat.lightMap = this.mProperties[ i ].dataAsMap(); }
   						if ( prop.mSemantic == aiTextureType_OPACITY )
-  							{ mat.alphaMap = this$1.mProperties[ i ].dataAsMap(); }
+  							{ mat.alphaMap = this.mProperties[ i ].dataAsMap(); }
 
   					}
 
@@ -47218,8 +46998,6 @@ var Three = (function (exports) {
   			};
 
   			this.toTHREE = function ( o, tps ) {
-  				var this$1 = this;
-
 
   				this.sortKeys();
   				var length = this.getLength();
@@ -47229,9 +47007,9 @@ var Three = (function (exports) {
 
   					var matrix = new Matrix4();
   					var time = i;
-  					var pos = sampleTrack( this$1.mPositionKeys, time, length, veclerp );
-  					var scale = sampleTrack( this$1.mScalingKeys, time, length, veclerp );
-  					var rotation = sampleTrack( this$1.mRotationKeys, time, length, quatlerp );
+  					var pos = sampleTrack( this.mPositionKeys, time, length, veclerp );
+  					var scale = sampleTrack( this.mScalingKeys, time, length, veclerp );
+  					var rotation = sampleTrack( this.mRotationKeys, time, length, quatlerp );
   					matrix.compose( pos, rotation, scale );
 
   					var key = new Virtulous.KeyFrame( time, matrix );
@@ -47248,7 +47026,7 @@ var Three = (function (exports) {
   					for ( var i = 0; i < o.nodeToBoneMap[ this.mNodeName ].length; i ++ ) {
 
   						var t2 = track.clone();
-  						t2.target = o.nodeToBoneMap[ this$1.mNodeName ][ i ];
+  						t2.target = o.nodeToBoneMap[ this.mNodeName ][ i ];
   						tracks.push( t2 );
 
   					}
@@ -47269,16 +47047,14 @@ var Three = (function (exports) {
   			this.mNumChannels = 0;
   			this.mChannels = [];
   			this.toTHREE = function ( root ) {
-  				var this$1 = this;
-
 
   				var animationHandle = new Virtulous.Animation();
 
-  				for ( var i in this$1.mChannels ) {
+  				for ( var i in this.mChannels ) {
 
-  					this$1.mChannels[ i ].init( this$1.mTicksPerSecond );
+  					this.mChannels[ i ].init( this.mTicksPerSecond );
 
-  					var tracks = this$1.mChannels[ i ].toTHREE( root );
+  					var tracks = this.mChannels[ i ].toTHREE( root );
 
   					for ( var j in tracks ) {
 
@@ -47354,8 +47130,6 @@ var Three = (function (exports) {
   			this.mCameras = [];
   			this.nodeToBoneMap = {};
   			this.findNode = function ( name, root ) {
-  				var this$1 = this;
-
 
   				if ( ! root ) {
 
@@ -47371,7 +47145,7 @@ var Three = (function (exports) {
 
   				for ( var i = 0; i < root.mChildren.length; i ++ ) {
 
-  					var ret = this$1.findNode( name, root.mChildren[ i ] );
+  					var ret = this.findNode( name, root.mChildren[ i ] );
   					if ( ret ) { return ret; }
 
   				}
@@ -47381,8 +47155,6 @@ var Three = (function (exports) {
   			};
 
   			this.toTHREE = function () {
-  				var this$1 = this;
-
 
   				this.nodeCount = 0;
 
@@ -47390,8 +47162,8 @@ var Three = (function (exports) {
 
   				var o = this.mRootNode.toTHREE( this );
 
-  				for ( var i in this$1.mMeshes )
-  					{ this$1.mMeshes[ i ].hookupSkeletons( this$1, o ); }
+  				for ( var i in this.mMeshes )
+  					{ this.mMeshes[ i ].hookupSkeletons( this, o ); }
 
   				if ( this.mAnimations.length > 0 ) {
 
@@ -47414,8 +47186,6 @@ var Three = (function (exports) {
   				[]
   			];
   			this.toTHREE = function () {
-  				var this$1 = this;
-
 
   				var m = new Matrix4();
 
@@ -47423,7 +47193,7 @@ var Three = (function (exports) {
 
   					for ( var i2 = 0; i2 < 4; ++ i2 ) {
 
-  						m.elements[ i * 4 + i2 ] = this$1.elements[ i2 ][ i ];
+  						m.elements[ i * 4 + i2 ] = this.elements[ i2 ][ i ];
 
   					}
 
@@ -48207,12 +47977,10 @@ var Three = (function (exports) {
   			};
 
   			stream.ReadBytes = function ( buff, size, n ) {
-  				var this$1 = this;
-
 
   				var bytes = size * n;
   				for ( var i = 0; i < bytes; i ++ )
-  					{ buff[ i ] = Read_uint8_t( this$1 ); }
+  					{ buff[ i ] = Read_uint8_t( this ); }
 
   			};
 
@@ -48417,8 +48185,6 @@ var Three = (function (exports) {
   		},
 
   		parse: function ( data ) {
-  			var this$1 = this;
-
 
   			var blen = data.byteLength;
 
@@ -48441,7 +48207,7 @@ var Three = (function (exports) {
 
   			while ( this._ptr < blen ) {
 
-  				this$1.parseNextBlock();
+  				this.parseNextBlock();
 
   			}
 
@@ -48585,8 +48351,6 @@ var Three = (function (exports) {
   		},
 
   		parseMeshInstance: function ( len ) {
-  			var this$1 = this;
-
 
   			var name,
   				mesh, geometries, meshLen, meshes,
@@ -48609,8 +48373,8 @@ var Three = (function (exports) {
 
   			for ( i = 0; i < num_materials; i ++ ) {
 
-  				mat_id = this$1.readU32();
-  				mat = this$1.getBlock( mat_id );
+  				mat_id = this.readU32();
+  				mat = this.getBlock( mat_id );
   				materials.push( mat );
 
   			}
@@ -48655,8 +48419,6 @@ var Three = (function (exports) {
   		},
 
   		parseMaterial: function ( len ) {
-  			var this$1 = this;
-
 
   			var name,
   				type,
@@ -48686,9 +48448,9 @@ var Three = (function (exports) {
 
   			while ( methods_parsed < num_methods ) {
 
-  				var method_type = this$1.readU16();
-  				this$1.parseProperties( null );
-  				this$1.parseUserAttributes();
+  				var method_type = this.readU16();
+  				this.parseProperties( null );
+  				this.parseUserAttributes();
 
   			}
 
@@ -48766,8 +48528,6 @@ var Three = (function (exports) {
   		},
 
   		parseSkeleton: function ( len ) {
-  			var this$1 = this;
-
 
   			// Array<Bone>
   			var name = this.readUTF(),
@@ -48782,18 +48542,18 @@ var Three = (function (exports) {
   				var joint, ibp;
 
   				// Ignore joint id
-  				this$1.readU16();
+  				this.readU16();
 
   				joint = new Bone();
-  				joint.parent = this$1.readU16() - 1; // 0=null in AWD
-  				joint.name = this$1.readUTF();
+  				joint.parent = this.readU16() - 1; // 0=null in AWD
+  				joint.name = this.readUTF();
 
-  				ibp = this$1.parseMatrix4();
+  				ibp = this.parseMatrix4();
   				joint.skinMatrix = ibp;
 
   				// Ignore joint props/attributes for now
-  				this$1.parseProperties( null );
-  				this$1.parseUserAttributes();
+  				this.parseProperties( null );
+  				this.parseUserAttributes();
 
   				skeleton.push( joint );
   				joints_parsed ++;
@@ -48807,8 +48567,6 @@ var Three = (function (exports) {
   		},
 
   		parseSkeletonPose: function ( blockID ) {
-  			var this$1 = this;
-
 
   			var name = this.readUTF();
 
@@ -48826,11 +48584,11 @@ var Three = (function (exports) {
   				var has_transform; //:uint;
   				var mtx_data;
 
-  				has_transform = this$1.readU8();
+  				has_transform = this.readU8();
 
   				if ( has_transform === 1 ) {
 
-  					mtx_data = this$1.parseMatrix4();
+  					mtx_data = this.parseMatrix4();
 
   				} else {
 
@@ -48850,8 +48608,6 @@ var Three = (function (exports) {
   		},
 
   		parseSkeletonAnimation: function ( blockID ) {
-  			var this$1 = this;
-
 
   			var frame_dur;
   			var pose_addr;
@@ -48870,10 +48626,10 @@ var Three = (function (exports) {
 
   			while ( frames_parsed < num_frames ) {
 
-  				pose_addr = this$1.readU32();
-  				frame_dur = this$1.readU16();
+  				pose_addr = this.readU32();
+  				frame_dur = this.readU16();
 
-  				pose = this$1._blocks[ pose_addr ].data;
+  				pose = this._blocks[ pose_addr ].data;
   				// debug( 'pose address ',pose[2].elements[12],pose[2].elements[13],pose[2].elements[14] );
   				clip.push( {
   					pose: pose,
@@ -48897,8 +48653,6 @@ var Three = (function (exports) {
   		},
 
   		parseVertexAnimationSet: function ( len ) {
-  			var this$1 = this;
-
 
   			var poseBlockAdress,
   				name = this.readUTF(),
@@ -48909,8 +48663,8 @@ var Three = (function (exports) {
 
   			while ( frames_parsed < num_frames ) {
 
-  				poseBlockAdress = this$1.readU32();
-  				skeletonFrames.push( this$1._blocks[ poseBlockAdress ].data );
+  				poseBlockAdress = this.readU32();
+  				skeletonFrames.push( this._blocks[ poseBlockAdress ].data );
   				frames_parsed ++;
 
   			}
@@ -48921,7 +48675,6 @@ var Three = (function (exports) {
   		},
 
   		parseAnimatorSet: function ( len ) {
-  			var this$1 = this;
 
   			var animSetBlockAdress; //:int
 
@@ -48937,7 +48690,7 @@ var Three = (function (exports) {
   			var meshAdresses = []; //:Vector.<uint> = new Vector.<uint>;
 
   			for ( var i = 0; i < targetMeshLength; i ++ )
-  				{ meshAdresses.push( this$1.readU32() ); }
+  				{ meshAdresses.push( this.readU32() ); }
 
   			var activeState = this.readU16();
   			var autoplay = Boolean( this.readU8() );
@@ -48949,7 +48702,7 @@ var Three = (function (exports) {
 
   				//      returnedArray = getAssetByID(meshAdresses[i], [AssetType.MESH]);
   				//      if (returnedArray[0])
-  				targetMeshes.push( this$1._blocks[ meshAdresses[ i ] ].data );
+  				targetMeshes.push( this._blocks[ meshAdresses[ i ] ].data );
 
   			}
 
@@ -48975,8 +48728,6 @@ var Three = (function (exports) {
   		},
 
   		parseMeshData: function ( len ) {
-  			var this$1 = this;
-
 
   			var name = this.readUTF(),
   				num_subs = this.readU16(),
@@ -48996,19 +48747,19 @@ var Three = (function (exports) {
   				geom = new BufferGeometry();
   				geom.name = name;
   				geometries.push( geom );
-  				sm_len = this$1.readU32();
-  				sm_end = this$1._ptr + sm_len;
+  				sm_len = this.readU32();
+  				sm_end = this._ptr + sm_len;
   				// Ignore for now
-  				this$1.parseProperties( { 1: this$1._geoNrType, 2: this$1._geoNrType } );
+  				this.parseProperties( { 1: this._geoNrType, 2: this._geoNrType } );
 
   				// Loop through data streams
   				while ( this._ptr < sm_end ) {
 
   					var idx = 0,
-  						str_type = this$1.readU8(),
-  						str_ftype = this$1.readU8(),
-  						str_len = this$1.readU32(),
-  						str_end = str_len + this$1._ptr;
+  						str_type = this.readU8(),
+  						str_ftype = this.readU8(),
+  						str_len = this.readU32(),
+  						str_end = str_len + this._ptr;
 
   					if ( str_type === 1 ) {
 
@@ -49022,9 +48773,9 @@ var Three = (function (exports) {
 
   						while ( this._ptr < str_end ) {
 
-  							buffer[ idx ] = - this$1.readF32();
-  							buffer[ idx + 1 ] = this$1.readF32();
-  							buffer[ idx + 2 ] = this$1.readF32();
+  							buffer[ idx ] = - this.readF32();
+  							buffer[ idx + 1 ] = this.readF32();
+  							buffer[ idx + 2 ] = this.readF32();
   							idx += 3;
 
   						}
@@ -49041,9 +48792,9 @@ var Three = (function (exports) {
 
   						while ( this._ptr < str_end ) {
 
-  							buffer[ idx + 1 ] = this$1.readU16();
-  							buffer[ idx ] = this$1.readU16();
-  							buffer[ idx + 2 ] = this$1.readU16();
+  							buffer[ idx + 1 ] = this.readU16();
+  							buffer[ idx ] = this.readU16();
+  							buffer[ idx + 2 ] = this.readU16();
   							idx += 3;
 
   						}
@@ -49060,8 +48811,8 @@ var Three = (function (exports) {
 
   						while ( this._ptr < str_end ) {
 
-  							buffer[ idx ] = this$1.readF32();
-  							buffer[ idx + 1 ] = 1.0 - this$1.readF32();
+  							buffer[ idx ] = this.readF32();
+  							buffer[ idx + 1 ] = 1.0 - this.readF32();
   							idx += 2;
 
   						}
@@ -49077,22 +48828,22 @@ var Three = (function (exports) {
 
   						while ( this._ptr < str_end ) {
 
-  							buffer[ idx ] = - this$1.readF32();
-  							buffer[ idx + 1 ] = this$1.readF32();
-  							buffer[ idx + 2 ] = this$1.readF32();
+  							buffer[ idx ] = - this.readF32();
+  							buffer[ idx + 1 ] = this.readF32();
+  							buffer[ idx + 2 ] = this.readF32();
   							idx += 3;
 
   						}
 
   					} else {
 
-  						this$1._ptr = str_end;
+  						this._ptr = str_end;
 
   					}
 
   				}
 
-  				this$1.parseUserAttributes();
+  				this.parseUserAttributes();
 
   				geom.computeBoundingSphere();
   				subs_parsed ++;
@@ -49109,8 +48860,6 @@ var Three = (function (exports) {
   		},
 
   		parseMeshPoseAnimation: function ( len, poseOnly ) {
-  			var this$1 = this;
-
 
   			var num_frames = 1,
   				num_submeshes,
@@ -49155,7 +48904,7 @@ var Three = (function (exports) {
   			streamsParsed = 0;
   			while ( streamsParsed < num_Streams ) {
 
-  				streamtypes.push( this$1.readU16() );
+  				streamtypes.push( this.readU16() );
   				streamsParsed ++;
 
   			}
@@ -49168,14 +48917,14 @@ var Three = (function (exports) {
 
   			while ( frames_parsed < num_frames ) {
 
-  				frame_dur = this$1.readU16();
+  				frame_dur = this.readU16();
   				subMeshParsed = 0;
 
   				while ( subMeshParsed < num_submeshes ) {
 
   					streamsParsed = 0;
-  					str_len = this$1.readU32();
-  					str_end = this$1._ptr + str_len;
+  					str_len = this.readU32();
+  					str_end = this._ptr + str_len;
 
   					while ( streamsParsed < num_Streams ) {
 
@@ -49192,16 +48941,16 @@ var Three = (function (exports) {
 
   							while ( this._ptr < str_end ) {
 
-  								buffer[ idx ] = this$1.readF32();
-  								buffer[ idx + 1 ] = this$1.readF32();
-  								buffer[ idx + 2 ] = this$1.readF32();
+  								buffer[ idx ] = this.readF32();
+  								buffer[ idx + 1 ] = this.readF32();
+  								buffer[ idx + 2 ] = this.readF32();
   								idx += 3;
 
   							}
   							subMeshParsed ++;
 
   						} else
-  							{ this$1._ptr = str_end; }
+  							{ this._ptr = str_end; }
   						streamsParsed ++;
 
   					}
@@ -49256,8 +49005,6 @@ var Three = (function (exports) {
   		},
 
   		parseProperties: function ( expected ) {
-  			var this$1 = this;
-
 
   			var list_len = this.readU32();
   			var list_end = this._ptr + list_len;
@@ -49268,18 +49015,18 @@ var Three = (function (exports) {
 
   				while ( this._ptr < list_end ) {
 
-  					var key = this$1.readU16();
-  					var len = this$1.readU32();
+  					var key = this.readU16();
+  					var len = this.readU32();
   					var type;
 
   					if ( expected.hasOwnProperty( key ) ) {
 
   						type = expected[ key ];
-  						props.set( key, this$1.parseAttrValue( type, len ) );
+  						props.set( key, this.parseAttrValue( type, len ) );
 
   					} else {
 
-  						this$1._ptr += len;
+  						this._ptr += len;
 
   					}
 
@@ -49300,8 +49047,6 @@ var Three = (function (exports) {
   		},
 
   		parseAttrValue: function ( type, len ) {
-  			var this$1 = this;
-
 
   			var elem_len;
   			var read_func;
@@ -49375,7 +49120,7 @@ var Three = (function (exports) {
 
   				while ( num_read < num_elems ) {
 
-  					list.push( read_func.call( this$1 ) );
+  					list.push( read_func.call( this ) );
   					num_read ++;
 
   				}
@@ -49449,28 +49194,26 @@ var Three = (function (exports) {
 
   		},
   		readUTFBytes: function ( len ) {
-  			var this$1 = this;
-
 
   			// TODO(user): Use native implementations if/when available
   			var out = [], c = 0;
 
   			while ( out.length < len ) {
 
-  				var c1 = this$1._data.getUint8( this$1._ptr ++, littleEndian );
+  				var c1 = this._data.getUint8( this._ptr ++, littleEndian );
   				if ( c1 < 128 ) {
 
   					out[ c ++ ] = String.fromCharCode( c1 );
 
   				} else if ( c1 > 191 && c1 < 224 ) {
 
-  					var c2 = this$1._data.getUint8( this$1._ptr ++, littleEndian );
+  					var c2 = this._data.getUint8( this._ptr ++, littleEndian );
   					out[ c ++ ] = String.fromCharCode( ( c1 & 31 ) << 6 | c2 & 63 );
 
   				} else {
 
-  					var c2 = this$1._data.getUint8( this$1._ptr ++, littleEndian );
-  					var c3 = this$1._data.getUint8( this$1._ptr ++, littleEndian );
+  					var c2 = this._data.getUint8( this._ptr ++, littleEndian );
+  					var c3 = this._data.getUint8( this._ptr ++, littleEndian );
   					out[ c ++ ] = String.fromCharCode( ( c1 & 15 ) << 12 | ( c2 & 63 ) << 6 | c3 & 63 );
 
   				}
@@ -56188,14 +55931,12 @@ var Three = (function (exports) {
   	onLoadComplete: function () {},
 
   	initMaterials: function ( materials, texturePath, crossOrigin ) {
-  		var this$1 = this;
-
 
   		var array = [];
 
   		for ( var i = 0; i < materials.length; ++ i ) {
 
-  			array[ i ] = this$1.createMaterial( materials[ i ], texturePath, crossOrigin );
+  			array[ i ] = this.createMaterial( materials[ i ], texturePath, crossOrigin );
 
   		}
 
@@ -56677,8 +56418,6 @@ var Three = (function (exports) {
 
   	// Update - update all the uniform values
   	GLTFShader.prototype.update = function ( scene, camera ) {
-  		var this$1 = this;
-
 
   		var boundUniforms = this.boundUniforms;
 
@@ -56697,8 +56436,8 @@ var Three = (function (exports) {
   				case "MODELVIEWINVERSETRANSPOSE":
 
   					var m3 = boundUniform.uniform.value;
-  					this$1._m4.multiplyMatrices( camera.matrixWorldInverse, boundUniform.sourceNode.matrixWorld );
-  					m3.getNormalMatrix( this$1._m4 );
+  					this._m4.multiplyMatrices( camera.matrixWorldInverse, boundUniform.sourceNode.matrixWorld );
+  					m3.getNormalMatrix( this._m4 );
   					break;
 
   				case "PROJECTION":
@@ -56751,8 +56490,6 @@ var Three = (function (exports) {
   		KHR_MATERIALS_COMMON: 'KHR_materials_common'
   	};
   	function GLTFMaterialsCommonExtension( json ) {
-  		var this$1 = this;
-
 
   		this.name = EXTENSIONS.KHR_MATERIALS_COMMON;
 
@@ -56793,7 +56530,7 @@ var Three = (function (exports) {
 
   			if ( lightNode ) {
 
-  				this$1.lights[ lightId ] = lightNode;
+  				this.lights[ lightId ] = lightNode;
 
   			}
 
@@ -56990,8 +56727,6 @@ var Three = (function (exports) {
   		32926: 'SAMPLE_ALPHA_TO_COVERAGE'
   	};
   	function _each( object, callback, thisObj ) {
-  		var this$1 = this;
-
 
   		if ( ! object ) {
 
@@ -57010,7 +56745,7 @@ var Three = (function (exports) {
 
   			for ( var idx = 0; idx < length; idx ++ ) {
 
-  				var value = callback.call( thisObj || this$1, object[ idx ], idx );
+  				var value = callback.call( thisObj || this, object[ idx ], idx );
 
   				if ( value ) {
 
@@ -57022,7 +56757,7 @@ var Three = (function (exports) {
 
   							results[ key ] = value;
 
-  						}.bind( this$1, idx ) );
+  						}.bind( this, idx ) );
 
   					} else {
 
@@ -57042,7 +56777,7 @@ var Three = (function (exports) {
 
   				if ( object.hasOwnProperty( key ) ) {
 
-  					var value = callback.call( thisObj || this$1, object[ key ], key );
+  					var value = callback.call( thisObj || this, object[ key ], key );
 
   					if ( value ) {
 
@@ -57054,7 +56789,7 @@ var Three = (function (exports) {
 
   								results[ key ] = value;
 
-  							}.bind( this$1, key ) );
+  							}.bind( this, key ) );
 
   						} else {
 
@@ -57231,14 +56966,12 @@ var Three = (function (exports) {
   	}
 
   	DeferredShaderMaterial.prototype.create = function () {
-  		var this$1 = this;
-
 
   		var uniforms = UniformsUtils.clone( this.params.uniforms );
 
-  		for ( var uniformId in this$1.params.uniforms ) {
+  		for ( var uniformId in this.params.uniforms ) {
 
-  			var originalUniform = this$1.params.uniforms[ uniformId ];
+  			var originalUniform = this.params.uniforms[ uniformId ];
 
   			if ( originalUniform.value instanceof Texture ) {
 
@@ -57269,8 +57002,6 @@ var Three = (function (exports) {
   	}
 
   	GLTFParser.prototype._withDependencies = function ( dependencies ) {
-  		var this$1 = this;
-
 
   		var _dependencies = {};
 
@@ -57279,16 +57010,16 @@ var Three = (function (exports) {
   			var dependency = dependencies[ i ];
   			var fnName = "load" + dependency.charAt( 0 ).toUpperCase() + dependency.slice( 1 );
 
-  			var cached = this$1.cache.get( dependency );
+  			var cached = this.cache.get( dependency );
 
   			if ( cached !== undefined ) {
 
   				_dependencies[ dependency ] = cached;
 
-  			} else if ( this$1[ fnName ] ) {
+  			} else if ( this[ fnName ] ) {
 
-  				var fn = this$1[ fnName ]();
-  				this$1.cache.add( dependency, fn );
+  				var fn = this[ fnName ]();
+  				this.cache.add( dependency, fn );
 
   				_dependencies[ dependency ] = fn;
 
@@ -59412,8 +59143,6 @@ var Three = (function (exports) {
       convertDracoGeometryTo3JS: function(dracoDecoder, decoder, geometryType,
                                           buffer, attributeUniqueIdMap,
                                           attributeTypeMap) {
-          var this$1 = this;
-
           // TODO: Should not assume native Draco attribute IDs apply.
           if (this.getAttributeOptions('position').skipDequantization === true) {
             decoder.SkipAttributeTransform(dracoDecoder.POSITION);
@@ -59486,22 +59215,22 @@ var Three = (function (exports) {
               var attributeId = attributeUniqueIdMap[attributeName];
               var attribute = decoder.GetAttributeByUniqueId(dracoGeometry,
                                                              attributeId);
-              this$1.addAttributeToGeometry(dracoDecoder, decoder, dracoGeometry,
+              this.addAttributeToGeometry(dracoDecoder, decoder, dracoGeometry,
                   attributeName, attributeType, attribute, geometry, geometryBuffer);
             }
 
           } else {
 
             // Add native Draco attribute type to geometry.
-            for (var attributeName in this$1.nativeAttributeMap) {
+            for (var attributeName in this.nativeAttributeMap) {
               var attId = decoder.GetAttributeId(dracoGeometry,
-                  dracoDecoder[this$1.nativeAttributeMap[attributeName]]);
+                  dracoDecoder[this.nativeAttributeMap[attributeName]]);
               if (attId !== -1) {
-                if (this$1.verbosity > 0) {
+                if (this.verbosity > 0) {
                   console.log('Loaded ' + attributeName + ' attribute.');
                 }
                 var attribute = decoder.GetAttribute(dracoGeometry, attId);
-                this$1.addAttributeToGeometry(dracoDecoder, decoder, dracoGeometry,
+                this.addAttributeToGeometry(dracoDecoder, decoder, dracoGeometry,
                     attributeName, Float32Array, attribute, geometry, geometryBuffer);
               }
             }
@@ -59893,8 +59622,6 @@ var Three = (function (exports) {
   		constructor: EquirectangularToCubeGenerator,
 
   		update: function ( renderer ) {
-  			var this$1 = this;
-
 
   			var currentRenderTarget = renderer.getRenderTarget();
 
@@ -59902,13 +59629,13 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < 6; i ++ ) {
 
-  				var v = this$1.views[ i ];
+  				var v = this.views[ i ];
 
   				camera.position.set( 0, 0, 0 );
   				camera.up.set( v.u[ 0 ], v.u[ 1 ], v.u[ 2 ] );
   				camera.lookAt( v.t[ 0 ], v.t[ 1 ], v.t[ 2 ] );
 
-  				renderer.setRenderTarget( this$1.renderTarget, i );
+  				renderer.setRenderTarget( this.renderTarget, i );
   				renderer.clear();
   				renderer.render( scene, camera );
 
@@ -61393,8 +61120,6 @@ var Three = (function (exports) {
   		// These images are connected to textures in FBXTree.Objects.Textures
   		// via FBXTree.Connections.
   		parseImages: function () {
-  			var this$1 = this;
-
 
   			var images = {};
   			var blobs = {};
@@ -61419,7 +61144,7 @@ var Three = (function (exports) {
 
   						if ( arrayBufferContent || base64Content ) {
 
-  							var image = this$1.parseImage( videoNodes[ nodeID ] );
+  							var image = this.parseImage( videoNodes[ nodeID ] );
 
   							blobs[ videoNode.RelativeFilename || videoNode.Filename ] = image;
 
@@ -61523,8 +61248,6 @@ var Three = (function (exports) {
   		// These contain details such as UV scaling, cropping, rotation etc and are connected
   		// to images in FBXTree.Objects.Video
   		parseTextures: function ( images ) {
-  			var this$1 = this;
-
 
   			var textureMap = new Map();
 
@@ -61533,7 +61256,7 @@ var Three = (function (exports) {
   				var textureNodes = fbxTree.Objects.Texture;
   				for ( var nodeID in textureNodes ) {
 
-  					var texture = this$1.parseTexture( textureNodes[ nodeID ], images );
+  					var texture = this.parseTexture( textureNodes[ nodeID ], images );
   					textureMap.set( parseInt( nodeID ), texture );
 
   				}
@@ -61637,8 +61360,6 @@ var Three = (function (exports) {
 
   		// Parse nodes in FBXTree.Objects.Material
   		parseMaterials: function ( textureMap ) {
-  			var this$1 = this;
-
 
   			var materialMap = new Map();
 
@@ -61648,7 +61369,7 @@ var Three = (function (exports) {
 
   				for ( var nodeID in materialNodes ) {
 
-  					var material = this$1.parseMaterial( materialNodes[ nodeID ], textureMap );
+  					var material = this.parseMaterial( materialNodes[ nodeID ], textureMap );
 
   					if ( material !== null ) { materialMap.set( parseInt( nodeID ), material ); }
 
@@ -61867,8 +61588,6 @@ var Three = (function (exports) {
   		// Deformer node can contain skinning or Vertex Cache animation data, however only skinning is supported here
   		// Generates map of Skeleton-like objects for use later when generating and binding skeletons.
   		parseDeformers: function () {
-  			var this$1 = this;
-
 
   			var skeletons = {};
   			var morphTargets = {};
@@ -61885,7 +61604,7 @@ var Three = (function (exports) {
 
   					if ( deformerNode.attrType === 'Skin' ) {
 
-  						var skeleton = this$1.parseSkeleton( relationships, DeformerNodes );
+  						var skeleton = this.parseSkeleton( relationships, DeformerNodes );
   						skeleton.ID = nodeID;
 
   						if ( relationships.parents.length > 1 ) { console.warn( 'FBXLoader: skeleton attached to more than one geometry is not supported.' ); }
@@ -61899,7 +61618,7 @@ var Three = (function (exports) {
   							id: nodeID,
   						};
 
-  						morphTarget.rawTargets = this$1.parseMorphTargets( relationships, DeformerNodes );
+  						morphTarget.rawTargets = this.parseMorphTargets( relationships, DeformerNodes );
   						morphTarget.id = nodeID;
 
   						if ( relationships.parents.length > 1 ) { console.warn( 'FBXLoader: morph target attached to more than one geometry is not supported.' ); }
@@ -62068,8 +61787,6 @@ var Three = (function (exports) {
 
   		// parse nodes in FBXTree.Objects.Model
   		parseModels: function ( skeletons, geometryMap, materialMap ) {
-  			var this$1 = this;
-
 
   			var modelMap = new Map();
   			var modelNodes = fbxTree.Objects.Model;
@@ -62080,23 +61797,23 @@ var Three = (function (exports) {
   				var node = modelNodes[ nodeID ];
   				var relationships = connections.get( id );
 
-  				var model = this$1.buildSkeleton( relationships, skeletons, id, node.attrName );
+  				var model = this.buildSkeleton( relationships, skeletons, id, node.attrName );
 
   				if ( ! model ) {
 
   					switch ( node.attrType ) {
 
   						case 'Camera':
-  							model = this$1.createCamera( relationships );
+  							model = this.createCamera( relationships );
   							break;
   						case 'Light':
-  							model = this$1.createLight( relationships );
+  							model = this.createLight( relationships );
   							break;
   						case 'Mesh':
-  							model = this$1.createMesh( relationships, geometryMap, materialMap );
+  							model = this.createMesh( relationships, geometryMap, materialMap );
   							break;
   						case 'NurbsCurve':
-  							model = this$1.createCurve( relationships, geometryMap );
+  							model = this.createCurve( relationships, geometryMap );
   							break;
   						case 'LimbNode':
   						case 'Root':
@@ -62114,7 +61831,7 @@ var Three = (function (exports) {
 
   				}
 
-  				this$1.getTransformData( model, node );
+  				this.getTransformData( model, node );
   				modelMap.set( id, model );
 
   			}
@@ -62709,8 +62426,6 @@ var Three = (function (exports) {
 
   		// Parse nodes in FBXTree.Objects.Geometry
   		parse: function ( deformers ) {
-  			var this$1 = this;
-
 
   			var geometryMap = new Map();
 
@@ -62721,7 +62436,7 @@ var Three = (function (exports) {
   				for ( var nodeID in geoNodes ) {
 
   					var relationships = connections.get( parseInt( nodeID ) );
-  					var geo = this$1.parseGeometry( relationships, geoNodes[ nodeID ], deformers );
+  					var geo = this.parseGeometry( relationships, geoNodes[ nodeID ], deformers );
 
   					geometryMap.set( parseInt( nodeID ), geo );
 
@@ -62909,8 +62624,6 @@ var Three = (function (exports) {
   		},
 
   		parseGeoNode: function ( geoNode, skeleton ) {
-  			var this$1 = this;
-
 
   			var geoInfo = {};
 
@@ -62942,7 +62655,7 @@ var Three = (function (exports) {
   				var i = 0;
   				while ( geoNode.LayerElementUV[ i ] ) {
 
-  					geoInfo.uv.push( this$1.parseUVs( geoNode.LayerElementUV[ i ] ) );
+  					geoInfo.uv.push( this.parseUVs( geoNode.LayerElementUV[ i ] ) );
   					i ++;
 
   				}
@@ -63540,8 +63253,6 @@ var Three = (function (exports) {
 
   		// take raw animation clips and turn them into three.js animation clips
   		parse: function () {
-  			var this$1 = this;
-
 
   			var animationClips = [];
 
@@ -63553,7 +63264,7 @@ var Three = (function (exports) {
 
   					var rawClip = rawClips[ key ];
 
-  					var clip = this$1.addClip( rawClip );
+  					var clip = this.addClip( rawClip );
 
   					animationClips.push( clip );
 
@@ -64462,8 +64173,6 @@ var Three = (function (exports) {
   		constructor: BinaryParser,
 
   		parse: function ( buffer ) {
-  			var this$1 = this;
-
 
   			var reader = new BinaryReader( buffer );
   			reader.skip( 23 ); // skip magic 23 bytes
@@ -64476,7 +64185,7 @@ var Three = (function (exports) {
 
   			while ( ! this.endOfContent( reader ) ) {
 
-  				var node = this$1.parseNode( reader, version );
+  				var node = this.parseNode( reader, version );
   				if ( node !== null ) { allNodes.add( node.name, node ); }
 
   			}
@@ -64510,8 +64219,6 @@ var Three = (function (exports) {
 
   		// recursively parse nodes until the end of the file is reached
   		parseNode: function ( reader, version ) {
-  			var this$1 = this;
-
 
   			var node = {};
 
@@ -64532,7 +64239,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < numProperties; i ++ ) {
 
-  				propertyList.push( this$1.parseProperty( reader ) );
+  				propertyList.push( this.parseProperty( reader ) );
 
   			}
 
@@ -64547,9 +64254,9 @@ var Three = (function (exports) {
 
   			while ( endOffset > reader.getOffset() ) {
 
-  				var subNode = this$1.parseNode( reader, version );
+  				var subNode = this.parseNode( reader, version );
 
-  				if ( subNode !== null ) { this$1.parseSubNode( name, node, subNode ); }
+  				if ( subNode !== null ) { this.parseSubNode( name, node, subNode ); }
 
   			}
 
@@ -64827,14 +64534,12 @@ var Three = (function (exports) {
   		},
 
   		getBooleanArray: function ( size ) {
-  			var this$1 = this;
-
 
   			var a = [];
 
   			for ( var i = 0; i < size; i ++ ) {
 
-  				a.push( this$1.getBoolean() );
+  				a.push( this.getBoolean() );
 
   			}
 
@@ -64867,14 +64572,12 @@ var Three = (function (exports) {
   		},
 
   		getInt32Array: function ( size ) {
-  			var this$1 = this;
-
 
   			var a = [];
 
   			for ( var i = 0; i < size; i ++ ) {
 
-  				a.push( this$1.getInt32() );
+  				a.push( this.getInt32() );
 
   			}
 
@@ -64930,14 +64633,12 @@ var Three = (function (exports) {
   		},
 
   		getInt64Array: function ( size ) {
-  			var this$1 = this;
-
 
   			var a = [];
 
   			for ( var i = 0; i < size; i ++ ) {
 
-  				a.push( this$1.getInt64() );
+  				a.push( this.getInt64() );
 
   			}
 
@@ -64975,14 +64676,12 @@ var Three = (function (exports) {
   		},
 
   		getFloat32Array: function ( size ) {
-  			var this$1 = this;
-
 
   			var a = [];
 
   			for ( var i = 0; i < size; i ++ ) {
 
-  				a.push( this$1.getFloat32() );
+  				a.push( this.getFloat32() );
 
   			}
 
@@ -64999,14 +64698,12 @@ var Three = (function (exports) {
   		},
 
   		getFloat64Array: function ( size ) {
-  			var this$1 = this;
-
 
   			var a = [];
 
   			for ( var i = 0; i < size; i ++ ) {
 
-  				a.push( this$1.getFloat64() );
+  				a.push( this.getFloat64() );
 
   			}
 
@@ -65023,15 +64720,13 @@ var Three = (function (exports) {
   		},
 
   		getString: function ( size ) {
-  			var this$1 = this;
-
 
   			// note: safari 9 doesn't support Uint8Array.indexOf; create intermediate array instead
   			var a = [];
 
   			for ( var i = 0; i < size; i ++ ) {
 
-  				a[ i ] = this$1.getUint8();
+  				a[ i ] = this.getUint8();
 
   			}
 
@@ -65745,8 +65440,6 @@ var Three = (function (exports) {
 
   	},
   	mergeBufferGeometries: function ( geometries, useGroups ) {
-  		var this$1 = this;
-
 
   		var isIndexed = geometries[ 0 ].index !== null;
 
@@ -65852,7 +65545,7 @@ var Three = (function (exports) {
 
   		for ( var name in attributes ) {
 
-  			var mergedAttribute = this$1.mergeBufferAttributes( attributes[ name ] );
+  			var mergedAttribute = this.mergeBufferAttributes( attributes[ name ] );
 
   			if ( ! mergedAttribute ) { return null; }
 
@@ -65881,7 +65574,7 @@ var Three = (function (exports) {
 
   				}
 
-  				var mergedMorphAttribute = this$1.mergeBufferAttributes( morphAttributesToMerge );
+  				var mergedMorphAttribute = this.mergeBufferAttributes( morphAttributesToMerge );
 
   				if ( ! mergedMorphAttribute ) { return null; }
 
@@ -66297,8 +65990,6 @@ var Three = (function (exports) {
   		},
 
   		parse: function ( data, path, onLoad, onError ) {
-  			var this$1 = this;
-
 
   			var content;
   			var extensions = {};
@@ -66365,7 +66056,7 @@ var Three = (function (exports) {
   							break;
 
   						case EXTENSIONS.KHR_DRACO_MESH_COMPRESSION:
-  							extensions[ extensionName ] = new GLTFDracoMeshCompressionExtension( json, this$1.dracoLoader );
+  							extensions[ extensionName ] = new GLTFDracoMeshCompressionExtension( json, this.dracoLoader );
   							break;
 
   						case EXTENSIONS.MSFT_TEXTURE_DDS:
@@ -66584,8 +66275,6 @@ var Three = (function (exports) {
   	var BINARY_EXTENSION_CHUNK_TYPES = { JSON: 0x4E4F534A, BIN: 0x004E4942 };
 
   	function GLTFBinaryExtension( data ) {
-  		var this$1 = this;
-
 
   		this.name = EXTENSIONS.KHR_BINARY_GLTF;
   		this.content = null;
@@ -66623,12 +66312,12 @@ var Three = (function (exports) {
   			if ( chunkType === BINARY_EXTENSION_CHUNK_TYPES.JSON ) {
 
   				var contentArray = new Uint8Array( data, BINARY_EXTENSION_HEADER_LENGTH + chunkIndex, chunkLength );
-  				this$1.content = LoaderUtils.decodeText( contentArray );
+  				this.content = LoaderUtils.decodeText( contentArray );
 
   			} else if ( chunkType === BINARY_EXTENSION_CHUNK_TYPES.BIN ) {
 
   				var byteOffset = BINARY_EXTENSION_HEADER_LENGTH + chunkIndex;
-  				this$1.body = data.slice( byteOffset, byteOffset + chunkLength );
+  				this.body = data.slice( byteOffset, byteOffset + chunkLength );
 
   			}
 
@@ -67874,8 +67563,6 @@ var Three = (function (exports) {
 
   	};
   	GLTFParser.prototype.getMultiDependencies = function ( types ) {
-  		var this$1 = this;
-
 
   		var results = {};
   		var pending = [];
@@ -67883,14 +67570,14 @@ var Three = (function (exports) {
   		for ( var i = 0, il = types.length; i < il; i ++ ) {
 
   			var type = types[ i ];
-  			var value = this$1.getDependencies( type );
+  			var value = this.getDependencies( type );
 
   			// TODO: Error-prone use of a callback inside a loop.
   			value = value.then( function ( key, value ) {
 
   				results[ key ] = value;
 
-  			}.bind( this$1, type + ( type === 'mesh' ? 'es' : 's' ) ) );
+  			}.bind( this, type + ( type === 'mesh' ? 'es' : 's' ) ) );
 
   			pending.push( value );
 
@@ -68580,8 +68267,6 @@ var Three = (function (exports) {
 
   	};
   	GLTFParser.prototype.loadMesh = function ( meshIndex ) {
-  		var this$1 = this;
-
 
   		var parser = this;
   		var json = this.json;
@@ -68596,7 +68281,7 @@ var Three = (function (exports) {
 
   			var material = primitives[ i ].material === undefined
   				? createDefaultMaterial()
-  				: this$1.getDependency( 'material', primitives[ i ].material );
+  				: this.getDependency( 'material', primitives[ i ].material );
 
   			pending.push( material );
 
@@ -68868,8 +68553,6 @@ var Three = (function (exports) {
 
   	};
   	GLTFParser.prototype.loadAnimation = function ( animationIndex ) {
-  		var this$1 = this;
-
 
   		var json = this.json;
 
@@ -68890,9 +68573,9 @@ var Three = (function (exports) {
   			var input = animationDef.parameters !== undefined ? animationDef.parameters[ sampler.input ] : sampler.input;
   			var output = animationDef.parameters !== undefined ? animationDef.parameters[ sampler.output ] : sampler.output;
 
-  			pendingNodes.push( this$1.getDependency( 'node', name ) );
-  			pendingInputAccessors.push( this$1.getDependency( 'accessor', input ) );
-  			pendingOutputAccessors.push( this$1.getDependency( 'accessor', output ) );
+  			pendingNodes.push( this.getDependency( 'node', name ) );
+  			pendingInputAccessors.push( this.getDependency( 'accessor', input ) );
+  			pendingOutputAccessors.push( this.getDependency( 'accessor', output ) );
   			pendingSamplers.push( sampler );
   			pendingTargets.push( target );
 
@@ -70091,8 +69774,6 @@ var Three = (function (exports) {
 
   	// return mipmaps for js
   	KhronosTextureContainer.prototype.mipmaps = function ( loadMipmaps ) {
-  		var this$1 = this;
-
 
   		var mipmaps = [];
 
@@ -70104,10 +69785,10 @@ var Three = (function (exports) {
 
   		for ( var level = 0; level < mipmapCount; level ++ ) {
 
-  			var imageSize = new Int32Array( this$1.arrayBuffer, dataOffset, 1 )[ 0 ]; // size per face, since not supporting array cubemaps
+  			var imageSize = new Int32Array( this.arrayBuffer, dataOffset, 1 )[ 0 ]; // size per face, since not supporting array cubemaps
   			for ( var face = 0; face < this.numberOfFaces; face ++ ) {
 
-  				var byteArray = new Uint8Array( this$1.arrayBuffer, dataOffset + 4, imageSize );
+  				var byteArray = new Uint8Array( this.arrayBuffer, dataOffset + 4, imageSize );
 
   				mipmaps.push( { "data": byteArray, "width": width, "height": height } );
 
@@ -70153,43 +69834,39 @@ var Three = (function (exports) {
   		constructor: LineParser,
 
   		seekNonSpace: function () {
-  			var this$1 = this;
-
 
   			while ( this.currentCharIndex < this.lineLength ) {
 
-  				this$1.currentChar = this$1.line.charAt( this$1.currentCharIndex );
+  				this.currentChar = this.line.charAt( this.currentCharIndex );
 
-  				if ( this$1.currentChar !== ' ' && this$1.currentChar !== '\t' ) {
+  				if ( this.currentChar !== ' ' && this.currentChar !== '\t' ) {
 
   					return;
 
   				}
 
-  				this$1.currentCharIndex ++;
+  				this.currentCharIndex ++;
 
   			}
 
   		},
 
   		getToken: function () {
-  			var this$1 = this;
-
 
   			var pos0 = this.currentCharIndex ++;
 
   			// Seek space
   			while ( this.currentCharIndex < this.lineLength ) {
 
-  				this$1.currentChar = this$1.line.charAt( this$1.currentCharIndex );
+  				this.currentChar = this.line.charAt( this.currentCharIndex );
 
-  				if ( this$1.currentChar === ' ' || this$1.currentChar === '\t' ) {
+  				if ( this.currentChar === ' ' || this.currentChar === '\t' ) {
 
   					break;
 
   				}
 
-  				this$1.currentCharIndex ++;
+  				this.currentCharIndex ++;
 
   			}
 
@@ -70762,8 +70439,6 @@ var Three = (function (exports) {
   		},
 
   		getMaterial: function ( colourCode ) {
-  			var this$1 = this;
-
 
   			// Given a colour code search its material in the parse scopes stack
 
@@ -70779,7 +70454,7 @@ var Three = (function (exports) {
 
   			for ( var i = this.parseScopesStack.length - 1; i >= 0; i -- ) {
 
-  				var material = this$1.parseScopesStack[ i ].lib[ colourCode ];
+  				var material = this.parseScopesStack[ i ].lib[ colourCode ];
 
   				if ( material ) {
 
@@ -70819,8 +70494,6 @@ var Three = (function (exports) {
   		},
 
   		parseColourMetaDirective: function ( lineParser ) {
-  			var this$1 = this;
-
 
   			// Parses a colour definition and returns a Material or null if error
 
@@ -70891,7 +70564,7 @@ var Three = (function (exports) {
   						} else if ( ! edgeColour.startsWith( '#' ) ) {
 
   							// Try to see if edge colour is a colour code
-  							edgeMaterial = this$1.getMaterial( edgeColour );
+  							edgeMaterial = this.getMaterial( edgeColour );
   							if ( ! edgeMaterial ) {
 
   								throw 'LDrawLoader: Invalid edge colour while parsing material' + lineParser.getLineNumberString() + ".";
@@ -71068,8 +70741,6 @@ var Three = (function (exports) {
   		//
 
   		parse: function ( text ) {
-  			var this$1 = this;
-
 
   			//console.time( 'LDrawLoader' );
 
@@ -71184,7 +70855,7 @@ var Three = (function (exports) {
   					if ( line.startsWith( '0 FILE ' ) ) {
 
   						// Save previous embedded file in the cache
-  						this$1.subobjectCache[ currentEmbeddedFileName ] = currentEmbeddedText;
+  						this.subobjectCache[ currentEmbeddedFileName ] = currentEmbeddedText;
 
   						// New embedded text file
   						currentEmbeddedFileName = line.substring( 7 );
@@ -71228,10 +70899,10 @@ var Three = (function (exports) {
 
   								case '!COLOUR':
 
-  									var material = this$1.parseColourMetaDirective( lp );
+  									var material = this.parseColourMetaDirective( lp );
   									if ( material ) {
 
-  										this$1.addMaterial( material );
+  										this.addMaterial( material );
 
   									}	else {
 
@@ -71583,8 +71254,6 @@ var Three = (function (exports) {
   		this.resources.push( resource );
   	},
   	clone: function () {
-  		var this$1 = this;
-
   		var clone = new LoaderSupport.PrepData( this.modelName );
   		clone.logging.enabled = this.logging.enabled;
   		clone.logging.debug = this.logging.debug;
@@ -71592,10 +71261,10 @@ var Three = (function (exports) {
   		clone.callbacks = this.callbacks;
 
   		var property, value;
-  		for ( property in this$1 ) {
+  		for ( property in this ) {
 
-  			value = this$1[ property ];
-  			if ( ! clone.hasOwnProperty( property ) && typeof this$1[ property ] !== 'function' ) {
+  			value = this[ property ];
+  			if ( ! clone.hasOwnProperty( property ) && typeof this[ property ] !== 'function' ) {
 
   				clone[ property ] = value;
 
@@ -71751,8 +71420,6 @@ var Three = (function (exports) {
   		}
   	},
   	buildMeshes: function ( meshPayload ) {
-  		var this$1 = this;
-
   		var meshName = meshPayload.params.meshName;
 
   		var bufferGeometry = new BufferGeometry();
@@ -71790,7 +71457,7 @@ var Three = (function (exports) {
   		for ( key in materialNames ) {
 
   			materialName = materialNames[ key ];
-  			material = this$1.materials[ materialName ];
+  			material = this.materials[ materialName ];
   			if ( createMultiMaterial ) { multiMaterials.push( material ); }
 
   		}
@@ -71904,8 +71571,6 @@ var Three = (function (exports) {
   		return meshes;
   	},
   	updateMaterials: function ( materialPayload ) {
-  		var this$1 = this;
-
   		var material, materialName;
   		var materialCloneInstructions = materialPayload.materials.materialCloneInstructions;
   		if ( this.validator.isValid( materialCloneInstructions ) ) {
@@ -71943,11 +71608,11 @@ var Three = (function (exports) {
   			for ( materialName in materials ) {
 
   				materialJson = materials[ materialName ];
-  				if ( this$1.validator.isValid( materialJson ) ) {
+  				if ( this.validator.isValid( materialJson ) ) {
 
   					material = loader.parse( materialJson );
-  					if ( this$1.logging.enabled ) { console.info( 'De-serialized material with name "' + materialName + '" will be added.' ); }
-  					this$1.materials[ materialName ] = material;
+  					if ( this.logging.enabled ) { console.info( 'De-serialized material with name "' + materialName + '" will be added.' ); }
+  					this.materials[ materialName ] = material;
   				}
 
   			}
@@ -71960,21 +71625,19 @@ var Three = (function (exports) {
   			for ( materialName in materials ) {
 
   				material = materials[ materialName ];
-  				if ( this$1.logging.enabled ) { console.info( 'Material with name "' + materialName + '" will be added.' ); }
-  				this$1.materials[ materialName ] = material;
+  				if ( this.logging.enabled ) { console.info( 'Material with name "' + materialName + '" will be added.' ); }
+  				this.materials[ materialName ] = material;
 
   			}
 
   		}
   	},
   	getMaterialsJSON: function () {
-  		var this$1 = this;
-
   		var materialsJSON = {};
   		var material;
-  		for ( var materialName in this$1.materials ) {
+  		for ( var materialName in this.materials ) {
 
-  			material = this$1.materials[ materialName ];
+  			material = this.materials[ materialName ];
   			materialsJSON[ materialName ] = material.toJSON();
   		}
 
@@ -72599,8 +72262,6 @@ var Three = (function (exports) {
   		this.workerDescription.forceWorkerDataCopy = forceWorkerDataCopy === true;
   	},
   	prepareWorkers: function ( globalCallbacks, maxQueueSize, maxWebWorkers ) {
-  		var this$1 = this;
-
   		if ( LoaderSupport.Validator.isValid( globalCallbacks ) ) { this.workerDescription.globalCallbacks = globalCallbacks; }
   		this.maxQueueSize = Math.min( maxQueueSize, LoaderSupport.WorkerDirector.MAX_QUEUE_SIZE );
   		this.maxWebWorkers = Math.min( maxWebWorkers, LoaderSupport.WorkerDirector.MAX_WEB_WORKER );
@@ -72612,9 +72273,9 @@ var Three = (function (exports) {
   		for ( var instanceNo = 0; instanceNo < this.maxWebWorkers; instanceNo++ ) {
 
   			var workerSupport = new LoaderSupport.WorkerSupport();
-  			workerSupport.setLogging( this$1.logging.enabled, this$1.logging.debug );
-  			workerSupport.setForceWorkerDataCopy( this$1.workerDescription.forceWorkerDataCopy );
-  			this$1.workerDescription.workerSupports[ instanceNo ] = {
+  			workerSupport.setLogging( this.logging.enabled, this.logging.debug );
+  			workerSupport.setForceWorkerDataCopy( this.workerDescription.forceWorkerDataCopy );
+  			this.workerDescription.workerSupports[ instanceNo ] = {
   				instanceNo: instanceNo,
   				inUse: false,
   				terminateRequested: false,
@@ -72634,23 +72295,21 @@ var Three = (function (exports) {
   		return ( ( this.instructionQueue.length > 0 && this.instructionQueuePointer < this.instructionQueue.length ) || wsKeys.length > 0 );
   	},
   	processQueue: function () {
-  		var this$1 = this;
-
   		var prepData, supportDesc;
-  		for ( var instanceNo in this$1.workerDescription.workerSupports ) {
+  		for ( var instanceNo in this.workerDescription.workerSupports ) {
 
-  			supportDesc = this$1.workerDescription.workerSupports[ instanceNo ];
+  			supportDesc = this.workerDescription.workerSupports[ instanceNo ];
   			if ( ! supportDesc.inUse ) {
 
-  				if ( this$1.instructionQueuePointer < this$1.instructionQueue.length ) {
+  				if ( this.instructionQueuePointer < this.instructionQueue.length ) {
 
-  					prepData = this$1.instructionQueue[ this$1.instructionQueuePointer ];
-  					this$1._kickWorkerRun( prepData, supportDesc );
-  					this$1.instructionQueuePointer++;
+  					prepData = this.instructionQueue[ this.instructionQueuePointer ];
+  					this._kickWorkerRun( prepData, supportDesc );
+  					this.instructionQueuePointer++;
 
   				} else {
 
-  					this$1._deregister( supportDesc );
+  					this._deregister( supportDesc );
 
   				}
 
@@ -72772,16 +72431,14 @@ var Three = (function (exports) {
   		}
   	},
   	tearDown: function ( callbackOnFinishedProcessing ) {
-  		var this$1 = this;
-
   		if ( this.logging.enabled ) { console.info( 'WorkerDirector received the deregister call. Terminating all workers!' ); }
 
   		this.instructionQueuePointer = this.instructionQueue.length;
   		this.callbackOnFinishedProcessing = LoaderSupport.Validator.verifyInput( callbackOnFinishedProcessing, null );
 
-  		for ( var name in this$1.workerDescription.workerSupports ) {
+  		for ( var name in this.workerDescription.workerSupports ) {
 
-  			this$1.workerDescription.workerSupports[ name ].terminateRequested = true;
+  			this.workerDescription.workerSupports[ name ].terminateRequested = true;
 
   		}
   	}
@@ -73322,8 +72979,6 @@ var Three = (function (exports) {
 
   		},
   		loadVMD: function ( url, onLoad, onProgress, onError ) {
-  			var this$1 = this;
-
 
   			var urls = Array.isArray( url ) ? url : [ url ];
 
@@ -73339,7 +72994,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0, il = urls.length; i < il; i ++ ) {
 
-  				this$1.loader.load( urls[ i ], function ( buffer ) {
+  				this.loader.load( urls[ i ], function ( buffer ) {
 
   					vmds.push( parser.parseVmd( buffer, true ) );
 
@@ -73992,8 +73647,6 @@ var Three = (function (exports) {
 
   		},
   		build: function ( data, geometry, onProgress, onError ) {
-  			var this$1 = this;
-
 
   			var materials = [];
 
@@ -74056,13 +73709,13 @@ var Three = (function (exports) {
   						// fileNames[ 0 ]: mapFileName
   						// fileNames[ 1 ]: envMapFileName( optional )
 
-  						params.map = this$1._loadTexture( fileNames[ 0 ], textures );
+  						params.map = this._loadTexture( fileNames[ 0 ], textures );
 
   						if ( fileNames.length > 1 ) {
 
   							var extension = fileNames[ 1 ].slice( - 4 ).toLowerCase();
 
-  							params.envMap = this$1._loadTexture(
+  							params.envMap = this._loadTexture(
   								fileNames[ 1 ],
   								textures,
   								{ sphericalReflectionMapping: true }
@@ -74082,12 +73735,12 @@ var Three = (function (exports) {
   						? 'toon00.bmp'
   						: data.toonTextures[ material.toonIndex ].fileName;
 
-  					params.gradientMap = this$1._loadTexture(
+  					params.gradientMap = this._loadTexture(
   						toonFileName,
   						textures,
   						{
   							isToonTexture: true,
-  							isDefaultToonTexture: this$1._isDefaultToonTexture( toonFileName )
+  							isDefaultToonTexture: this._isDefaultToonTexture( toonFileName )
   						}
   					);
 
@@ -74106,7 +73759,7 @@ var Three = (function (exports) {
 
   					if ( material.textureIndex !== - 1 ) {
 
-  						params.map = this$1._loadTexture( data.textures[ material.textureIndex ], textures );
+  						params.map = this._loadTexture( data.textures[ material.textureIndex ], textures );
 
   					}
 
@@ -74114,7 +73767,7 @@ var Three = (function (exports) {
 
   					if ( material.envTextureIndex !== - 1 && ( material.envFlag === 1 || material.envFlag == 2 ) ) {
 
-  						params.envMap = this$1._loadTexture(
+  						params.envMap = this._loadTexture(
   							data.textures[ material.envTextureIndex ],
   							textures, { sphericalReflectionMapping: true }
   						);
@@ -74141,7 +73794,7 @@ var Three = (function (exports) {
 
   					}
 
-  					params.gradientMap = this$1._loadTexture(
+  					params.gradientMap = this._loadTexture(
   						toonFileName,
   						textures,
   						{
@@ -74164,7 +73817,7 @@ var Three = (function (exports) {
 
   					if ( ! params.transparent ) {
 
-  						this$1._checkImageTransparency( params.map, geometry, i );
+  						this._checkImageTransparency( params.map, geometry, i );
 
   					}
 
@@ -74482,8 +74135,6 @@ var Three = (function (exports) {
 
   		},
   		buildSkeletalAnimation: function ( vmd, mesh ) {
-  			var this$1 = this;
-
 
   			function pushInterpolation( array, interpolation, index ) {
 
@@ -74555,8 +74206,8 @@ var Three = (function (exports) {
 
   				var targetName = '.bones[' + key + ']';
 
-  				tracks.push( this$1._createTrack( targetName + '.position', VectorKeyframeTrack, times, positions, pInterpolations ) );
-  				tracks.push( this$1._createTrack( targetName + '.quaternion', QuaternionKeyframeTrack, times, rotations, rInterpolations ) );
+  				tracks.push( this._createTrack( targetName + '.position', VectorKeyframeTrack, times, positions, pInterpolations ) );
+  				tracks.push( this._createTrack( targetName + '.quaternion', QuaternionKeyframeTrack, times, rotations, rInterpolations ) );
 
   			}
 
@@ -74806,8 +74457,6 @@ var Three = (function (exports) {
   		constructor: CubicBezierInterpolation,
 
   		interpolate_: function ( i1, t0, t, t1 ) {
-  			var this$1 = this;
-
 
   			var result = this.resultBuffer;
   			var values = this.sampleValues;
@@ -74842,7 +74491,7 @@ var Three = (function (exports) {
   					var y1 = params[ i1 * 12 + i * 4 + 2 ];
   					var y2 = params[ i1 * 12 + i * 4 + 3 ];
 
-  					var ratio = this$1._calculate( x1, x2, y1, y2, weight1 );
+  					var ratio = this._calculate( x1, x2, y1, y2, weight1 );
 
   					result[ i ] = values[ offset0 + i ] * ( 1 - ratio ) + values[ offset1 + i ] * ratio;
 
@@ -75063,8 +74712,6 @@ var Three = (function (exports) {
   	},
 
   	convert: function ( materialsInfo ) {
-  		var this$1 = this;
-
 
   		if ( ! this.options ) { return materialsInfo; }
 
@@ -75094,13 +74741,13 @@ var Three = (function (exports) {
 
   						// Diffuse color (color under white light) using RGB values
 
-  						if ( this$1.options && this$1.options.normalizeRGB ) {
+  						if ( this.options && this.options.normalizeRGB ) {
 
   							value = [ value[ 0 ] / 255, value[ 1 ] / 255, value[ 2 ] / 255 ];
 
   						}
 
-  						if ( this$1.options && this$1.options.ignoreZeroRGBs ) {
+  						if ( this.options && this.options.ignoreZeroRGBs ) {
 
   							if ( value[ 0 ] === 0 && value[ 1 ] === 0 && value[ 2 ] === 0 ) {
 
@@ -75135,12 +74782,10 @@ var Three = (function (exports) {
   	},
 
   	preload: function () {
-  		var this$1 = this;
 
+  		for ( var mn in this.materialsInfo ) {
 
-  		for ( var mn in this$1.materialsInfo ) {
-
-  			this$1.create( mn );
+  			this.create( mn );
 
   		}
 
@@ -75153,15 +74798,13 @@ var Three = (function (exports) {
   	},
 
   	getAsArray: function () {
-  		var this$1 = this;
-
 
   		var index = 0;
 
-  		for ( var mn in this$1.materialsInfo ) {
+  		for ( var mn in this.materialsInfo ) {
 
-  			this$1.materialsArray[ index ] = this$1.create( mn );
-  			this$1.nameLookup[ mn ] = index;
+  			this.materialsArray[ index ] = this.create( mn );
+  			this.nameLookup[ mn ] = index;
   			index ++;
 
   		}
@@ -75183,8 +74826,6 @@ var Three = (function (exports) {
   	},
 
   	createMaterial_: function ( materialName ) {
-  		var this$1 = this;
-
 
   		// Create material
 
@@ -75331,7 +74972,7 @@ var Three = (function (exports) {
   				case 'tr':
   					n = parseFloat( value );
 
-  					if ( this$1.options && this$1.options.invertTrProperty ) { n = 1 - n; }
+  					if ( this.options && this.options.invertTrProperty ) { n = 1 - n; }
 
   					if ( n > 0 ) {
 
@@ -75490,8 +75131,6 @@ var Three = (function (exports) {
   	},
 
   	resolve: function( json ) {
-  		var this$1 = this;
-
 
   		switch( typeof json ) {
 
@@ -75516,7 +75155,7 @@ var Three = (function (exports) {
 
   					for(var i = 0; i < json.length; i++) {
 
-  						json[i] = this$1.resolve( json[i] );
+  						json[i] = this.resolve( json[i] );
 
   					}
 
@@ -75526,7 +75165,7 @@ var Three = (function (exports) {
 
   						if (prop === "uuid") { continue; }
 
-  						json[ prop ] = this$1.resolve( json[ prop ] );
+  						json[ prop ] = this.resolve( json[ prop ] );
 
   					}
 
@@ -75539,8 +75178,6 @@ var Three = (function (exports) {
   	},
 
   	declare: function( json ) {
-  		var this$1 = this;
-
 
   		var uuid, node, object;
 
@@ -75554,11 +75191,11 @@ var Three = (function (exports) {
 
   				object.name = node.name;
 
-  				this$1.names[ object.name ] = object;
+  				this.names[ object.name ] = object;
 
   			}
 
-  			this$1.nodes[ uuid ] = object;
+  			this.nodes[ uuid ] = object;
 
   		}
 
@@ -75572,11 +75209,11 @@ var Three = (function (exports) {
 
   				object.name = node.name;
 
-  				this$1.names[ object.name ] = object;
+  				this.names[ object.name ] = object;
 
   			}
 
-  			this$1.materials[ uuid ] = object;
+  			this.materials[ uuid ] = object;
 
   		}
 
@@ -75590,11 +75227,11 @@ var Three = (function (exports) {
 
   				object.name = node.name;
 
-  				this$1.names[ object.name ] = object;
+  				this.names[ object.name ] = object;
 
   			}
 
-  			this$1.passes[ uuid ] = object;
+  			this.passes[ uuid ] = object;
 
   		}
 
@@ -75607,8 +75244,6 @@ var Three = (function (exports) {
   	},
 
   	parse: function ( json ) {
-  		var this$1 = this;
-
 
   		var uuid;
 
@@ -75616,19 +75251,19 @@ var Three = (function (exports) {
 
   		for ( uuid in json.nodes ) {
 
-  			this$1.nodes[ uuid ].copy( json.nodes[ uuid ] );
+  			this.nodes[ uuid ].copy( json.nodes[ uuid ] );
 
   		}
 
   		for ( uuid in json.materials ) {
 
-  			this$1.materials[ uuid ].copy( json.materials[ uuid ] );
+  			this.materials[ uuid ].copy( json.materials[ uuid ] );
 
   		}
 
   		for ( uuid in json.passes ) {
 
-  			this$1.passes[ uuid ].copy( json.passes[ uuid ] );
+  			this.passes[ uuid ].copy( json.passes[ uuid ] );
 
   		}
 
@@ -75753,8 +75388,6 @@ var Three = (function (exports) {
   					},
 
   					_finalize: function ( end ) {
-  						var this$1 = this;
-
 
   						var lastMultiMaterial = this.currentMaterial();
   						if ( lastMultiMaterial && lastMultiMaterial.groupEnd === - 1 ) {
@@ -75770,9 +75403,9 @@ var Three = (function (exports) {
 
   							for ( var mi = this.materials.length - 1; mi >= 0; mi -- ) {
 
-  								if ( this$1.materials[ mi ].groupCount <= 0 ) {
+  								if ( this.materials[ mi ].groupCount <= 0 ) {
 
-  									this$1.materials.splice( mi, 1 );
+  									this.materials.splice( mi, 1 );
 
   								}
 
@@ -75957,8 +75590,6 @@ var Three = (function (exports) {
   			},
 
   			addPointGeometry: function ( vertices ) {
-  				var this$1 = this;
-
 
   				this.object.geometry.type = 'Points';
 
@@ -75966,15 +75597,13 @@ var Three = (function (exports) {
 
   				for ( var vi = 0, l = vertices.length; vi < l; vi ++ ) {
 
-  					this$1.addVertexPoint( this$1.parseVertexIndex( vertices[ vi ], vLen ) );
+  					this.addVertexPoint( this.parseVertexIndex( vertices[ vi ], vLen ) );
 
   				}
 
   			},
 
   			addLineGeometry: function ( vertices, uvs ) {
-  				var this$1 = this;
-
 
   				this.object.geometry.type = 'Line';
 
@@ -75983,13 +75612,13 @@ var Three = (function (exports) {
 
   				for ( var vi = 0, l = vertices.length; vi < l; vi ++ ) {
 
-  					this$1.addVertexLine( this$1.parseVertexIndex( vertices[ vi ], vLen ) );
+  					this.addVertexLine( this.parseVertexIndex( vertices[ vi ], vLen ) );
 
   				}
 
   				for ( var uvi = 0, l = uvs.length; uvi < l; uvi ++ ) {
 
-  					this$1.addUVLine( this$1.parseUVIndex( uvs[ uvi ], uvLen ) );
+  					this.addUVLine( this.parseUVIndex( uvs[ uvi ], uvLen ) );
 
   				}
 
@@ -76048,8 +75677,6 @@ var Three = (function (exports) {
   		},
 
   		parse: function ( text ) {
-  			var this$1 = this;
-
 
   			console.time( 'OBJLoader' );
 
@@ -76313,9 +75940,9 @@ var Three = (function (exports) {
   					var sourceMaterial = materials[ mi ];
   					var material = undefined;
 
-  					if ( this$1.materials !== null ) {
+  					if ( this.materials !== null ) {
 
-  						material = this$1.materials.create( sourceMaterial.name );
+  						material = this.materials.create( sourceMaterial.name );
 
   						// mtl etc. loaders probably can't create line materials correctly, copy properties to a line material.
   						if ( isLine && material && ! ( material instanceof LineBasicMaterial ) ) {
@@ -77029,8 +76656,6 @@ var Three = (function (exports) {
   		}
   	},
   	parse: function ( arrayBuffer ) {
-  		var this$1 = this;
-
   		if ( this.logging.enabled ) { console.time( 'OBJLoader2.Parser.parse' ); }
   		this.configure();
 
@@ -77060,9 +76685,9 @@ var Three = (function (exports) {
   				case 10:
   					if ( word.length > 0 ) { buffer[ bufferPointer++ ] = word; }
   					word = '';
-  					this$1.globalCounts.lineByte = this$1.globalCounts.currentByte;
-  					this$1.globalCounts.currentByte = i;
-  					this$1.processLine( buffer, bufferPointer, slashesCount );
+  					this.globalCounts.lineByte = this.globalCounts.currentByte;
+  					this.globalCounts.currentByte = i;
+  					this.processLine( buffer, bufferPointer, slashesCount );
   					bufferPointer = 0;
   					slashesCount = 0;
   					break;
@@ -77080,8 +76705,6 @@ var Three = (function (exports) {
   		if ( this.logging.enabled ) { console.timeEnd(  'OBJLoader2.Parser.parse' ); }
   	},
   	parseText: function ( text ) {
-  		var this$1 = this;
-
   		if ( this.logging.enabled ) { console.time(  'OBJLoader2.Parser.parseText' ); }
   		this.configure();
   		this.legacyMode = true;
@@ -77108,9 +76731,9 @@ var Three = (function (exports) {
   				case '\n':
   					if ( word.length > 0 ) { buffer[ bufferPointer++ ] = word; }
   					word = '';
-  					this$1.globalCounts.lineByte = this$1.globalCounts.currentByte;
-  					this$1.globalCounts.currentByte = i;
-  					this$1.processLine( buffer, bufferPointer, slashesCount );
+  					this.globalCounts.lineByte = this.globalCounts.currentByte;
+  					this.globalCounts.currentByte = i;
+  					this.processLine( buffer, bufferPointer, slashesCount );
   					bufferPointer = 0;
   					slashesCount = 0;
   					break;
@@ -77127,8 +76750,6 @@ var Three = (function (exports) {
   	},
 
   	processLine: function ( buffer, bufferPointer, slashesCount ) {
-  		var this$1 = this;
-
   		if ( bufferPointer < 1 ) { return; }
 
   		var reconstructString = function ( content, legacyMode, start, stop ) {
@@ -77186,9 +76807,9 @@ var Three = (function (exports) {
   					this.checkFaceType( 0 );
   					for ( i = 2, length = bufferLength; i < length; i ++ ) {
 
-  						this$1.buildFace( buffer[ 1 ] );
-  						this$1.buildFace( buffer[ i ] );
-  						this$1.buildFace( buffer[ i + 1 ] );
+  						this.buildFace( buffer[ 1 ] );
+  						this.buildFace( buffer[ i ] );
+  						this.buildFace( buffer[ i + 1 ] );
 
   					}
 
@@ -77198,9 +76819,9 @@ var Three = (function (exports) {
   					this.checkFaceType( 1 );
   					for ( i = 3, length = bufferLength - 2; i < length; i += 2 ) {
 
-  						this$1.buildFace( buffer[ 1 ], buffer[ 2 ] );
-  						this$1.buildFace( buffer[ i ], buffer[ i + 1 ] );
-  						this$1.buildFace( buffer[ i + 2 ], buffer[ i + 3 ] );
+  						this.buildFace( buffer[ 1 ], buffer[ 2 ] );
+  						this.buildFace( buffer[ i ], buffer[ i + 1 ] );
+  						this.buildFace( buffer[ i + 2 ], buffer[ i + 3 ] );
 
   					}
 
@@ -77210,9 +76831,9 @@ var Three = (function (exports) {
   					this.checkFaceType( 2 );
   					for ( i = 4, length = bufferLength - 3; i < length; i += 3 ) {
 
-  						this$1.buildFace( buffer[ 1 ], buffer[ 2 ], buffer[ 3 ] );
-  						this$1.buildFace( buffer[ i ], buffer[ i + 1 ], buffer[ i + 2 ] );
-  						this$1.buildFace( buffer[ i + 3 ], buffer[ i + 4 ], buffer[ i + 5 ] );
+  						this.buildFace( buffer[ 1 ], buffer[ 2 ], buffer[ 3 ] );
+  						this.buildFace( buffer[ i ], buffer[ i + 1 ], buffer[ i + 2 ] );
+  						this.buildFace( buffer[ i + 3 ], buffer[ i + 4 ], buffer[ i + 5 ] );
 
   					}
 
@@ -77222,9 +76843,9 @@ var Three = (function (exports) {
   					this.checkFaceType( 3 );
   					for ( i = 3, length = bufferLength - 2; i < length; i += 2 ) {
 
-  						this$1.buildFace( buffer[ 1 ], undefined, buffer[ 2 ] );
-  						this$1.buildFace( buffer[ i ], undefined, buffer[ i + 1 ] );
-  						this$1.buildFace( buffer[ i + 2 ], undefined, buffer[ i + 3 ] );
+  						this.buildFace( buffer[ 1 ], undefined, buffer[ 2 ] );
+  						this.buildFace( buffer[ i ], undefined, buffer[ i + 1 ] );
+  						this.buildFace( buffer[ i + 2 ], undefined, buffer[ i + 3 ] );
 
   					}
 
@@ -77237,12 +76858,12 @@ var Three = (function (exports) {
   				if ( bufferLength === slashesCount * 2 )  {
 
   					this.checkFaceType( 4 );
-  					for ( i = 1, length = bufferLength + 1; i < length; i += 2 ) { this$1.buildFace( buffer[ i ], buffer[ i + 1 ] ); }
+  					for ( i = 1, length = bufferLength + 1; i < length; i += 2 ) { this.buildFace( buffer[ i ], buffer[ i + 1 ] ); }
 
   				} else {
 
   					this.checkFaceType( ( lineDesignation === 'l' ) ? 5 : 6  );
-  					for ( i = 1, length = bufferLength + 1; i < length; i ++ ) { this$1.buildFace( buffer[ i ] ); }
+  					for ( i = 1, length = bufferLength + 1; i < length; i ++ ) { this.buildFace( buffer[ i ] ); }
 
   				}
   				break;
@@ -77417,8 +77038,6 @@ var Three = (function (exports) {
   			'\n\tReal MeshOutputGroup count: ' + this.rawMesh.subGroups.length;
   	},
   	finalizeRawMesh: function () {
-  		var this$1 = this;
-
   		var meshOutputGroupTemp = [];
   		var meshOutputGroup;
   		var absoluteVertexCount = 0;
@@ -77428,9 +77047,9 @@ var Three = (function (exports) {
   		var absoluteNormalCount = 0;
   		var absoluteUvCount = 0;
   		var indices;
-  		for ( var name in this$1.rawMesh.subGroups ) {
+  		for ( var name in this.rawMesh.subGroups ) {
 
-  			meshOutputGroup = this$1.rawMesh.subGroups[ name ];
+  			meshOutputGroup = this.rawMesh.subGroups[ name ];
   			if ( meshOutputGroup.vertices.length > 0 ) {
 
   				indices = meshOutputGroup.indices;
@@ -77494,8 +77113,6 @@ var Three = (function (exports) {
   		}
   	},
   	buildMesh: function ( result ) {
-  		var this$1 = this;
-
   		var meshOutputGroups = result.subGroups;
 
   		var vertexFA = new Float32Array( result.absoluteVertexCount );
@@ -77534,23 +77151,23 @@ var Three = (function (exports) {
   			meshOutputGroup = meshOutputGroups[ oodIndex ];
 
   			materialNameOrg = meshOutputGroup.materialName;
-  			if ( this$1.rawMesh.faceType < 4 ) {
+  			if ( this.rawMesh.faceType < 4 ) {
 
   				materialName = materialNameOrg + ( haveVertexColors ? '_vertexColor' : '' ) + ( meshOutputGroup.smoothingGroup === 0 ? '_flat' : '' );
   			} else {
 
-  				materialName = this$1.rawMesh.faceType === 6 ? 'defaultPointMaterial' : 'defaultLineMaterial';
+  				materialName = this.rawMesh.faceType === 6 ? 'defaultPointMaterial' : 'defaultLineMaterial';
 
   			}
-  			materialOrg = this$1.materials[ materialNameOrg ];
-  			material = this$1.materials[ materialName ];
+  			materialOrg = this.materials[ materialNameOrg ];
+  			material = this.materials[ materialName ];
 
   			// both original and derived names do not lead to an existing material => need to use a default material
   			if ( ! LoaderSupport.Validator.isValid( materialOrg ) && ! LoaderSupport.Validator.isValid( material ) ) {
 
   				var defaultMaterialName = haveVertexColors ? 'defaultVertexColorMaterial' : 'defaultMaterial';
-  				materialOrg = this$1.materials[ defaultMaterialName ];
-  				if ( this$1.logging.enabled ) { console.warn( 'object_group "' + meshOutputGroup.objectName + '_' +
+  				materialOrg = this.materials[ defaultMaterialName ];
+  				if ( this.logging.enabled ) { console.warn( 'object_group "' + meshOutputGroup.objectName + '_' +
   					meshOutputGroup.groupName + '" was defined with unresolvable material "' +
   					materialNameOrg + '"! Assigning "' + defaultMaterialName + '".' ); }
   				materialNameOrg = defaultMaterialName;
@@ -77580,10 +77197,10 @@ var Three = (function (exports) {
   						materialCloneInstructions: materialCloneInstructions
   					}
   				};
-  				this$1.callbackMeshBuilder( payload );
+  				this.callbackMeshBuilder( payload );
 
   				// fake entry for async; sync Parser always works on material references (Builder update directly visible here)
-  				if ( this$1.useAsync ) { this$1.materials[ materialName ] = materialCloneInstructions; }
+  				if ( this.useAsync ) { this.materials[ materialName ] = materialCloneInstructions; }
 
   			}
 
@@ -77599,7 +77216,7 @@ var Three = (function (exports) {
   					materialIndex++;
 
   				}
-  				materialGroupLength = this$1.useIndices ? meshOutputGroup.indices.length : meshOutputGroup.vertices.length / 3;
+  				materialGroupLength = this.useIndices ? meshOutputGroup.indices.length : meshOutputGroup.vertices.length / 3;
   				materialGroup = {
   					start: materialGroupOffset,
   					count: materialGroupLength,
@@ -77644,12 +77261,12 @@ var Three = (function (exports) {
 
   			}
 
-  			if ( this$1.logging.enabled && this$1.logging.debug ) {
+  			if ( this.logging.enabled && this.logging.debug ) {
   				var materialIndexLine = LoaderSupport.Validator.isValid( selectedMaterialIndex ) ? '\n\t\tmaterialIndex: ' + selectedMaterialIndex : '';
-  				var createdReport = '\tOutput Object no.: ' + this$1.outputObjectCount +
+  				var createdReport = '\tOutput Object no.: ' + this.outputObjectCount +
   					'\n\t\tgroupName: ' + meshOutputGroup.groupName +
   					'\n\t\tIndex: ' + meshOutputGroup.index +
-  					'\n\t\tfaceType: ' + this$1.rawMesh.faceType +
+  					'\n\t\tfaceType: ' + this.rawMesh.faceType +
   					'\n\t\tmaterialName: ' + meshOutputGroup.materialName +
   					'\n\t\tsmoothingGroup: ' + meshOutputGroup.smoothingGroup +
   					materialIndexLine +
@@ -77761,8 +77378,6 @@ var Three = (function (exports) {
   	},
 
   	parse: function ( data, url ) {
-  		var this$1 = this;
-
 
   		function parseHeader( data ) {
 
@@ -77947,9 +77562,9 @@ var Three = (function (exports) {
 
   				if ( offset.x !== undefined ) {
 
-  					position.push( dataview.getFloat32( row + offset.x, this$1.littleEndian ) );
-  					position.push( dataview.getFloat32( row + offset.y, this$1.littleEndian ) );
-  					position.push( dataview.getFloat32( row + offset.z, this$1.littleEndian ) );
+  					position.push( dataview.getFloat32( row + offset.x, this.littleEndian ) );
+  					position.push( dataview.getFloat32( row + offset.y, this.littleEndian ) );
+  					position.push( dataview.getFloat32( row + offset.z, this.littleEndian ) );
 
   				}
 
@@ -77963,9 +77578,9 @@ var Three = (function (exports) {
 
   				if ( offset.normal_x !== undefined ) {
 
-  					normal.push( dataview.getFloat32( row + offset.normal_x, this$1.littleEndian ) );
-  					normal.push( dataview.getFloat32( row + offset.normal_y, this$1.littleEndian ) );
-  					normal.push( dataview.getFloat32( row + offset.normal_z, this$1.littleEndian ) );
+  					normal.push( dataview.getFloat32( row + offset.normal_x, this.littleEndian ) );
+  					normal.push( dataview.getFloat32( row + offset.normal_y, this.littleEndian ) );
+  					normal.push( dataview.getFloat32( row + offset.normal_z, this.littleEndian ) );
 
   				}
 
@@ -80021,8 +79636,6 @@ var Three = (function (exports) {
   };
 
   CatmullRomCurve3.prototype.copy = function ( source ) {
-  	var this$1 = this;
-
 
   	Curve.prototype.copy.call( this, source );
 
@@ -80032,7 +79645,7 @@ var Three = (function (exports) {
 
   		var point = source.points[ i ];
 
-  		this$1.points.push( point.clone() );
+  		this.points.push( point.clone() );
 
   	}
 
@@ -80045,8 +79658,6 @@ var Three = (function (exports) {
   };
 
   CatmullRomCurve3.prototype.toJSON = function () {
-  	var this$1 = this;
-
 
   	var data = Curve.prototype.toJSON.call( this );
 
@@ -80054,7 +79665,7 @@ var Three = (function (exports) {
 
   	for ( var i = 0, l = this.points.length; i < l; i ++ ) {
 
-  		var point = this$1.points[ i ];
+  		var point = this.points[ i ];
   		data.points.push( point.toArray() );
 
   	}
@@ -80068,8 +79679,6 @@ var Three = (function (exports) {
   };
 
   CatmullRomCurve3.prototype.fromJSON = function ( json ) {
-  	var this$1 = this;
-
 
   	Curve.prototype.fromJSON.call( this, json );
 
@@ -80078,7 +79687,7 @@ var Three = (function (exports) {
   	for ( var i = 0, l = json.points.length; i < l; i ++ ) {
 
   		var point = json.points[ i ];
-  		this$1.points.push( new Vector3().fromArray( point ) );
+  		this.points.push( new Vector3().fromArray( point ) );
 
   	}
 
@@ -80655,8 +80264,6 @@ var Three = (function (exports) {
   };
 
   SplineCurve.prototype.copy = function ( source ) {
-  	var this$1 = this;
-
 
   	Curve.prototype.copy.call( this, source );
 
@@ -80666,7 +80273,7 @@ var Three = (function (exports) {
 
   		var point = source.points[ i ];
 
-  		this$1.points.push( point.clone() );
+  		this.points.push( point.clone() );
 
   	}
 
@@ -80675,8 +80282,6 @@ var Three = (function (exports) {
   };
 
   SplineCurve.prototype.toJSON = function () {
-  	var this$1 = this;
-
 
   	var data = Curve.prototype.toJSON.call( this );
 
@@ -80684,7 +80289,7 @@ var Three = (function (exports) {
 
   	for ( var i = 0, l = this.points.length; i < l; i ++ ) {
 
-  		var point = this$1.points[ i ];
+  		var point = this.points[ i ];
   		data.points.push( point.toArray() );
 
   	}
@@ -80694,8 +80299,6 @@ var Three = (function (exports) {
   };
 
   SplineCurve.prototype.fromJSON = function ( json ) {
-  	var this$1 = this;
-
 
   	Curve.prototype.fromJSON.call( this, json );
 
@@ -80704,7 +80307,7 @@ var Three = (function (exports) {
   	for ( var i = 0, l = json.points.length; i < l; i ++ ) {
 
   		var point = json.points[ i ];
-  		this$1.points.push( new Vector2().fromArray( point ) );
+  		this.points.push( new Vector2().fromArray( point ) );
 
   	}
 
@@ -80770,8 +80373,6 @@ var Three = (function (exports) {
   	// 4. Return curve.getPointAt(t')
 
   	getPoint: function ( t ) {
-  		var this$1 = this;
-
 
   		var d = t * this.getLength();
   		var curveLengths = this.getCurveLengths();
@@ -80784,7 +80385,7 @@ var Three = (function (exports) {
   			if ( curveLengths[ i ] >= d ) {
 
   				var diff = curveLengths[ i ] - d;
-  				var curve = this$1.curves[ i ];
+  				var curve = this.curves[ i ];
 
   				var segmentLength = curve.getLength();
   				var u = segmentLength === 0 ? 0 : 1 - diff / segmentLength;
@@ -80827,8 +80428,6 @@ var Three = (function (exports) {
   	// We cannot overwrite getLengths() because UtoT mapping uses it.
 
   	getCurveLengths: function () {
-  		var this$1 = this;
-
 
   		// We use cache values if curves and cache array are same length
 
@@ -80845,7 +80444,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0, l = this.curves.length; i < l; i ++ ) {
 
-  			sums += this$1.curves[ i ].getLength();
+  			sums += this.curves[ i ].getLength();
   			lengths.push( sums );
 
   		}
@@ -80857,8 +80456,6 @@ var Three = (function (exports) {
   	},
 
   	getSpacedPoints: function ( divisions ) {
-  		var this$1 = this;
-
 
   		if ( divisions === undefined ) { divisions = 40; }
 
@@ -80866,7 +80463,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i <= divisions; i ++ ) {
 
-  			points.push( this$1.getPoint( i / divisions ) );
+  			points.push( this.getPoint( i / divisions ) );
 
   		}
 
@@ -80920,8 +80517,6 @@ var Three = (function (exports) {
   	},
 
   	copy: function ( source ) {
-  		var this$1 = this;
-
 
   		Curve.prototype.copy.call( this, source );
 
@@ -80931,7 +80526,7 @@ var Three = (function (exports) {
 
   			var curve = source.curves[ i ];
 
-  			this$1.curves.push( curve.clone() );
+  			this.curves.push( curve.clone() );
 
   		}
 
@@ -80942,8 +80537,6 @@ var Three = (function (exports) {
   	},
 
   	toJSON: function () {
-  		var this$1 = this;
-
 
   		var data = Curve.prototype.toJSON.call( this );
 
@@ -80952,7 +80545,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0, l = this.curves.length; i < l; i ++ ) {
 
-  			var curve = this$1.curves[ i ];
+  			var curve = this.curves[ i ];
   			data.curves.push( curve.toJSON() );
 
   		}
@@ -80962,8 +80555,6 @@ var Three = (function (exports) {
   	},
 
   	fromJSON: function ( json ) {
-  		var this$1 = this;
-
 
   		Curve.prototype.fromJSON.call( this, json );
 
@@ -80973,7 +80564,7 @@ var Three = (function (exports) {
   		for ( var i = 0, l = json.curves.length; i < l; i ++ ) {
 
   			var curve = json.curves[ i ];
-  			this$1.curves.push( new Curves$1[ curve.type ]().fromJSON( curve ) );
+  			this.curves.push( new Curves$1[ curve.type ]().fromJSON( curve ) );
 
   		}
 
@@ -81005,14 +80596,12 @@ var Three = (function (exports) {
   	constructor: Path,
 
   	setFromPoints: function ( points ) {
-  		var this$1 = this;
-
 
   		this.moveTo( points[ 0 ].x, points[ 0 ].y );
 
   		for ( var i = 1, l = points.length; i < l; i ++ ) {
 
-  			this$1.lineTo( points[ i ].x, points[ i ].y );
+  			this.lineTo( points[ i ].x, points[ i ].y );
 
   		}
 
@@ -81178,14 +80767,12 @@ var Three = (function (exports) {
   	constructor: Shape,
 
   	getPointsHoles: function ( divisions ) {
-  		var this$1 = this;
-
 
   		var holesPts = [];
 
   		for ( var i = 0, l = this.holes.length; i < l; i ++ ) {
 
-  			holesPts[ i ] = this$1.holes[ i ].getPoints( divisions );
+  			holesPts[ i ] = this.holes[ i ].getPoints( divisions );
 
   		}
 
@@ -81207,8 +80794,6 @@ var Three = (function (exports) {
   	},
 
   	copy: function ( source ) {
-  		var this$1 = this;
-
 
   		Path.prototype.copy.call( this, source );
 
@@ -81218,7 +80803,7 @@ var Three = (function (exports) {
 
   			var hole = source.holes[ i ];
 
-  			this$1.holes.push( hole.clone() );
+  			this.holes.push( hole.clone() );
 
   		}
 
@@ -81227,8 +80812,6 @@ var Three = (function (exports) {
   	},
 
   	toJSON: function () {
-  		var this$1 = this;
-
 
   		var data = Path.prototype.toJSON.call( this );
 
@@ -81237,7 +80820,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0, l = this.holes.length; i < l; i ++ ) {
 
-  			var hole = this$1.holes[ i ];
+  			var hole = this.holes[ i ];
   			data.holes.push( hole.toJSON() );
 
   		}
@@ -81247,8 +80830,6 @@ var Three = (function (exports) {
   	},
 
   	fromJSON: function ( json ) {
-  		var this$1 = this;
-
 
   		Path.prototype.fromJSON.call( this, json );
 
@@ -81258,7 +80839,7 @@ var Three = (function (exports) {
   		for ( var i = 0, l = json.holes.length; i < l; i ++ ) {
 
   			var hole = json.holes[ i ];
-  			this$1.holes.push( new Path().fromJSON( hole ) );
+  			this.holes.push( new Path().fromJSON( hole ) );
 
   		}
 
@@ -83476,8 +83057,6 @@ var Three = (function (exports) {
 
   	},
   	parse: function ( arraybuffer, path ) {
-  		var this$1 = this;
-
 
   		this.group = new Group();
   		this.position = 0;
@@ -83488,7 +83067,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.meshes.length; i ++ ) {
 
-  			this$1.group.add( this$1.meshes[ i ] );
+  			this.group.add( this.meshes[ i ] );
 
   		}
 
@@ -83496,8 +83075,6 @@ var Three = (function (exports) {
 
   	},
   	readFile: function ( arraybuffer, path ) {
-  		var this$1 = this;
-
 
   		var data = new DataView( arraybuffer );
   		var chunk = this.readChunk( data );
@@ -83510,21 +83087,21 @@ var Three = (function (exports) {
 
   				if ( next === M3D_VERSION ) {
 
-  					var version = this$1.readDWord( data );
-  					this$1.debugMessage( '3DS file version: ' + version );
+  					var version = this.readDWord( data );
+  					this.debugMessage( '3DS file version: ' + version );
 
   				} else if ( next === MDATA ) {
 
-  					this$1.resetPosition( data );
-  					this$1.readMeshData( data, path );
+  					this.resetPosition( data );
+  					this.readMeshData( data, path );
 
   				} else {
 
-  					this$1.debugMessage( 'Unknown main chunk: ' + next.toString( 16 ) );
+  					this.debugMessage( 'Unknown main chunk: ' + next.toString( 16 ) );
 
   				}
 
-  				next = this$1.nextChunk( data, chunk );
+  				next = this.nextChunk( data, chunk );
 
   			}
 
@@ -83534,8 +83111,6 @@ var Three = (function (exports) {
 
   	},
   	readMeshData: function ( data, path ) {
-  		var this$1 = this;
-
 
   		var chunk = this.readChunk( data );
   		var next = this.nextChunk( data, chunk );
@@ -83544,41 +83119,39 @@ var Three = (function (exports) {
 
   			if ( next === MESH_VERSION ) {
 
-  				var version = + this$1.readDWord( data );
-  				this$1.debugMessage( 'Mesh Version: ' + version );
+  				var version = + this.readDWord( data );
+  				this.debugMessage( 'Mesh Version: ' + version );
 
   			} else if ( next === MASTER_SCALE ) {
 
-  				var scale = this$1.readFloat( data );
-  				this$1.debugMessage( 'Master scale: ' + scale );
-  				this$1.group.scale.set( scale, scale, scale );
+  				var scale = this.readFloat( data );
+  				this.debugMessage( 'Master scale: ' + scale );
+  				this.group.scale.set( scale, scale, scale );
 
   			} else if ( next === NAMED_OBJECT ) {
 
-  				this$1.debugMessage( 'Named Object' );
-  				this$1.resetPosition( data );
-  				this$1.readNamedObject( data );
+  				this.debugMessage( 'Named Object' );
+  				this.resetPosition( data );
+  				this.readNamedObject( data );
 
   			} else if ( next === MAT_ENTRY ) {
 
-  				this$1.debugMessage( 'Material' );
-  				this$1.resetPosition( data );
-  				this$1.readMaterialEntry( data, path );
+  				this.debugMessage( 'Material' );
+  				this.resetPosition( data );
+  				this.readMaterialEntry( data, path );
 
   			} else {
 
-  				this$1.debugMessage( 'Unknown MDATA chunk: ' + next.toString( 16 ) );
+  				this.debugMessage( 'Unknown MDATA chunk: ' + next.toString( 16 ) );
 
   			}
 
-  			next = this$1.nextChunk( data, chunk );
+  			next = this.nextChunk( data, chunk );
 
   		}
 
   	},
   	readNamedObject: function ( data ) {
-  		var this$1 = this;
-
 
   		var chunk = this.readChunk( data );
   		var name = this.readString( data, 64 );
@@ -83589,18 +83162,18 @@ var Three = (function (exports) {
 
   			if ( next === N_TRI_OBJECT ) {
 
-  				this$1.resetPosition( data );
-  				var mesh = this$1.readMesh( data );
+  				this.resetPosition( data );
+  				var mesh = this.readMesh( data );
   				mesh.name = name;
-  				this$1.meshes.push( mesh );
+  				this.meshes.push( mesh );
 
   			} else {
 
-  				this$1.debugMessage( 'Unknown named object chunk: ' + next.toString( 16 ) );
+  				this.debugMessage( 'Unknown named object chunk: ' + next.toString( 16 ) );
 
   			}
 
-  			next = this$1.nextChunk( data, chunk );
+  			next = this.nextChunk( data, chunk );
 
   		}
 
@@ -83608,8 +83181,6 @@ var Three = (function (exports) {
 
   	},
   	readMaterialEntry: function ( data, path ) {
-  		var this$1 = this;
-
 
   		var chunk = this.readChunk( data );
   		var next = this.nextChunk( data, chunk );
@@ -83619,82 +83190,82 @@ var Three = (function (exports) {
 
   			if ( next === MAT_NAME ) {
 
-  				material.name = this$1.readString( data, 64 );
-  				this$1.debugMessage( '   Name: ' + material.name );
+  				material.name = this.readString( data, 64 );
+  				this.debugMessage( '   Name: ' + material.name );
 
   			} else if ( next === MAT_WIRE ) {
 
-  				this$1.debugMessage( '   Wireframe' );
+  				this.debugMessage( '   Wireframe' );
   				material.wireframe = true;
 
   			} else if ( next === MAT_WIRE_SIZE ) {
 
-  				var value = this$1.readByte( data );
+  				var value = this.readByte( data );
   				material.wireframeLinewidth = value;
-  				this$1.debugMessage( '   Wireframe Thickness: ' + value );
+  				this.debugMessage( '   Wireframe Thickness: ' + value );
 
   			} else if ( next === MAT_TWO_SIDE ) {
 
   				material.side = DoubleSide;
-  				this$1.debugMessage( '   DoubleSided' );
+  				this.debugMessage( '   DoubleSided' );
 
   			} else if ( next === MAT_ADDITIVE ) {
 
-  				this$1.debugMessage( '   Additive Blending' );
+  				this.debugMessage( '   Additive Blending' );
   				material.blending = AdditiveBlending;
 
   			} else if ( next === MAT_DIFFUSE ) {
 
-  				this$1.debugMessage( '   Diffuse Color' );
-  				material.color = this$1.readColor( data );
+  				this.debugMessage( '   Diffuse Color' );
+  				material.color = this.readColor( data );
 
   			} else if ( next === MAT_SPECULAR ) {
 
-  				this$1.debugMessage( '   Specular Color' );
-  				material.specular = this$1.readColor( data );
+  				this.debugMessage( '   Specular Color' );
+  				material.specular = this.readColor( data );
 
   			} else if ( next === MAT_AMBIENT ) {
 
-  				this$1.debugMessage( '   Ambient color' );
-  				material.color = this$1.readColor( data );
+  				this.debugMessage( '   Ambient color' );
+  				material.color = this.readColor( data );
 
   			} else if ( next === MAT_SHININESS ) {
 
-  				var shininess = this$1.readWord( data );
+  				var shininess = this.readWord( data );
   				material.shininess = shininess;
-  				this$1.debugMessage( '   Shininess : ' + shininess );
+  				this.debugMessage( '   Shininess : ' + shininess );
 
   			} else if ( next === MAT_TEXMAP ) {
 
-  				this$1.debugMessage( '   ColorMap' );
-  				this$1.resetPosition( data );
-  				material.map = this$1.readMap( data, path );
+  				this.debugMessage( '   ColorMap' );
+  				this.resetPosition( data );
+  				material.map = this.readMap( data, path );
 
   			} else if ( next === MAT_BUMPMAP ) {
 
-  				this$1.debugMessage( '   BumpMap' );
-  				this$1.resetPosition( data );
-  				material.bumpMap = this$1.readMap( data, path );
+  				this.debugMessage( '   BumpMap' );
+  				this.resetPosition( data );
+  				material.bumpMap = this.readMap( data, path );
 
   			} else if ( next === MAT_OPACMAP ) {
 
-  				this$1.debugMessage( '   OpacityMap' );
-  				this$1.resetPosition( data );
-  				material.alphaMap = this$1.readMap( data, path );
+  				this.debugMessage( '   OpacityMap' );
+  				this.resetPosition( data );
+  				material.alphaMap = this.readMap( data, path );
 
   			} else if ( next === MAT_SPECMAP ) {
 
-  				this$1.debugMessage( '   SpecularMap' );
-  				this$1.resetPosition( data );
-  				material.specularMap = this$1.readMap( data, path );
+  				this.debugMessage( '   SpecularMap' );
+  				this.resetPosition( data );
+  				material.specularMap = this.readMap( data, path );
 
   			} else {
 
-  				this$1.debugMessage( '   Unknown material chunk: ' + next.toString( 16 ) );
+  				this.debugMessage( '   Unknown material chunk: ' + next.toString( 16 ) );
 
   			}
 
-  			next = this$1.nextChunk( data, chunk );
+  			next = this.nextChunk( data, chunk );
 
   		}
 
@@ -83704,8 +83275,6 @@ var Three = (function (exports) {
 
   	},
   	readMesh: function ( data ) {
-  		var this$1 = this;
-
 
   		var chunk = this.readChunk( data );
   		var next = this.nextChunk( data, chunk );
@@ -83721,9 +83290,9 @@ var Three = (function (exports) {
 
   			if ( next === POINT_ARRAY ) {
 
-  				var points = this$1.readWord( data );
+  				var points = this.readWord( data );
 
-  				this$1.debugMessage( '   Vertex: ' + points );
+  				this.debugMessage( '   Vertex: ' + points );
 
   				//BufferGeometry
 
@@ -83731,9 +83300,9 @@ var Three = (function (exports) {
 
   				for ( var i = 0; i < points; i ++ )		{
 
-  					vertices.push( this$1.readFloat( data ) );
-  					vertices.push( this$1.readFloat( data ) );
-  					vertices.push( this$1.readFloat( data ) );
+  					vertices.push( this.readFloat( data ) );
+  					vertices.push( this.readFloat( data ) );
+  					vertices.push( this.readFloat( data ) );
 
   				}
 
@@ -83741,14 +83310,14 @@ var Three = (function (exports) {
 
   			} else if ( next === FACE_ARRAY ) {
 
-  				this$1.resetPosition( data );
-  				this$1.readFaceArray( data, mesh );
+  				this.resetPosition( data );
+  				this.readFaceArray( data, mesh );
 
   			} else if ( next === TEX_VERTS ) {
 
-  				var texels = this$1.readWord( data );
+  				var texels = this.readWord( data );
 
-  				this$1.debugMessage( '   UV: ' + texels );
+  				this.debugMessage( '   UV: ' + texels );
 
   				//BufferGeometry
 
@@ -83756,20 +83325,20 @@ var Three = (function (exports) {
 
   				for ( var i = 0; i < texels; i ++ )		{
 
-  					uvs.push( this$1.readFloat( data ) );
-  					uvs.push( this$1.readFloat( data ) );
+  					uvs.push( this.readFloat( data ) );
+  					uvs.push( this.readFloat( data ) );
 
   				}
 
   				geometry.addAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
   			} else if ( next === MESH_MATRIX ) {
 
-  				this$1.debugMessage( '   Tranformation Matrix (TODO)' );
+  				this.debugMessage( '   Tranformation Matrix (TODO)' );
 
   				var values = [];
   				for ( var i = 0; i < 12; i ++ ) {
 
-  					values[ i ] = this$1.readFloat( data );
+  					values[ i ] = this.readFloat( data );
 
   				}
 
@@ -83809,11 +83378,11 @@ var Three = (function (exports) {
 
   			} else {
 
-  				this$1.debugMessage( '   Unknown mesh chunk: ' + next.toString( 16 ) );
+  				this.debugMessage( '   Unknown mesh chunk: ' + next.toString( 16 ) );
 
   			}
 
-  			next = this$1.nextChunk( data, chunk );
+  			next = this.nextChunk( data, chunk );
 
   		}
 
@@ -83825,8 +83394,6 @@ var Three = (function (exports) {
 
   	},
   	readFaceArray: function ( data, mesh ) {
-  		var this$1 = this;
-
 
   		var chunk = this.readChunk( data );
   		var faces = this.readWord( data );
@@ -83837,9 +83404,9 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < faces; ++ i ) {
 
-  			index.push( this$1.readWord( data ), this$1.readWord( data ), this$1.readWord( data ) );
+  			index.push( this.readWord( data ), this.readWord( data ), this.readWord( data ) );
 
-  			var visibility = this$1.readWord( data );
+  			var visibility = this.readWord( data );
 
   		}
 
@@ -83849,17 +83416,17 @@ var Three = (function (exports) {
 
   		while ( this.position < chunk.end ) {
 
-  			var chunk = this$1.readChunk( data );
+  			var chunk = this.readChunk( data );
 
   			if ( chunk.id === MSH_MAT_GROUP ) {
 
-  				this$1.debugMessage( '      Material Group' );
+  				this.debugMessage( '      Material Group' );
 
-  				this$1.resetPosition( data );
+  				this.resetPosition( data );
 
-  				var group = this$1.readMaterialGroup( data );
+  				var group = this.readMaterialGroup( data );
 
-  				var material = this$1.materials[ group.name ];
+  				var material = this.materials[ group.name ];
 
   				if ( material !== undefined )	{
 
@@ -83875,11 +83442,11 @@ var Three = (function (exports) {
 
   			} else {
 
-  				this$1.debugMessage( '      Unknown face array chunk: ' + chunk.toString( 16 ) );
+  				this.debugMessage( '      Unknown face array chunk: ' + chunk.toString( 16 ) );
 
   			}
 
-  			this$1.endChunk( chunk );
+  			this.endChunk( chunk );
 
   		}
 
@@ -83887,8 +83454,6 @@ var Three = (function (exports) {
 
   	},
   	readMap: function ( data, path ) {
-  		var this$1 = this;
-
 
   		var chunk = this.readChunk( data );
   		var next = this.nextChunk( data, chunk );
@@ -83901,38 +83466,38 @@ var Three = (function (exports) {
 
   			if ( next === MAT_MAPNAME ) {
 
-  				var name = this$1.readString( data, 128 );
+  				var name = this.readString( data, 128 );
   				texture = loader.load( name );
 
-  				this$1.debugMessage( '      File: ' + path + name );
+  				this.debugMessage( '      File: ' + path + name );
 
   			} else if ( next === MAT_MAP_UOFFSET ) {
 
-  				texture.offset.x = this$1.readFloat( data );
-  				this$1.debugMessage( '      OffsetX: ' + texture.offset.x );
+  				texture.offset.x = this.readFloat( data );
+  				this.debugMessage( '      OffsetX: ' + texture.offset.x );
 
   			} else if ( next === MAT_MAP_VOFFSET ) {
 
-  				texture.offset.y = this$1.readFloat( data );
-  				this$1.debugMessage( '      OffsetY: ' + texture.offset.y );
+  				texture.offset.y = this.readFloat( data );
+  				this.debugMessage( '      OffsetY: ' + texture.offset.y );
 
   			} else if ( next === MAT_MAP_USCALE ) {
 
-  				texture.repeat.x = this$1.readFloat( data );
-  				this$1.debugMessage( '      RepeatX: ' + texture.repeat.x );
+  				texture.repeat.x = this.readFloat( data );
+  				this.debugMessage( '      RepeatX: ' + texture.repeat.x );
 
   			} else if ( next === MAT_MAP_VSCALE ) {
 
-  				texture.repeat.y = this$1.readFloat( data );
-  				this$1.debugMessage( '      RepeatY: ' + texture.repeat.y );
+  				texture.repeat.y = this.readFloat( data );
+  				this.debugMessage( '      RepeatY: ' + texture.repeat.y );
 
   			} else {
 
-  				this$1.debugMessage( '      Unknown map chunk: ' + next.toString( 16 ) );
+  				this.debugMessage( '      Unknown map chunk: ' + next.toString( 16 ) );
 
   			}
 
-  			next = this$1.nextChunk( data, chunk );
+  			next = this.nextChunk( data, chunk );
 
   		}
 
@@ -83942,8 +83507,6 @@ var Three = (function (exports) {
 
   	},
   	readMaterialGroup: function ( data ) {
-  		var this$1 = this;
-
 
   		var chunk = this.readChunk( data );
   		var name = this.readString( data, 64 );
@@ -83955,7 +83518,7 @@ var Three = (function (exports) {
   		var index = [];
   		for ( var i = 0; i < numFaces; ++ i ) {
 
-  			index.push( this$1.readWord( data ) );
+  			index.push( this.readWord( data ) );
 
   		}
 
@@ -84095,14 +83658,12 @@ var Three = (function (exports) {
 
   	},
   	readString: function ( data, maxLength ) {
-  		var this$1 = this;
-
 
   		var s = '';
 
   		for ( var i = 0; i < maxLength; i ++ ) {
 
-  			var c = this$1.readByte( data );
+  			var c = this.readByte( data );
   			if ( ! c ) {
 
   				break;
@@ -87403,14 +86964,12 @@ var Three = (function (exports) {
   	};
 
   	this.end = function ( renderCallback ) {
-  		var this$1 = this;
-
 
   		if ( this.count === 0 ) { return; }
 
   		for ( var i = this.count * 3; i < this.positionArray.length; i ++ ) {
 
-  			this$1.positionArray[ i ] = 0.0;
+  			this.positionArray[ i ] = 0.0;
 
   		}
 
@@ -87441,8 +87000,6 @@ var Three = (function (exports) {
   	// a fixed distance, determined by strength and subtract.
 
   	this.addBall = function ( ballx, bally, ballz, strength, subtract, colors ) {
-  		var this$1 = this;
-
 
   		var sign = Math.sign( strength );
   		strength = Math.abs( strength );
@@ -87503,23 +87060,23 @@ var Three = (function (exports) {
   		var x, y, z, y_offset, z_offset, fx, fy, fz, fz2, fy2, val;
   		for ( z = min_z; z < max_z; z ++ ) {
 
-  			z_offset = this$1.size2 * z;
-  			fz = z / this$1.size - ballz;
+  			z_offset = this.size2 * z;
+  			fz = z / this.size - ballz;
   			fz2 = fz * fz;
 
   			for ( y = min_y; y < max_y; y ++ ) {
 
-  				y_offset = z_offset + this$1.size * y;
-  				fy = y / this$1.size - bally;
+  				y_offset = z_offset + this.size * y;
+  				fy = y / this.size - bally;
   				fy2 = fy * fy;
 
   				for ( x = min_x; x < max_x; x ++ ) {
 
-  					fx = x / this$1.size - ballx;
+  					fx = x / this.size - ballx;
   					val = strength / ( 0.000001 + fx * fx + fy2 + fz2 ) - subtract;
   					if ( val > 0.0 ) {
 
-  						this$1.field[ y_offset + x ] += val * sign;
+  						this.field[ y_offset + x ] += val * sign;
 
   						// optimization
   						// http://www.geisswerks.com/ryan/BLOBS/blobs.html
@@ -87527,9 +87084,9 @@ var Three = (function (exports) {
   							Math.sqrt( ( x - xs ) * ( x - xs ) + ( y - ys ) * ( y - ys ) + ( z - zs ) * ( z - zs ) ) / radius;
   						var contrib =
   							1 - ratio * ratio * ratio * ( ratio * ( ratio * 6 - 15 ) + 10 );
-  						this$1.palette[ ( y_offset + x ) * 3 + 0 ] += ballColor.r * contrib;
-  						this$1.palette[ ( y_offset + x ) * 3 + 1 ] += ballColor.g * contrib;
-  						this$1.palette[ ( y_offset + x ) * 3 + 2 ] += ballColor.b * contrib;
+  						this.palette[ ( y_offset + x ) * 3 + 0 ] += ballColor.r * contrib;
+  						this.palette[ ( y_offset + x ) * 3 + 1 ] += ballColor.g * contrib;
+  						this.palette[ ( y_offset + x ) * 3 + 2 ] += ballColor.b * contrib;
 
   					}
 
@@ -87675,8 +87232,6 @@ var Three = (function (exports) {
   	/////////////////////////////////////
 
   	this.reset = function () {
-  		var this$1 = this;
-
 
   		var i;
 
@@ -87684,9 +87239,9 @@ var Three = (function (exports) {
 
   		for ( i = 0; i < this.size3; i ++ ) {
 
-  			this$1.normal_cache[ i * 3 ] = 0.0;
-  			this$1.field[ i ] = 0.0;
-  			this$1.palette[ i * 3 ] = this$1.palette[ i * 3 + 1 ] = this$1.palette[
+  			this.normal_cache[ i * 3 ] = 0.0;
+  			this.field[ i ] = 0.0;
+  			this.palette[ i * 3 ] = this.palette[ i * 3 + 1 ] = this.palette[
   				i * 3 + 2
   			] = 0.0;
 
@@ -87695,8 +87250,6 @@ var Three = (function (exports) {
   	};
 
   	this.render = function ( renderCallback ) {
-  		var this$1 = this;
-
 
   		this.begin();
 
@@ -87706,20 +87259,20 @@ var Three = (function (exports) {
 
   		for ( var z = 1; z < smin2; z ++ ) {
 
-  			var z_offset = this$1.size2 * z;
-  			var fz = ( z - this$1.halfsize ) / this$1.halfsize; //+ 1
+  			var z_offset = this.size2 * z;
+  			var fz = ( z - this.halfsize ) / this.halfsize; //+ 1
 
   			for ( var y = 1; y < smin2; y ++ ) {
 
-  				var y_offset = z_offset + this$1.size * y;
-  				var fy = ( y - this$1.halfsize ) / this$1.halfsize; //+ 1
+  				var y_offset = z_offset + this.size * y;
+  				var fy = ( y - this.halfsize ) / this.halfsize; //+ 1
 
   				for ( var x = 1; x < smin2; x ++ ) {
 
-  					var fx = ( x - this$1.halfsize ) / this$1.halfsize; //+ 1
+  					var fx = ( x - this.halfsize ) / this.halfsize; //+ 1
   					var q = y_offset + x;
 
-  					polygonize( fx, fy, fz, q, this$1.isolation, renderCallback );
+  					polygonize( fx, fy, fz, q, this.isolation, renderCallback );
 
   				}
 
@@ -88366,8 +87919,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var Lut = function ( colormap, numberofcolors ) {
-  	var this$1 = this;
-
 
   	this.lut = [];
   	this.map = ColorMapKeywords[ colormap ];
@@ -88380,17 +87931,17 @@ var Three = (function (exports) {
 
   		for ( var j = 0; j < this.map.length - 1; j ++ ) {
 
-  			if ( i >= this$1.map[ j ][ 0 ] && i < this$1.map[ j + 1 ][ 0 ] ) {
+  			if ( i >= this.map[ j ][ 0 ] && i < this.map[ j + 1 ][ 0 ] ) {
 
-  				var min = this$1.map[ j ][ 0 ];
-  				var max = this$1.map[ j + 1 ][ 0 ];
+  				var min = this.map[ j ][ 0 ];
+  				var max = this.map[ j + 1 ][ 0 ];
 
-  				var minColor = new Color( 0xffffff ).setHex( this$1.map[ j ][ 1 ] );
-  				var maxColor = new Color( 0xffffff ).setHex( this$1.map[ j + 1 ][ 1 ] );
+  				var minColor = new Color( 0xffffff ).setHex( this.map[ j ][ 1 ] );
+  				var maxColor = new Color( 0xffffff ).setHex( this.map[ j + 1 ][ 1 ] );
 
   				var color = minColor.lerp( maxColor, ( i - min ) / ( max - min ) );
 
-  				this$1.lut.push( color );
+  				this.lut.push( color );
 
   			}
 
@@ -88493,8 +88044,6 @@ var Three = (function (exports) {
   	},
 
   	setLegendOn: function ( parameters ) {
-  		var this$1 = this;
-
 
   		if ( parameters === undefined ) {
 
@@ -88538,13 +88087,13 @@ var Three = (function (exports) {
 
   			for ( var j = this.map.length - 1; j >= 0; j -- ) {
 
-  				if ( i < this$1.map[ j ][ 0 ] && i >= this$1.map[ j - 1 ][ 0 ] ) {
+  				if ( i < this.map[ j ][ 0 ] && i >= this.map[ j - 1 ][ 0 ] ) {
 
-  					var min = this$1.map[ j - 1 ][ 0 ];
-  					var max = this$1.map[ j ][ 0 ];
+  					var min = this.map[ j - 1 ][ 0 ];
+  					var max = this.map[ j ][ 0 ];
 
-  					var minColor = new Color( 0xffffff ).setHex( this$1.map[ j - 1 ][ 1 ] );
-  					var maxColor = new Color( 0xffffff ).setHex( this$1.map[ j ][ 1 ] );
+  					var minColor = new Color( 0xffffff ).setHex( this.map[ j - 1 ][ 1 ] );
+  					var maxColor = new Color( 0xffffff ).setHex( this.map[ j ][ 1 ] );
 
   					var color = minColor.lerp( maxColor, ( i - min ) / ( max - min ) );
 
@@ -88636,8 +88185,6 @@ var Three = (function (exports) {
   	},
 
   	setLegendLabels: function ( parameters, callback ) {
-  		var this$1 = this;
-
 
   		if ( ! this.legend ) {
 
@@ -88734,7 +88281,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < this.legend.labels.ticks; i ++ ) {
 
-  				var value = ( this$1.maxV - this$1.minV ) / ( this$1.legend.labels.ticks - 1 ) * i + this$1.minV;
+  				var value = ( this.maxV - this.minV ) / ( this.legend.labels.ticks - 1 ) * i + this.minV;
 
   				if ( callback ) {
 
@@ -88742,13 +88289,13 @@ var Three = (function (exports) {
 
   				} else {
 
-  					if ( this$1.legend.labels.notation == 'scientific' ) {
+  					if ( this.legend.labels.notation == 'scientific' ) {
 
-  						value = value.toExponential( this$1.legend.labels.decimal );
+  						value = value.toExponential( this.legend.labels.decimal );
 
   					} else {
 
-  						value = value.toFixed( this$1.legend.labels.decimal );
+  						value = value.toFixed( this.legend.labels.decimal );
 
   					}
 
@@ -88757,7 +88304,7 @@ var Three = (function (exports) {
   				var canvasTick = document.createElement( 'canvas' );
   				var contextTick = canvasTick.getContext( '2d' );
 
-  				contextTick.font = 'Normal ' + this$1.legend.labels.fontsize + 'px ' + this$1.legend.labels.fontface;
+  				contextTick.font = 'Normal ' + this.legend.labels.fontsize + 'px ' + this.legend.labels.fontface;
 
   				contextTick.fillStyle = 'rgba(' + backgroundColor.r + ',' + backgroundColor.g + ',' + backgroundColor.b + ',' + backgroundColor.a + ')';
 
@@ -88767,7 +88314,7 @@ var Three = (function (exports) {
 
   				contextTick.fillStyle = 'rgba( 0, 0, 0, 1.0 )';
 
-  				contextTick.fillText( value.toString(), borderThickness, this$1.legend.labels.fontsize + borderThickness );
+  				contextTick.fillText( value.toString(), borderThickness, this.legend.labels.fontsize + borderThickness );
 
   				var txtTick = new CanvasTexture( canvasTick );
   				txtTick.minFilter = LinearFilter;
@@ -88778,19 +88325,19 @@ var Three = (function (exports) {
 
   				spriteTick.scale.set( 2, 1, 1.0 );
 
-  				if ( this$1.legend.layout == 'vertical' ) {
+  				if ( this.legend.layout == 'vertical' ) {
 
-  					var position = bottomPositionY + ( topPositionY - bottomPositionY ) * ( ( value - this$1.minV ) / ( this$1.maxV - this$1.minV ) );
+  					var position = bottomPositionY + ( topPositionY - bottomPositionY ) * ( ( value - this.minV ) / ( this.maxV - this.minV ) );
 
-  					spriteTick.position.set( this$1.legend.position.x + ( this$1.legend.dimensions.width * 2.7 ), position, this$1.legend.position.z );
+  					spriteTick.position.set( this.legend.position.x + ( this.legend.dimensions.width * 2.7 ), position, this.legend.position.z );
 
   				}
 
-  				if ( this$1.legend.layout == 'horizontal' ) {
+  				if ( this.legend.layout == 'horizontal' ) {
 
-  					var position = bottomPositionX + ( topPositionX - bottomPositionX ) * ( ( value - this$1.minV ) / ( this$1.maxV - this$1.minV ) );
+  					var position = bottomPositionX + ( topPositionX - bottomPositionX ) * ( ( value - this.minV ) / ( this.maxV - this.minV ) );
 
-  					if ( this$1.legend.labels.ticks > 5 ) {
+  					if ( this.legend.labels.ticks > 5 ) {
 
   						if ( i % 2 === 0 ) {
 
@@ -88808,30 +88355,30 @@ var Three = (function (exports) {
 
   					}
 
-  					spriteTick.position.set( position, this$1.legend.position.y - this$1.legend.dimensions.width * offset, this$1.legend.position.z );
+  					spriteTick.position.set( position, this.legend.position.y - this.legend.dimensions.width * offset, this.legend.position.z );
 
   				}
 
   				var material = new LineBasicMaterial( { color: 0x000000, linewidth: 2 } );
 
   				var points = [];
-  				if ( this$1.legend.layout == 'vertical' ) {
+  				if ( this.legend.layout == 'vertical' ) {
 
-  					var linePosition = ( this$1.legend.position.y - ( this$1.legend.dimensions.height * 0.5 ) + 0.01 ) + ( this$1.legend.dimensions.height ) * ( ( value - this$1.minV ) / ( this$1.maxV - this$1.minV ) * 0.99 );
+  					var linePosition = ( this.legend.position.y - ( this.legend.dimensions.height * 0.5 ) + 0.01 ) + ( this.legend.dimensions.height ) * ( ( value - this.minV ) / ( this.maxV - this.minV ) * 0.99 );
 
-  					points.push( new Vector3( this$1.legend.position.x + this$1.legend.dimensions.width * 0.55, linePosition, this$1.legend.position.z ) );
+  					points.push( new Vector3( this.legend.position.x + this.legend.dimensions.width * 0.55, linePosition, this.legend.position.z ) );
 
-  					points.push( new Vector3( this$1.legend.position.x + this$1.legend.dimensions.width * 0.7, linePosition, this$1.legend.position.z ) );
+  					points.push( new Vector3( this.legend.position.x + this.legend.dimensions.width * 0.7, linePosition, this.legend.position.z ) );
 
   				}
 
-  				if ( this$1.legend.layout == 'horizontal' ) {
+  				if ( this.legend.layout == 'horizontal' ) {
 
-  					var linePosition = ( this$1.legend.position.x - ( this$1.legend.dimensions.height * 0.5 ) + 0.01 ) + ( this$1.legend.dimensions.height ) * ( ( value - this$1.minV ) / ( this$1.maxV - this$1.minV ) * 0.99 );
+  					var linePosition = ( this.legend.position.x - ( this.legend.dimensions.height * 0.5 ) + 0.01 ) + ( this.legend.dimensions.height ) * ( ( value - this.minV ) / ( this.maxV - this.minV ) * 0.99 );
 
-  					points.push( new Vector3( linePosition, this$1.legend.position.y - this$1.legend.dimensions.width * 0.55, this$1.legend.position.z ) );
+  					points.push( new Vector3( linePosition, this.legend.position.y - this.legend.dimensions.width * 0.55, this.legend.position.z ) );
 
-  					points.push( new Vector3( linePosition, this$1.legend.position.y - this$1.legend.dimensions.width * 0.7, this$1.legend.position.z ) );
+  					points.push( new Vector3( linePosition, this.legend.position.y - this.legend.dimensions.width * 0.7, this.legend.position.z ) );
 
   				}
 
@@ -88994,10 +88541,8 @@ var Three = (function (exports) {
   	};
 
   	this.setWeapon = function ( index ) {
-  		var this$1 = this;
 
-
-  		for ( var i = 0; i < this.weapons.length; i ++ ) { this$1.weapons[ i ].visible = false; }
+  		for ( var i = 0; i < this.weapons.length; i ++ ) { this.weapons[ i ].visible = false; }
 
   		var activeWeapon = this.weapons[ index ];
 
@@ -89180,8 +88725,6 @@ var Three = (function (exports) {
   	},
 
   	autoCreateAnimations: function ( fps ) {
-  		var this$1 = this;
-
 
   		var pattern = /([a-z]+)_?(\d+)/i;
 
@@ -89189,7 +88732,7 @@ var Three = (function (exports) {
 
   		var i = 0;
 
-  		for ( var key in this$1.morphTargetDictionary ) {
+  		for ( var key in this.morphTargetDictionary ) {
 
   			var chunks = key.match( pattern );
 
@@ -89215,7 +88758,7 @@ var Three = (function (exports) {
   		for ( var name in frameRanges ) {
 
   			var range = frameRanges[ name ];
-  			this$1.createAnimation( name, range.start, range.end, fps );
+  			this.createAnimation( name, range.start, range.end, fps );
 
   		}
 
@@ -89361,12 +88904,10 @@ var Three = (function (exports) {
   	},
 
   	update: function ( delta ) {
-  		var this$1 = this;
-
 
   		for ( var i = 0, il = this.animationsList.length; i < il; i ++ ) {
 
-  			var animation = this$1.animationsList[ i ];
+  			var animation = this.animationsList[ i ];
 
   			if ( ! animation.active ) { continue; }
 
@@ -89409,10 +88950,10 @@ var Three = (function (exports) {
 
   			if ( keyframe !== animation.currentFrame ) {
 
-  				this$1.morphTargetInfluences[ animation.lastFrame ] = 0;
-  				this$1.morphTargetInfluences[ animation.currentFrame ] = 1 * weight;
+  				this.morphTargetInfluences[ animation.lastFrame ] = 0;
+  				this.morphTargetInfluences[ animation.currentFrame ] = 1 * weight;
 
-  				this$1.morphTargetInfluences[ keyframe ] = 0;
+  				this.morphTargetInfluences[ keyframe ] = 0;
 
   				animation.lastFrame = animation.currentFrame;
   				animation.currentFrame = keyframe;
@@ -89425,12 +88966,12 @@ var Three = (function (exports) {
 
   			if ( animation.currentFrame !== animation.lastFrame ) {
 
-  				this$1.morphTargetInfluences[ animation.currentFrame ] = mix * weight;
-  				this$1.morphTargetInfluences[ animation.lastFrame ] = ( 1 - mix ) * weight;
+  				this.morphTargetInfluences[ animation.currentFrame ] = mix * weight;
+  				this.morphTargetInfluences[ animation.lastFrame ] = ( 1 - mix ) * weight;
 
   			} else {
 
-  				this$1.morphTargetInfluences[ animation.currentFrame ] = weight;
+  				this.morphTargetInfluences[ animation.currentFrame ] = weight;
 
   			}
 
@@ -89509,33 +89050,27 @@ var Three = (function (exports) {
   	// API
 
   	this.enableShadows = function ( enable ) {
-  		var this$1 = this;
-
 
   		for ( var i = 0; i < this.meshes.length; i ++ ) {
 
-  			this$1.meshes[ i ].castShadow = enable;
-  			this$1.meshes[ i ].receiveShadow = enable;
+  			this.meshes[ i ].castShadow = enable;
+  			this.meshes[ i ].receiveShadow = enable;
 
   		}
 
   	};
 
   	this.setVisible = function ( enable ) {
-  		var this$1 = this;
-
 
   		for ( var i = 0; i < this.meshes.length; i ++ ) {
 
-  			this$1.meshes[ i ].visible = enable;
-  			this$1.meshes[ i ].visible = enable;
+  			this.meshes[ i ].visible = enable;
+  			this.meshes[ i ].visible = enable;
 
   		}
 
   	};
   	this.shareParts = function ( original ) {
-  		var this$1 = this;
-
 
   		this.animations = original.animations;
   		this.walkSpeed = original.walkSpeed;
@@ -89560,18 +89095,18 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < original.weapons.length; i ++ ) {
 
-  			var meshWeapon = createPart( original.weapons[ i ].geometry, this$1.skinsWeapon[ i ] );
-  			meshWeapon.scale.set( this$1.scale, this$1.scale, this$1.scale );
+  			var meshWeapon = createPart( original.weapons[ i ].geometry, this.skinsWeapon[ i ] );
+  			meshWeapon.scale.set( this.scale, this.scale, this.scale );
   			meshWeapon.visible = false;
 
   			meshWeapon.name = original.weapons[ i ].name;
 
-  			this$1.root.add( meshWeapon );
+  			this.root.add( meshWeapon );
 
-  			this$1.weapons[ i ] = meshWeapon;
-  			this$1.meshWeapon = meshWeapon;
+  			this.weapons[ i ] = meshWeapon;
+  			this.meshWeapon = meshWeapon;
 
-  			this$1.meshes.push( meshWeapon );
+  			this.meshes.push( meshWeapon );
 
   		}
 
@@ -89681,10 +89216,8 @@ var Three = (function (exports) {
   	};
 
   	this.setWeapon = function ( index ) {
-  		var this$1 = this;
 
-
-  		for ( var i = 0; i < this.weapons.length; i ++ ) { this$1.weapons[ i ].visible = false; }
+  		for ( var i = 0; i < this.weapons.length; i ++ ) { this.weapons[ i ].visible = false; }
 
   		var activeWeapon = this.weapons[ index ];
 
@@ -90523,8 +90056,6 @@ var Three = (function (exports) {
 
   // Applies the "modify" pattern
   SubdivisionModifier.prototype.modify = function ( geometry ) {
-  	var this$1 = this;
-
 
   	if ( geometry.isBufferGeometry ) {
 
@@ -90542,7 +90073,7 @@ var Three = (function (exports) {
 
   	while ( repeats -- > 0 ) {
 
-  		this$1.smooth( geometry );
+  		this.smooth( geometry );
 
   	}
 
@@ -91556,16 +91087,14 @@ var Three = (function (exports) {
   };
 
   FunctionNode.prototype.getInputByName = function ( name ) {
-  	var this$1 = this;
-
 
   	var i = this.inputs.length;
 
   	while ( i -- ) {
 
-  		if ( this$1.inputs[ i ].name === name ) {
+  		if ( this.inputs[ i ].name === name ) {
 
-  			return this$1.inputs[ i ];
+  			return this.inputs[ i ];
 
   		}
 
@@ -91574,16 +91103,14 @@ var Three = (function (exports) {
   };
 
   FunctionNode.prototype.getIncludeByName = function ( name ) {
-  	var this$1 = this;
-
 
   	var i = this.includes.length;
 
   	while ( i -- ) {
 
-  		if ( this$1.includes[ i ].name === name ) {
+  		if ( this.includes[ i ].name === name ) {
 
-  			return this$1.includes[ i ];
+  			return this.includes[ i ];
 
   		}
 
@@ -91592,18 +91119,16 @@ var Three = (function (exports) {
   };
 
   FunctionNode.prototype.generate = function ( builder, output ) {
-  	var this$1 = this;
-
 
   	var match, offset = 0, src = this.src;
 
   	for ( var i = 0; i < this.includes.length; i ++ ) {
 
-  		builder.include( this$1.includes[ i ], this$1 );
+  		builder.include( this.includes[ i ], this );
 
   	}
 
-  	for ( var ext in this$1.extensions ) {
+  	for ( var ext in this.extensions ) {
 
   		builder.extensions[ ext ] = true;
 
@@ -91612,12 +91137,12 @@ var Three = (function (exports) {
   	while ( match = propertiesRegexp.exec( this.src ) ) {
 
   		var prop = match[ 0 ],
-  			isGlobal = this$1.isMethod ? ! this$1.getInputByName( prop ) : true,
+  			isGlobal = this.isMethod ? ! this.getInputByName( prop ) : true,
   			reference = prop;
 
-  		if ( this$1.keywords[ prop ] || ( this$1.useKeywords && isGlobal && NodeLib.containsKeyword( prop ) ) ) {
+  		if ( this.keywords[ prop ] || ( this.useKeywords && isGlobal && NodeLib.containsKeyword( prop ) ) ) {
 
-  			var node = this$1.keywords[ prop ];
+  			var node = this.keywords[ prop ];
 
   			if ( ! node ) {
 
@@ -91643,7 +91168,7 @@ var Three = (function (exports) {
 
   		}
 
-  		if ( this$1.getIncludeByName( reference ) === undefined && NodeLib.contains( reference ) ) {
+  		if ( this.getIncludeByName( reference ) === undefined && NodeLib.contains( reference ) ) {
 
   			builder.include( NodeLib.get( reference ) );
 
@@ -91670,8 +91195,6 @@ var Three = (function (exports) {
   };
 
   FunctionNode.prototype.eval = function ( src, includes, extensions, keywords ) {
-  	var this$1 = this;
-
 
   	this.src = src || '';
 
@@ -91714,7 +91237,7 @@ var Three = (function (exports) {
 
   					name = inputs[ i ++ ];
 
-  					this$1.inputs.push( {
+  					this.inputs.push( {
   						name: name,
   						type: type,
   						qualifier: qualifier
@@ -91749,8 +91272,6 @@ var Three = (function (exports) {
   };
 
   FunctionNode.prototype.toJSON = function ( meta ) {
-  	var this$1 = this;
-
 
   	var data = this.getJSONNode( meta );
 
@@ -91767,9 +91288,9 @@ var Three = (function (exports) {
   		data.extensions = JSON.parse( JSON.stringify( this.extensions ) );
   		data.keywords = {};
 
-  		for ( var keyword in this$1.keywords ) {
+  		for ( var keyword in this.keywords ) {
 
-  			data.keywords[ keyword ] = this$1.keywords[ keyword ].toJSON( meta ).uuid;
+  			data.keywords[ keyword ] = this.keywords[ keyword ].toJSON( meta ).uuid;
 
   		}
 
@@ -91779,7 +91300,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < this.includes.length; i ++ ) {
 
-  				data.includes.push( this$1.includes[ i ].toJSON( meta ).uuid );
+  				data.includes.push( this.includes[ i ].toJSON( meta ).uuid );
 
   			}
 
@@ -93313,8 +92834,6 @@ var Three = (function (exports) {
   };
 
   FunctionCallNode.prototype.generate = function ( builder, output ) {
-  	var this$1 = this;
-
 
   	var type = this.getType( builder ),
   		func = this.value;
@@ -93325,7 +92844,7 @@ var Three = (function (exports) {
   	for ( var i = 0; i < func.inputs.length; i ++ ) {
 
   		var inpt = func.inputs[ i ],
-  			param = this$1.inputs[ i ] || this$1.inputs[ inpt.name ];
+  			param = this.inputs[ i ] || this.inputs[ inpt.name ];
 
   		params.push( param.build( builder, builder.getTypeByFormat( inpt.type ) ) );
 
@@ -93338,14 +92857,12 @@ var Three = (function (exports) {
   };
 
   FunctionCallNode.prototype.copy = function ( source ) {
-  	var this$1 = this;
-
 
   	TempNode.prototype.copy.call( this, source );
 
   	for ( var prop in source.inputs ) {
 
-  		this$1.inputs[ prop ] = source.inputs[ prop ];
+  		this.inputs[ prop ] = source.inputs[ prop ];
 
   	}
 
@@ -93354,8 +92871,6 @@ var Three = (function (exports) {
   };
 
   FunctionCallNode.prototype.toJSON = function ( meta ) {
-  	var this$1 = this;
-
 
   	var data = this.getJSONNode( meta );
 
@@ -93374,7 +92889,7 @@ var Three = (function (exports) {
   			for ( var i = 0; i < func.inputs.length; i ++ ) {
 
   				var inpt = func.inputs[ i ],
-  					node = this$1.inputs[ i ] || this$1.inputs[ inpt.name ];
+  					node = this.inputs[ i ] || this.inputs[ inpt.name ];
 
   				data.inputs[ inpt.name ] = node.toJSON( meta ).uuid;
 
@@ -93445,16 +92960,14 @@ var Three = (function (exports) {
   };
 
   StructNode.prototype.getInputByName = function ( name ) {
-  	var this$1 = this;
-
 
   	var i = this.inputs.length;
 
   	while ( i -- ) {
 
-  		if ( this$1.inputs[ i ].name === name ) {
+  		if ( this.inputs[ i ].name === name ) {
 
-  			return this$1.inputs[ i ];
+  			return this.inputs[ i ];
 
   		}
 
@@ -93477,8 +92990,6 @@ var Three = (function (exports) {
   };
 
   StructNode.prototype.eval = function ( src ) {
-  	var this$1 = this;
-
 
   	this.src = src || '';
 
@@ -93492,7 +93003,7 @@ var Three = (function (exports) {
 
   		while ( match = propertiesRegexp$1.exec( properties ) ) {
 
-  			this$1.inputs.push( {
+  			this.inputs.push( {
   				type: match[ 1 ],
   				name: match[ 2 ]
   			} );
@@ -94839,8 +94350,6 @@ var Three = (function (exports) {
   	},
 
   	getVarListCode: function ( vars, prefix ) {
-  		var this$1 = this;
-
 
   		prefix = prefix || '';
 
@@ -94852,7 +94361,7 @@ var Three = (function (exports) {
   				type = nVar.type,
   				name = nVar.name;
 
-  			var formatType = this$1.getFormatByType( type );
+  			var formatType = this.getFormatByType( type );
 
   			if ( formatType === undefined ) {
 
@@ -94918,8 +94427,6 @@ var Three = (function (exports) {
   	},
 
   	include: function ( node, parent, source ) {
-  		var this$1 = this;
-
 
   		var includesStruct;
 
@@ -94973,7 +94480,7 @@ var Three = (function (exports) {
 
   					do {
 
-  						this$1.include( node.includes[ i ++ ], parent );
+  						this.include( node.includes[ i ++ ], parent );
 
   					} while ( i < node.includes.length );
 
@@ -95245,12 +94752,10 @@ var Three = (function (exports) {
   	},
 
   	mergeDefines: function ( defines ) {
-  		var this$1 = this;
-
 
   		for ( var name in defines ) {
 
-  			this$1.defines[ name ] = defines[ name ];
+  			this.defines[ name ] = defines[ name ];
 
   		}
 
@@ -95259,12 +94764,10 @@ var Three = (function (exports) {
   	},
 
   	mergeUniform: function ( uniforms ) {
-  		var this$1 = this;
-
 
   		for ( var name in uniforms ) {
 
-  			this$1.uniforms[ name ] = uniforms[ name ];
+  			this.uniforms[ name ] = uniforms[ name ];
 
   		}
 
@@ -96335,12 +95838,10 @@ var Three = (function (exports) {
   } );
 
   NodeMaterial.prototype.updateFrame = function ( frame ) {
-  	var this$1 = this;
-
 
   	for ( var i = 0; i < this.updaters.length; ++ i ) {
 
-  		frame.updateNode( this$1.updaters[ i ] );
+  		frame.updateNode( this.updaters[ i ] );
 
   	}
 
@@ -96389,14 +95890,12 @@ var Three = (function (exports) {
   };
 
   NodeMaterial.prototype.copy = function ( source ) {
-  	var this$1 = this;
-
 
   	var uuid = this.uuid;
 
   	for ( var name in source ) {
 
-  		this$1[ name ] = source[ name ];
+  		this[ name ] = source[ name ];
 
   	}
 
@@ -99326,14 +98825,12 @@ var Three = (function (exports) {
   JoinNode.prototype.nodeType = "Join";
 
   JoinNode.prototype.getNumElements = function () {
-  	var this$1 = this;
-
 
   	var i = inputs.length;
 
   	while ( i -- ) {
 
-  		if ( this$1[ inputs[ i ] ] !== undefined ) {
+  		if ( this[ inputs[ i ] ] !== undefined ) {
 
   			++ i;
 
@@ -99354,8 +98851,6 @@ var Three = (function (exports) {
   };
 
   JoinNode.prototype.generate = function ( builder, output ) {
-  	var this$1 = this;
-
 
   	var type = this.getType( builder ),
   		length = this.getNumElements(),
@@ -99363,7 +98858,7 @@ var Three = (function (exports) {
 
   	for ( var i = 0; i < length; i ++ ) {
 
-  		var elm = this$1[ inputs[ i ] ];
+  		var elm = this[ inputs[ i ] ];
 
   		outputs.push( elm ? elm.build( builder, 'f' ) : '0.0' );
 
@@ -99376,22 +98871,18 @@ var Three = (function (exports) {
   };
 
   JoinNode.prototype.copy = function ( source ) {
-  	var this$1 = this;
-
 
   	TempNode.prototype.copy.call( this, source );
 
   	for ( var prop in source.inputs ) {
 
-  		this$1[ prop ] = source.inputs[ prop ];
+  		this[ prop ] = source.inputs[ prop ];
 
   	}
 
   };
 
   JoinNode.prototype.toJSON = function ( meta ) {
-  	var this$1 = this;
-
 
   	var data = this.getJSONNode( meta );
 
@@ -99405,7 +98896,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < length; i ++ ) {
 
-  			var elm = this$1[ inputs[ i ] ];
+  			var elm = this[ inputs[ i ] ];
 
   			if ( elm ) {
 
@@ -99850,8 +99341,6 @@ var Three = (function (exports) {
   	this.sourceData = new Uint8Array( 4 * size );
 
   	this.clearSources = function () {
-  		var this$1 = this;
-
 
   		for ( var y = 0; y < textureHeight; y ++ ) {
 
@@ -99860,10 +99349,10 @@ var Three = (function (exports) {
   				var i = y * textureWidth + x;
   				var stride = i * 4;
 
-  				this$1.sourceData[ stride ] = 0;
-  				this$1.sourceData[ stride + 1 ] = 0;
-  				this$1.sourceData[ stride + 2 ] = 0;
-  				this$1.sourceData[ stride + 3 ] = 0;
+  				this.sourceData[ stride ] = 0;
+  				this.sourceData[ stride + 1 ] = 0;
+  				this.sourceData[ stride + 2 ] = 0;
+  				this.sourceData[ stride + 3 ] = 0;
 
   			}
 
@@ -99877,7 +99366,6 @@ var Three = (function (exports) {
   	};
 
   	this.addSource = function ( u, v, radius, density, windX, windY ) {
-  		var this$1 = this;
   		if ( density === void 0 ) density = null;
   		if ( windX === void 0 ) windX = null;
   		if ( windY === void 0 ) windY = null;
@@ -99902,21 +99390,21 @@ var Three = (function (exports) {
 
   					if ( density != null ) {
 
-  						this$1.sourceData[ stride ] = Math.min( Math.max( density, 0.0 ), 1.0 ) * 255;
+  						this.sourceData[ stride ] = Math.min( Math.max( density, 0.0 ), 1.0 ) * 255;
 
   					}
   					if ( windX != null ) {
 
   						var wind = Math.min( Math.max( windX, - 1.0 ), 1.0 );
   						wind = ( wind < 0.0 ) ? Math.floor( wind * 127 ) + 255 : Math.floor( wind * 127 );
-  						this$1.sourceData[ stride + 1 ] = wind;
+  						this.sourceData[ stride + 1 ] = wind;
 
   					}
   					if ( windY != null ) {
 
   						var wind = Math.min( Math.max( windY, - 1.0 ), 1.0 );
   						wind = ( wind < 0.0 ) ? Math.floor( wind * 127 ) + 255 : Math.floor( wind * 127 );
-  						this$1.sourceData[ stride + 2 ] = wind;
+  						this.sourceData[ stride + 2 ] = wind;
 
   					}
 
@@ -100190,8 +99678,6 @@ var Three = (function (exports) {
   	};
 
   	this.renderProject = function ( renderer ) {
-  		var this$1 = this;
-
 
   		// Projection pass 1
 
@@ -100212,14 +99698,14 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < 20; i ++ ) {
 
-  			renderer.setRenderTarget( this$1.field1 );
-  			renderer.render( this$1.fieldScene, this$1.orthoCamera );
+  			renderer.setRenderTarget( this.field1 );
+  			renderer.render( this.fieldScene, this.orthoCamera );
 
-  			var temp = this$1.field1;
-  			this$1.field1 = this$1.fieldProj;
-  			this$1.fieldProj = temp;
+  			var temp = this.field1;
+  			this.field1 = this.fieldProj;
+  			this.fieldProj = temp;
 
-  			this$1.projMaterial2.uniforms[ "densityMap" ].value = this$1.fieldProj.texture;
+  			this.projMaterial2.uniforms[ "densityMap" ].value = this.fieldProj.texture;
 
   		}
 
@@ -100242,8 +99728,6 @@ var Three = (function (exports) {
   	};
 
   	this.onBeforeRender = function ( renderer, scene, camera ) {
-  		var this$1 = this;
-
 
   		var delta = this.clock.getDelta();
   		if ( delta > 0.1 ) {
@@ -100274,7 +99758,7 @@ var Three = (function (exports) {
   		this.clearDiffuse();
   		for ( var i = 0; i < 21; i ++ ) {
 
-  			this$1.renderDiffuse( renderer );
+  			this.renderDiffuse( renderer );
 
   		}
   		this.configShaders( dt );
@@ -100892,14 +100376,12 @@ var Three = (function (exports) {
   	},
 
   	setFromPoints: function ( points ) {
-  		var this$1 = this;
-
 
   		this.makeEmpty();
 
   		for ( var i = 0, il = points.length; i < il; i ++ ) {
 
-  			this$1.expandByPoint( points[ i ] );
+  			this.expandByPoint( points[ i ] );
 
   		}
 
@@ -101489,8 +100971,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var LightningStorm = function ( stormParams ) {
-  	var this$1 = this;
-
 
   	Object3D.call( this );
   	
@@ -101548,9 +101028,9 @@ var Three = (function (exports) {
 
   	for ( var i = 0; i < this.stormParams.maxLightnings; i++ ) {
 
-  		var lightning = new LightningStrike( LightningStrike.copyParameters( {}, this$1.lightningParameters ) );
-  		var mesh = new Mesh( lightning, this$1.lightningMaterial );
-  		this$1.deadLightningsMeshes.push( mesh );
+  		var lightning = new LightningStrike( LightningStrike.copyParameters( {}, this.lightningParameters ) );
+  		var mesh = new Mesh( lightning, this.lightningMaterial );
+  		this.deadLightningsMeshes.push( mesh );
 
   	}
 
@@ -101563,8 +101043,6 @@ var Three = (function (exports) {
   LightningStorm.prototype.isLightningStorm = true;
 
   LightningStorm.prototype.update = function ( time ) {
-  	var this$1 = this;
-
 
   	if ( ! this.inited ) {
 
@@ -101605,7 +101083,7 @@ var Three = (function (exports) {
 
   	while ( i < il ){
 
-  		var mesh = this$1.lightningsMeshes[ i ];
+  		var mesh = this.lightningsMeshes[ i ];
 
   		var lightning = mesh.geometry;
 
@@ -101615,9 +101093,9 @@ var Three = (function (exports) {
 
   		if ( prevState === LightningStrike.RAY_PROPAGATING && lightning.state > prevState ) {
 
-  			if ( this$1.onLightningDown ) {
+  			if ( this.onLightningDown ) {
 
-  				this$1.onLightningDown( lightning );
+  				this.onLightningDown( lightning );
 
   			}
 
@@ -101627,11 +101105,11 @@ var Three = (function (exports) {
 
   			// Lightning is to be destroyed
 
-  			this$1.lightningsMeshes.splice( this$1.lightningsMeshes.indexOf( mesh ), 1 ); 
+  			this.lightningsMeshes.splice( this.lightningsMeshes.indexOf( mesh ), 1 ); 
 
-  			this$1.deadLightningsMeshes.push( mesh );
+  			this.deadLightningsMeshes.push( mesh );
 
-  			this$1.remove( mesh );
+  			this.remove( mesh );
 
   			il--;
 
@@ -103429,8 +102907,6 @@ var Three = (function (exports) {
   };
 
   Ocean.prototype.generateSeedPhaseTexture = function () {
-  	var this$1 = this;
-
 
   	// Setup the seed texture
   	this.pingPhase = true;
@@ -103439,10 +102915,10 @@ var Three = (function (exports) {
 
   		for ( var j = 0; j < this.resolution; j ++ ) {
 
-  			phaseArray[ i * this$1.resolution * 4 + j * 4 ] = Math.random() * 2.0 * Math.PI;
-  			phaseArray[ i * this$1.resolution * 4 + j * 4 + 1 ] = 0.0;
-  			phaseArray[ i * this$1.resolution * 4 + j * 4 + 2 ] = 0.0;
-  			phaseArray[ i * this$1.resolution * 4 + j * 4 + 3 ] = 0.0;
+  			phaseArray[ i * this.resolution * 4 + j * 4 ] = Math.random() * 2.0 * Math.PI;
+  			phaseArray[ i * this.resolution * 4 + j * 4 + 1 ] = 0.0;
+  			phaseArray[ i * this.resolution * 4 + j * 4 + 2 ] = 0.0;
+  			phaseArray[ i * this.resolution * 4 + j * 4 + 3 ] = 0.0;
 
   		}
 
@@ -103504,8 +102980,6 @@ var Three = (function (exports) {
   };
 
   Ocean.prototype.renderSpectrumFFT = function () {
-  	var this$1 = this;
-
 
   	// GPU FFT using Stockham formulation
   	var iterations = Math.log( this.resolution ) / Math.log( 2 ); // log2
@@ -103516,27 +102990,27 @@ var Three = (function (exports) {
 
   		if ( i === 0 ) {
 
-  			this$1.materialOceanHorizontal.uniforms.u_input.value = this$1.spectrumFramebuffer.texture;
-  			this$1.materialOceanHorizontal.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
+  			this.materialOceanHorizontal.uniforms.u_input.value = this.spectrumFramebuffer.texture;
+  			this.materialOceanHorizontal.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
 
-  			this$1.renderer.setRenderTarget( this$1.pingTransformFramebuffer );
-  			this$1.renderer.render( this$1.scene, this$1.oceanCamera );
+  			this.renderer.setRenderTarget( this.pingTransformFramebuffer );
+  			this.renderer.render( this.scene, this.oceanCamera );
 
   		} else if ( i % 2 === 1 ) {
 
-  			this$1.materialOceanHorizontal.uniforms.u_input.value = this$1.pingTransformFramebuffer.texture;
-  			this$1.materialOceanHorizontal.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
+  			this.materialOceanHorizontal.uniforms.u_input.value = this.pingTransformFramebuffer.texture;
+  			this.materialOceanHorizontal.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
 
-  			this$1.renderer.setRenderTarget( this$1.pongTransformFramebuffer );
-  			this$1.renderer.render( this$1.scene, this$1.oceanCamera );
+  			this.renderer.setRenderTarget( this.pongTransformFramebuffer );
+  			this.renderer.render( this.scene, this.oceanCamera );
 
   		} else {
 
-  			this$1.materialOceanHorizontal.uniforms.u_input.value = this$1.pongTransformFramebuffer.texture;
-  			this$1.materialOceanHorizontal.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
+  			this.materialOceanHorizontal.uniforms.u_input.value = this.pongTransformFramebuffer.texture;
+  			this.materialOceanHorizontal.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
 
-  			this$1.renderer.setRenderTarget( this$1.pingTransformFramebuffer );
-  			this$1.renderer.render( this$1.scene, this$1.oceanCamera );
+  			this.renderer.setRenderTarget( this.pingTransformFramebuffer );
+  			this.renderer.render( this.scene, this.oceanCamera );
 
   		}
 
@@ -103546,27 +103020,27 @@ var Three = (function (exports) {
 
   		if ( i === iterations * 2 - 1 ) {
 
-  			this$1.materialOceanVertical.uniforms.u_input.value = ( iterations % 2 === 0 ) ? this$1.pingTransformFramebuffer.texture : this$1.pongTransformFramebuffer.texture;
-  			this$1.materialOceanVertical.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
+  			this.materialOceanVertical.uniforms.u_input.value = ( iterations % 2 === 0 ) ? this.pingTransformFramebuffer.texture : this.pongTransformFramebuffer.texture;
+  			this.materialOceanVertical.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
 
-  			this$1.renderer.setRenderTarget( this$1.displacementMapFramebuffer );
-  			this$1.renderer.render( this$1.scene, this$1.oceanCamera );
+  			this.renderer.setRenderTarget( this.displacementMapFramebuffer );
+  			this.renderer.render( this.scene, this.oceanCamera );
 
   		} else if ( i % 2 === 1 ) {
 
-  			this$1.materialOceanVertical.uniforms.u_input.value = this$1.pingTransformFramebuffer.texture;
-  			this$1.materialOceanVertical.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
+  			this.materialOceanVertical.uniforms.u_input.value = this.pingTransformFramebuffer.texture;
+  			this.materialOceanVertical.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
 
-  			this$1.renderer.setRenderTarget( this$1.pongTransformFramebuffer );
-  			this$1.renderer.render( this$1.scene, this$1.oceanCamera );
+  			this.renderer.setRenderTarget( this.pongTransformFramebuffer );
+  			this.renderer.render( this.scene, this.oceanCamera );
 
   		} else {
 
-  			this$1.materialOceanVertical.uniforms.u_input.value = this$1.pongTransformFramebuffer.texture;
-  			this$1.materialOceanVertical.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
+  			this.materialOceanVertical.uniforms.u_input.value = this.pongTransformFramebuffer.texture;
+  			this.materialOceanVertical.uniforms.u_subtransformSize.value = Math.pow( 2, ( i % ( iterations ) ) + 1 );
 
-  			this$1.renderer.setRenderTarget( this$1.pingTransformFramebuffer );
-  			this$1.renderer.render( this$1.scene, this$1.oceanCamera );
+  			this.renderer.setRenderTarget( this.pingTransformFramebuffer );
+  			this.renderer.render( this.scene, this.oceanCamera );
 
   		}
 
@@ -103594,8 +103068,6 @@ var Three = (function (exports) {
   	var shader = getShader();
 
   	var PMREMCubeUVPacker = function ( cubeTextureLods ) {
-  		var this$1 = this;
-
 
   		this.cubeLods = cubeTextureLods;
   		var size = cubeTextureLods[ 0 ].width * 4;
@@ -103656,8 +103128,8 @@ var Three = (function (exports) {
 
   					// 6 Cube Faces
   					var material = shader.clone();
-  					material.uniforms[ 'envMap' ].value = this$1.cubeLods[ i ].texture;
-  					material.envMap = this$1.cubeLods[ i ].texture;
+  					material.uniforms[ 'envMap' ].value = this.cubeLods[ i ].texture;
+  					material.envMap = this.cubeLods[ i ].texture;
   					material.uniforms[ 'faceIndex' ].value = k;
   					material.uniforms[ 'mapSize' ].value = mipSize;
 
@@ -103666,7 +103138,7 @@ var Three = (function (exports) {
   					planeMesh.position.y = faceOffsets[ k ].y * mipSize - offset1 + offset2 + mipOffsetY;
   					planeMesh.material.side = BackSide;
   					planeMesh.scale.setScalar( mipSize );
-  					this$1.objects.push( planeMesh );
+  					this.objects.push( planeMesh );
 
   				}
   				mipOffsetY += 1.75 * mipSize;
@@ -103686,8 +103158,6 @@ var Three = (function (exports) {
   		constructor: PMREMCubeUVPacker,
 
   		update: function ( renderer ) {
-  			var this$1 = this;
-
 
   			var size = this.cubeLods[ 0 ].width * 4;
   			// top and bottom are swapped for some reason?
@@ -103701,7 +103171,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < this.objects.length; i ++ ) {
 
-  				scene.add( this$1.objects[ i ] );
+  				scene.add( this.objects[ i ] );
 
   			}
 
@@ -103726,19 +103196,17 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < this.objects.length; i ++ ) {
 
-  				scene.remove( this$1.objects[ i ] );
+  				scene.remove( this.objects[ i ] );
 
   			}
 
   		},
 
   		dispose: function () {
-  			var this$1 = this;
-
 
   			for ( var i = 0, l = this.objects.length; i < l; i ++ ) {
 
-  				this$1.objects[ i ].material.dispose();
+  				this.objects[ i ].material.dispose();
 
   			}
 
@@ -103822,8 +103290,6 @@ var Three = (function (exports) {
   	scene.add( camera );
 
   	var PMREMGenerator = function ( sourceTexture, samplesPerLevel, resolution ) {
-  		var this$1 = this;
-
 
   		this.sourceTexture = sourceTexture;
   		this.resolution = ( resolution !== undefined ) ? resolution : 256; // NODE: 256 is currently hard coded in the glsl code for performance reasons
@@ -103856,7 +103322,7 @@ var Three = (function (exports) {
 
   			var renderTarget = new WebGLRenderTargetCube( size, size, params );
   			renderTarget.texture.name = "PMREMGenerator.cube" + i;
-  			this$1.cubeLods.push( renderTarget );
+  			this.cubeLods.push( renderTarget );
   			size = Math.max( 16, size / 2 );
 
   		}
@@ -103867,8 +103333,6 @@ var Three = (function (exports) {
 
   		constructor: PMREMGenerator,
   		update: function ( renderer ) {
-  			var this$1 = this;
-
 
   			// Texture should only be flipped for CubeTexture, not for
   			// a Texture created via WebGLRenderTargetCube.
@@ -103893,15 +103357,15 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < this.numLods; i ++ ) {
 
-  				var r = i / ( this$1.numLods - 1 );
+  				var r = i / ( this.numLods - 1 );
   				shader.uniforms[ 'roughness' ].value = r * 0.9; // see comment above, pragmatic choice
   				// Only apply the tFlip for the first LOD
   				shader.uniforms[ 'tFlip' ].value = ( i == 0 ) ? tFlip : 1;
-  				var size = this$1.cubeLods[ i ].width;
+  				var size = this.cubeLods[ i ].width;
   				shader.uniforms[ 'mapSize' ].value = size;
-  				this$1.renderToCubeMapTarget( renderer, this$1.cubeLods[ i ] );
+  				this.renderToCubeMapTarget( renderer, this.cubeLods[ i ] );
 
-  				if ( i < 5 ) { shader.uniforms[ 'envMap' ].value = this$1.cubeLods[ i ].texture; }
+  				if ( i < 5 ) { shader.uniforms[ 'envMap' ].value = this.cubeLods[ i ].texture; }
 
   			}
 
@@ -103914,12 +103378,10 @@ var Three = (function (exports) {
   		},
 
   		renderToCubeMapTarget: function ( renderer, renderTarget ) {
-  			var this$1 = this;
-
 
   			for ( var i = 0; i < 6; i ++ ) {
 
-  				this$1.renderToCubeMapTargetFace( renderer, renderTarget, i );
+  				this.renderToCubeMapTargetFace( renderer, renderTarget, i );
 
   			}
 
@@ -103935,12 +103397,10 @@ var Three = (function (exports) {
   		},
 
   		dispose: function () {
-  			var this$1 = this;
-
 
   			for ( var i = 0, l = this.cubeLods.length; i < l; i ++ ) {
 
-  				this$1.cubeLods[ i ].dispose();
+  				this.cubeLods[ i ].dispose();
 
   			}
 
@@ -105482,8 +104942,6 @@ var Three = (function (exports) {
   	},
 
   	render: function ( deltaTime ) {
-  		var this$1 = this;
-
 
   		// deltaTime value is in seconds
 
@@ -105503,27 +104961,27 @@ var Three = (function (exports) {
 
   		for ( i = 0; i < il; i ++ ) {
 
-  			pass = this$1.passes[ i ];
+  			pass = this.passes[ i ];
 
   			if ( pass.enabled === false ) { continue; }
 
-  			pass.render( this$1.renderer, this$1.writeBuffer, this$1.readBuffer, deltaTime, maskActive );
+  			pass.render( this.renderer, this.writeBuffer, this.readBuffer, deltaTime, maskActive );
 
   			if ( pass.needsSwap ) {
 
   				if ( maskActive ) {
 
-  					var context = this$1.renderer.context;
+  					var context = this.renderer.context;
 
   					context.stencilFunc( context.NOTEQUAL, 1, 0xffffffff );
 
-  					this$1.copyPass.render( this$1.renderer, this$1.writeBuffer, this$1.readBuffer, deltaTime );
+  					this.copyPass.render( this.renderer, this.writeBuffer, this.readBuffer, deltaTime );
 
   					context.stencilFunc( context.EQUAL, 1, 0xffffffff );
 
   				}
 
-  				this$1.swapBuffers();
+  				this.swapBuffers();
 
   			}
 
@@ -105569,15 +105027,13 @@ var Three = (function (exports) {
   	},
 
   	setSize: function ( width, height ) {
-  		var this$1 = this;
-
 
   		this.renderTarget1.setSize( width, height );
   		this.renderTarget2.setSize( width, height );
 
   		for ( var i = 0; i < this.passes.length; i ++ ) {
 
-  			this$1.passes[ i ].setSize( width, height );
+  			this.passes[ i ].setSize( width, height );
 
   		}
 
@@ -106250,8 +105706,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var HalftonePass = function ( width, height, params ) {
-  	var this$1 = this;
-
 
   	Pass.call( this );
 
@@ -106274,9 +105728,9 @@ var Three = (function (exports) {
 
   	for ( var key in params ) {
 
-  		if ( params.hasOwnProperty( key ) && this$1.uniforms.hasOwnProperty( key ) ) {
+  		if ( params.hasOwnProperty( key ) && this.uniforms.hasOwnProperty( key ) ) {
 
-  			this$1.uniforms[ key ].value = params[ key ];
+  			this.uniforms[ key ].value = params[ key ];
 
   		}
 
@@ -106481,8 +105935,6 @@ var Three = (function (exports) {
   	},
 
   	changeVisibilityOfSelectedObjects: function ( bVisible ) {
-  		var this$1 = this;
-
 
   		function gatherSelectedMeshesCallBack( object ) {
 
@@ -106506,7 +105958,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.selectedObjects.length; i ++ ) {
 
-  			var selectedObject = this$1.selectedObjects[ i ];
+  			var selectedObject = this.selectedObjects[ i ];
   			selectedObject.traverse( gatherSelectedMeshesCallBack );
 
   		}
@@ -106514,8 +105966,6 @@ var Three = (function (exports) {
   	},
 
   	changeVisibilityOfNonSelectedObjects: function ( bVisible ) {
-  		var this$1 = this;
-
 
   		var selectedMeshes = [];
 
@@ -106527,7 +105977,7 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.selectedObjects.length; i ++ ) {
 
-  			var selectedObject = this$1.selectedObjects[ i ];
+  			var selectedObject = this.selectedObjects[ i ];
   			selectedObject.traverse( gatherSelectedMeshesCallBack );
 
   		}
@@ -108539,8 +107989,6 @@ var Three = (function (exports) {
   	},
 
   	render: function ( renderer, writeBuffer, readBuffer ) {
-  		var this$1 = this;
-
 
   		if ( ! this.sampleRenderTarget ) {
 
@@ -108568,9 +108016,9 @@ var Three = (function (exports) {
 
   			var jitterOffset = jitterOffsets[ i ];
 
-  			if ( this$1.camera.setViewOffset ) {
+  			if ( this.camera.setViewOffset ) {
 
-  				this$1.camera.setViewOffset( width, height,
+  				this.camera.setViewOffset( width, height,
   					jitterOffset[ 0 ] * 0.0625, jitterOffset[ 1 ] * 0.0625, // 0.0625 = 1 / 16
   					width, height );
 
@@ -108578,7 +108026,7 @@ var Three = (function (exports) {
 
   			var sampleWeight = baseSampleWeight;
 
-  			if ( this$1.unbiased ) {
+  			if ( this.unbiased ) {
 
   				// the theory is that equal weights for each sample lead to an accumulation of rounding errors.
   				// The following equation varies the sampleWeight per sample so that it is uniformly distributed
@@ -108589,13 +108037,13 @@ var Three = (function (exports) {
 
   			}
 
-  			this$1.copyUniforms[ "opacity" ].value = sampleWeight;
-  			renderer.setClearColor( this$1.clearColor, this$1.clearAlpha );
-  			renderer.setRenderTarget( this$1.sampleRenderTarget );
+  			this.copyUniforms[ "opacity" ].value = sampleWeight;
+  			renderer.setClearColor( this.clearColor, this.clearAlpha );
+  			renderer.setRenderTarget( this.sampleRenderTarget );
   			renderer.clear();
-  			renderer.render( this$1.scene, this$1.camera );
+  			renderer.render( this.scene, this.camera );
 
-  			renderer.setRenderTarget( this$1.renderToScreen ? null : writeBuffer );
+  			renderer.setRenderTarget( this.renderToScreen ? null : writeBuffer );
 
   			if ( i === 0 ) {
 
@@ -108604,7 +108052,7 @@ var Three = (function (exports) {
 
   			}
 
-  			renderer.render( this$1.scene2, this$1.camera2 );
+  			renderer.render( this.scene2, this.camera2 );
 
   		}
 
@@ -109373,8 +108821,6 @@ var Three = (function (exports) {
   	constructor: TAARenderPass,
 
   	render: function ( renderer, writeBuffer, readBuffer, deltaTime ) {
-  		var this$1 = this;
-
 
   		if ( ! this.accumulate ) {
 
@@ -109423,12 +108869,12 @@ var Three = (function (exports) {
   			var numSamplesPerFrame = Math.pow( 2, this.sampleLevel );
   			for ( var i = 0; i < numSamplesPerFrame; i ++ ) {
 
-  				var j = this$1.accumulateIndex;
+  				var j = this.accumulateIndex;
   				var jitterOffset = jitterOffsets[ j ];
 
-  				if ( this$1.camera.setViewOffset ) {
+  				if ( this.camera.setViewOffset ) {
 
-  					this$1.camera.setViewOffset( readBuffer.width, readBuffer.height,
+  					this.camera.setViewOffset( readBuffer.width, readBuffer.height,
   						jitterOffset[ 0 ] * 0.0625, jitterOffset[ 1 ] * 0.0625, // 0.0625 = 1 / 16
   						readBuffer.width, readBuffer.height );
 
@@ -109436,15 +108882,15 @@ var Three = (function (exports) {
 
   				renderer.setRenderTarget( writeBuffer );
   				renderer.clear();
-  				renderer.render( this$1.scene, this$1.camera );
+  				renderer.render( this.scene, this.camera );
 
-  				renderer.setRenderTarget( this$1.sampleRenderTarget );
-  				if ( this$1.accumulateIndex === 0 ) { renderer.clear(); }
-  				renderer.render( this$1.scene2, this$1.camera2 );
+  				renderer.setRenderTarget( this.sampleRenderTarget );
+  				if ( this.accumulateIndex === 0 ) { renderer.clear(); }
+  				renderer.render( this.scene2, this.camera2 );
 
-  				this$1.accumulateIndex ++;
+  				this.accumulateIndex ++;
 
-  				if ( this$1.accumulateIndex >= jitterOffsets.length ) { break; }
+  				if ( this.accumulateIndex >= jitterOffsets.length ) { break; }
 
   			}
 
@@ -109601,8 +109047,6 @@ var Three = (function (exports) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   var UnrealBloomPass = function ( resolution, strength, radius, threshold ) {
-  	var this$1 = this;
-
 
   	Pass.call( this );
 
@@ -109633,14 +109077,14 @@ var Three = (function (exports) {
   		renderTargetHorizonal.texture.name = "UnrealBloomPass.h" + i;
   		renderTargetHorizonal.texture.generateMipmaps = false;
 
-  		this$1.renderTargetsHorizontal.push( renderTargetHorizonal );
+  		this.renderTargetsHorizontal.push( renderTargetHorizonal );
 
   		var renderTargetVertical = new WebGLRenderTarget( resx, resy, pars );
 
   		renderTargetVertical.texture.name = "UnrealBloomPass.v" + i;
   		renderTargetVertical.texture.generateMipmaps = false;
 
-  		this$1.renderTargetsVertical.push( renderTargetVertical );
+  		this.renderTargetsVertical.push( renderTargetVertical );
 
   		resx = Math.round( resx / 2 );
 
@@ -109674,9 +109118,9 @@ var Three = (function (exports) {
 
   	for ( var i = 0; i < this.nMips; i ++ ) {
 
-  		this$1.separableBlurMaterials.push( this$1.getSeperableBlurMaterial( kernelSizeArray[ i ] ) );
+  		this.separableBlurMaterials.push( this.getSeperableBlurMaterial( kernelSizeArray[ i ] ) );
 
-  		this$1.separableBlurMaterials[ i ].uniforms[ "texSize" ].value = new Vector2( resx, resy );
+  		this.separableBlurMaterials[ i ].uniforms[ "texSize" ].value = new Vector2( resx, resy );
 
   		resx = Math.round( resx / 2 );
 
@@ -109745,18 +109189,16 @@ var Three = (function (exports) {
   	constructor: UnrealBloomPass,
 
   	dispose: function () {
-  		var this$1 = this;
-
 
   		for ( var i = 0; i < this.renderTargetsHorizontal.length; i ++ ) {
 
-  			this$1.renderTargetsHorizontal[ i ].dispose();
+  			this.renderTargetsHorizontal[ i ].dispose();
 
   		}
 
   		for ( var i = 0; i < this.renderTargetsVertical.length; i ++ ) {
 
-  			this$1.renderTargetsVertical[ i ].dispose();
+  			this.renderTargetsVertical[ i ].dispose();
 
   		}
 
@@ -109765,8 +109207,6 @@ var Three = (function (exports) {
   	},
 
   	setSize: function ( width, height ) {
-  		var this$1 = this;
-
 
   		var resx = Math.round( width / 2 );
   		var resy = Math.round( height / 2 );
@@ -109775,10 +109215,10 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.nMips; i ++ ) {
 
-  			this$1.renderTargetsHorizontal[ i ].setSize( resx, resy );
-  			this$1.renderTargetsVertical[ i ].setSize( resx, resy );
+  			this.renderTargetsHorizontal[ i ].setSize( resx, resy );
+  			this.renderTargetsVertical[ i ].setSize( resx, resy );
 
-  			this$1.separableBlurMaterials[ i ].uniforms[ "texSize" ].value = new Vector2( resx, resy );
+  			this.separableBlurMaterials[ i ].uniforms[ "texSize" ].value = new Vector2( resx, resy );
 
   			resx = Math.round( resx / 2 );
   			resy = Math.round( resy / 2 );
@@ -109788,8 +109228,6 @@ var Three = (function (exports) {
   	},
 
   	render: function ( renderer, writeBuffer, readBuffer, deltaTime, maskActive ) {
-  		var this$1 = this;
-
 
   		this.oldClearColor.copy( renderer.getClearColor() );
   		this.oldClearAlpha = renderer.getClearAlpha();
@@ -109829,21 +109267,21 @@ var Three = (function (exports) {
 
   		for ( var i = 0; i < this.nMips; i ++ ) {
 
-  			this$1.quad.material = this$1.separableBlurMaterials[ i ];
+  			this.quad.material = this.separableBlurMaterials[ i ];
 
-  			this$1.separableBlurMaterials[ i ].uniforms[ "colorTexture" ].value = inputRenderTarget.texture;
-  			this$1.separableBlurMaterials[ i ].uniforms[ "direction" ].value = UnrealBloomPass.BlurDirectionX;
-  			renderer.setRenderTarget( this$1.renderTargetsHorizontal[ i ] );
+  			this.separableBlurMaterials[ i ].uniforms[ "colorTexture" ].value = inputRenderTarget.texture;
+  			this.separableBlurMaterials[ i ].uniforms[ "direction" ].value = UnrealBloomPass.BlurDirectionX;
+  			renderer.setRenderTarget( this.renderTargetsHorizontal[ i ] );
   			renderer.clear();
-  			renderer.render( this$1.scene, this$1.camera );
+  			renderer.render( this.scene, this.camera );
 
-  			this$1.separableBlurMaterials[ i ].uniforms[ "colorTexture" ].value = this$1.renderTargetsHorizontal[ i ].texture;
-  			this$1.separableBlurMaterials[ i ].uniforms[ "direction" ].value = UnrealBloomPass.BlurDirectionY;
-  			renderer.setRenderTarget( this$1.renderTargetsVertical[ i ] );
+  			this.separableBlurMaterials[ i ].uniforms[ "colorTexture" ].value = this.renderTargetsHorizontal[ i ].texture;
+  			this.separableBlurMaterials[ i ].uniforms[ "direction" ].value = UnrealBloomPass.BlurDirectionY;
+  			renderer.setRenderTarget( this.renderTargetsVertical[ i ] );
   			renderer.clear();
-  			renderer.render( this$1.scene, this$1.camera );
+  			renderer.render( this.scene, this.camera );
 
-  			inputRenderTarget = this$1.renderTargetsVertical[ i ];
+  			inputRenderTarget = this.renderTargetsVertical[ i ];
 
   		}
 
@@ -115951,8 +115389,6 @@ var Three = (function (exports) {
   // Root Container
 
   function WebGLUniforms( gl, program, renderer ) {
-  	var this$1 = this;
-
 
   	UniformContainer.call( this );
 
@@ -115965,7 +115401,7 @@ var Three = (function (exports) {
   		var info = gl.getActiveUniform( program, i ),
   			addr = gl.getUniformLocation( program, info.name );
 
-  		parseUniform( info, addr, this$1 );
+  		parseUniform( info, addr, this );
 
   	}
 
@@ -131640,8 +131076,6 @@ var Three = (function (exports) {
   	constructor: TimelinerController,
 
   	init: function( timeliner ) {
-  		var this$1 = this;
-
 
   		var tracks = [],
   			trackInfo = this._trackInfo;
@@ -131650,7 +131084,7 @@ var Three = (function (exports) {
 
   			var spec = trackInfo[ i ];
 
-  			tracks.push( this$1._addTrack(
+  			tracks.push( this._addTrack(
   					spec.type, spec.propertyPath,
   					spec.initialValue, spec.interpolation ) );
   		}
@@ -131816,8 +131250,6 @@ var Three = (function (exports) {
   	},
 
   	deserialize: function( structs ) {
-  		var this$1 = this;
-
 
   		var names = this._channelNames,
   			tracks = this._tracks,
@@ -131832,8 +131264,8 @@ var Three = (function (exports) {
   				track = tracks[ name ],
   				data = channels[ name ];
 
-  			this$1._setArray( track.times, data.times );
-  			this$1._setArray( track.values, data.values );
+  			this._setArray( track.times, data.times );
+  			this._setArray( track.values, data.values );
 
   		}
 
@@ -132283,31 +131715,29 @@ var Three = (function (exports) {
   	},
 
   	remove: function ( node ) {
-  		var this$1 = this;
-
 
   		var len = this.content.length;
 
   		// To remove a value, we must search through the array to find it.
   		for ( var i = 0; i < len; i ++ ) {
 
-  			if ( this$1.content[ i ] == node ) {
+  			if ( this.content[ i ] == node ) {
 
   				// When it is found, the process seen in 'pop' is repeated
   				// to fill up the hole.
-  				var end = this$1.content.pop();
+  				var end = this.content.pop();
 
   				if ( i != len - 1 ) {
 
-  					this$1.content[ i ] = end;
+  					this.content[ i ] = end;
 
-  					if ( this$1.scoreFunction( end ) < this$1.scoreFunction( node ) ) {
+  					if ( this.scoreFunction( end ) < this.scoreFunction( node ) ) {
 
-  						this$1.bubbleUp( i );
+  						this.bubbleUp( i );
 
   					} else {
 
-  						this$1.sinkDown( i );
+  						this.sinkDown( i );
 
   					}
 
@@ -132330,8 +131760,6 @@ var Three = (function (exports) {
   	},
 
   	bubbleUp: function ( n ) {
-  		var this$1 = this;
-
 
   		// Fetch the element that has to be moved.
   		var element = this.content[ n ];
@@ -132341,13 +131769,13 @@ var Three = (function (exports) {
 
   			// Compute the parent element's index, and fetch it.
   			var parentN = Math.floor( ( n + 1 ) / 2 ) - 1,
-  				parent = this$1.content[ parentN ];
+  				parent = this.content[ parentN ];
 
   			// Swap the elements if the parent is greater.
-  			if ( this$1.scoreFunction( element ) < this$1.scoreFunction( parent ) ) {
+  			if ( this.scoreFunction( element ) < this.scoreFunction( parent ) ) {
 
-  				this$1.content[ parentN ] = element;
-  				this$1.content[ n ] = parent;
+  				this.content[ parentN ] = element;
+  				this.content[ n ] = parent;
 
   				// Update 'n' to continue at the new position.
   				n = parentN;
@@ -132364,8 +131792,6 @@ var Three = (function (exports) {
   	},
 
   	sinkDown: function ( n ) {
-  		var this$1 = this;
-
 
   		// Look up the target element and its score.
   		var length = this.content.length,
@@ -132384,8 +131810,8 @@ var Three = (function (exports) {
   			if ( child1N < length ) {
 
   				// Look it up and compute its score.
-  				var child1 = this$1.content[ child1N ],
-  					child1Score = this$1.scoreFunction( child1 );
+  				var child1 = this.content[ child1N ],
+  					child1Score = this.scoreFunction( child1 );
 
   				// If the score is less than our element's, we need to swap.
   				if ( child1Score < elemScore ) { swap = child1N; }
@@ -132395,8 +131821,8 @@ var Three = (function (exports) {
   			// Do the same checks for the other child.
   			if ( child2N < length ) {
 
-  				var child2 = this$1.content[ child2N ],
-  					child2Score = this$1.scoreFunction( child2 );
+  				var child2 = this.content[ child2N ],
+  					child2Score = this.scoreFunction( child2 );
 
   				if ( child2Score < ( swap === null ? elemScore : child1Score ) ) { swap = child2N; }
 
@@ -132405,8 +131831,8 @@ var Three = (function (exports) {
   			// If the element needs to be moved, swap it, and continue.
   			if ( swap !== null ) {
 
-  				this$1.content[ n ] = this$1.content[ swap ];
-  				this$1.content[ swap ] = element;
+  				this.content[ n ] = this.content[ swap ];
+  				this.content[ swap ] = element;
   				n = swap;
 
   			} else {
@@ -133090,8 +132516,6 @@ var Three = (function (exports) {
   			globalMatrix = new Matrix4();
 
   		return function ( target, source, options ) {
-  			var this$1 = this;
-
 
   			options = options || {};
   			options.preserveMatrix = options.preserveMatrix !== undefined ? options.preserveMatrix : true;
@@ -133180,7 +132604,7 @@ var Three = (function (exports) {
   				bone = bones[ i ];
   				name = options.names[ bone.name ] || bone.name;
 
-  				boneTo = this$1.getBoneByName( name, sourceBones );
+  				boneTo = this.getBoneByName( name, sourceBones );
 
   				globalMatrix.copy( bone.matrixWorld );
 
@@ -133274,8 +132698,6 @@ var Three = (function (exports) {
   	}(),
 
   	retargetClip: function ( target, source, clip, options ) {
-  		var this$1 = this;
-
 
   		options = options || {};
   		options.useFirstFramePosition = options.useFirstFramePosition !== undefined ? options.useFirstFramePosition : false;
@@ -133307,13 +132729,13 @@ var Three = (function (exports) {
 
   			var time = i * delta;
 
-  			this$1.retarget( target, source, options );
+  			this.retarget( target, source, options );
 
   			for ( j = 0; j < bones.length; ++ j ) {
 
   				name = options.names[ bones[ j ].name ] || bones[ j ].name;
 
-  				boneTo = this$1.getBoneByName( name, source.skeleton );
+  				boneTo = this.getBoneByName( name, source.skeleton );
 
   				if ( boneTo ) {
 
@@ -133423,8 +132845,6 @@ var Three = (function (exports) {
   			sourceDir = new Vector2();
 
   		return function ( target, source, options ) {
-  			var this$1 = this;
-
 
   			options = options || {};
   			options.hip = options.hip !== undefined ? options.hip : "hip";
@@ -133451,12 +132871,12 @@ var Three = (function (exports) {
   				bone = bones[ i ];
   				name = options.names[ bone.name ] || bone.name;
 
-  				boneTo = this$1.getBoneByName( name, sourceBones );
+  				boneTo = this.getBoneByName( name, sourceBones );
 
   				if ( boneTo && name !== options.hip ) {
 
-  					var boneParent = this$1.getNearestBone( bone.parent, nameKeys ),
-  						boneToParent = this$1.getNearestBone( boneTo.parent, nameValues );
+  					var boneParent = this.getNearestBone( bone.parent, nameKeys ),
+  						boneToParent = this.getNearestBone( boneTo.parent, nameValues );
 
   					boneParent.updateMatrixWorld();
   					boneToParent.updateMatrixWorld();
@@ -133833,8 +133253,6 @@ var Three = (function (exports) {
 
   	constructor: VolumeSlice,
   	repaint: function () {
-  		var this$1 = this;
-
 
   		if ( this.geometryNeedsUpdate ) {
 
@@ -133868,8 +133286,8 @@ var Three = (function (exports) {
   				for ( var i = 0; i < iLength; i ++ ) {
 
   					var label = volumeData[ sliceAccess( i, j ) ];
-  					label = label >= this$1.colorMap.length ? ( label % this$1.colorMap.length ) + 1 : label;
-  					var color = this$1.colorMap[ label ];
+  					label = label >= this.colorMap.length ? ( label % this.colorMap.length ) + 1 : label;
+  					var color = this.colorMap[ label ];
   					data[ 4 * pixelCount ] = ( color >> 24 ) & 0xff;
   					data[ 4 * pixelCount + 1 ] = ( color >> 16 ) & 0xff;
   					data[ 4 * pixelCount + 2 ] = ( color >> 8 ) & 0xff;
@@ -134519,8 +133937,6 @@ var Three = (function (exports) {
   // ShapeBufferGeometry
 
   function ShapeBufferGeometry( shapes, curveSegments ) {
-  	var this$1 = this;
-
 
   	BufferGeometry.call( this );
 
@@ -134557,7 +133973,7 @@ var Three = (function (exports) {
 
   			addShape( shapes[ i ] );
 
-  			this$1.addGroup( groupStart, groupCount, i ); // enables MultiMaterial support
+  			this.addGroup( groupStart, groupCount, i ); // enables MultiMaterial support
 
   			groupStart += groupCount;
   			groupCount = 0;
@@ -135692,8 +135108,6 @@ var Three = (function (exports) {
   	},
 
   	connect: function () {
-  		var this$1 = this;
-
 
   		if ( this.filters.length > 0 ) {
 
@@ -135701,7 +135115,7 @@ var Three = (function (exports) {
 
   			for ( var i = 1, l = this.filters.length; i < l; i ++ ) {
 
-  				this$1.filters[ i - 1 ].connect( this$1.filters[ i ] );
+  				this.filters[ i - 1 ].connect( this.filters[ i ] );
 
   			}
 
@@ -135718,8 +135132,6 @@ var Three = (function (exports) {
   	},
 
   	disconnect: function () {
-  		var this$1 = this;
-
 
   		if ( this.filters.length > 0 ) {
 
@@ -135727,7 +135139,7 @@ var Three = (function (exports) {
 
   			for ( var i = 1, l = this.filters.length; i < l; i ++ ) {
 
-  				this$1.filters[ i - 1 ].disconnect( this$1.filters[ i ] );
+  				this.filters[ i - 1 ].disconnect( this.filters[ i ] );
 
   			}
 
@@ -138959,8 +138371,6 @@ var Three = (function (exports) {
   	var normalMatrix = new Matrix3();
 
   	return function update() {
-  		var this$1 = this;
-
 
   		this.object.updateMatrixWorld( true );
 
@@ -138992,7 +138402,7 @@ var Three = (function (exports) {
   				.divideScalar( 3 )
   				.applyMatrix4( matrixWorld );
 
-  			v2.copy( normal ).applyMatrix3( normalMatrix ).normalize().multiplyScalar( this$1.size ).add( v1 );
+  			v2.copy( normal ).applyMatrix3( normalMatrix ).normalize().multiplyScalar( this.size ).add( v1 );
 
   			position.setXYZ( idx, v1.x, v1.y, v1.z );
 
@@ -139613,8 +139023,6 @@ var Three = (function (exports) {
   	var normalMatrix = new Matrix3();
 
   	return function update() {
-  		var this$1 = this;
-
 
   		var keys = [ 'a', 'b', 'c' ];
 
@@ -139650,7 +139058,7 @@ var Three = (function (exports) {
 
   					v1.copy( vertex ).applyMatrix4( matrixWorld );
 
-  					v2.copy( normal ).applyMatrix3( normalMatrix ).normalize().multiplyScalar( this$1.size ).add( v1 );
+  					v2.copy( normal ).applyMatrix3( normalMatrix ).normalize().multiplyScalar( this.size ).add( v1 );
 
   					position.setXYZ( idx, v1.x, v1.y, v1.z );
 
@@ -139680,7 +139088,7 @@ var Three = (function (exports) {
 
   				v2.set( objNorm.getX( j ), objNorm.getY( j ), objNorm.getZ( j ) );
 
-  				v2.applyMatrix3( normalMatrix ).normalize().multiplyScalar( this$1.size ).add( v1 );
+  				v2.applyMatrix3( normalMatrix ).normalize().multiplyScalar( this.size ).add( v1 );
 
   				position.setXYZ( idx, v1.x, v1.y, v1.z );
 
@@ -140210,8 +139618,6 @@ var Three = (function (exports) {
   	constructor: LOD,
 
   	copy: function ( source ) {
-  		var this$1 = this;
-
 
   		Object3D.prototype.copy.call( this, source, false );
 
@@ -140221,7 +139627,7 @@ var Three = (function (exports) {
 
   			var level = levels[ i ];
 
-  			this$1.addLevel( level.object.clone(), level.distance );
+  			this.addLevel( level.object.clone(), level.distance );
 
   		}
 
@@ -140593,8 +139999,6 @@ var Three = (function (exports) {
   	},
 
   	parseGeometries: function ( json, shapes ) {
-  		var this$1 = this;
-
 
   		var geometries = {};
 
@@ -140848,7 +140252,7 @@ var Three = (function (exports) {
   						if ( 'THREE' in window && 'LegacyJSONLoader' in THREE ) {
 
   							var geometryLoader = new LegacyJSONLoader();
-  							geometry = geometryLoader.parse( data, this$1.resourcePath ).geometry;
+  							geometry = geometryLoader.parse( data, this.resourcePath ).geometry;
   						} else {
 
   							console.error( 'ObjectLoader: You have to import LegacyJSONLoader in order load geometry data of type "Geometry".' );
@@ -141112,8 +140516,6 @@ var Three = (function (exports) {
   	},
 
   	parseObject: function ( data, geometries, materials ) {
-  		var this$1 = this;
-
 
   		var object;
 
@@ -141370,7 +140772,7 @@ var Three = (function (exports) {
 
   			for ( var i = 0; i < children.length; i ++ ) {
 
-  				object.add( this$1.parseObject( children[ i ], geometries, materials ) );
+  				object.add( this.parseObject( children[ i ], geometries, materials ) );
 
   			}
 
